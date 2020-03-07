@@ -1,0 +1,21 @@
+typedef struct 
+{
+    uint32_t uptimeInS;
+    uint16_t vSolarBoost[4];
+    uint16_t curSolarPanels[8];
+    uint16_t vBatt;
+    uint16_t curSolar;
+    uint16_t curBattIn;
+    uint16_t curBattOut;
+    uint16_t curOutput[10];
+    uint16_t AOcurOutput[2];
+    uint16_t vOutputBoost[4];
+    uint8_t outputBoostState[4];
+    int16_t temp[12];
+    uint16_t outputStatus;
+    uint8_t battMode;
+    uint8_t pptMode;
+    uint8_t batHeaterMode;
+    uint8_t batHeaterState;
+} eps_telemetry;
+

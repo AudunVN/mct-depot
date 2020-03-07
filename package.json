@@ -1,0 +1,31 @@
+{
+  "name": "hypso-openmct",
+  "version": "0.0.1",
+  "description": "OpenMCT implementation for the HYPSO satellite",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/audunvn/placeholder.git"
+  },
+  "author": "AudunVN",
+  "bugs": {
+    "url": "https://github.com/audunvn/placeholder/issues"
+  },
+  "homepage": "https://github.com/audunvn/placeholder#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-ws": "^4.0.0",
+    "ws": "^6.1.2",
+    "node-fetch": "^2.6.0",
+    "ezstruct": "^0.0.3",
+    "sqlite3": "^4.1.1",
+    "openmct": "https://github.com/Srokap/openmct.git#css_build_fix",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2",
+    "simple-node-logger": "^18.12.24"
+  }
+}

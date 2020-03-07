@@ -1,0 +1,20 @@
+{
+	"port": 8471,
+    "defs": [
+        {
+			"id": "eps",
+			"name": "Electronic Power System",
+            "structPath": "defs/eps_telemetry_struct.txt"
+        },
+        {
+			"id": "fc",
+			"name": "Flight Computer",
+            "structPath": "defs/fc_v0.0.3_GeneralT_file.txt"
+        },
+        {
+			"id": "pc",
+			"name": "Payload Controller",
+            "structPath": "defs/pc_v0.0.3_GeneralT_file.txt"
+        }
+    ]
+}

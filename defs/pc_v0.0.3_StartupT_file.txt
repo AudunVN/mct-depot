@@ -1,0 +1,31 @@
+{
+        uint32_t startupTimestamp = 0;
+        uint32_t lastResetCause = 0;
+        /* Initialization error codes */
+        uint8_t framFM22L16 = 0;
+        uint8_t flashMT25Q = 0;
+        uint8_t flashApp = 0;
+        uint8_t sdmmcApp = 0;
+        uint8_t can1App = 0;
+        uint8_t can2App = 0;
+        uint8_t uart1App = 0;
+        uint8_t uart4App = 0;
+        uint8_t uart5App = 0;
+        uint8_t uart6App = 0;
+        uint8_t uart7App = 0;
+        uint8_t uart8App = 0;
+        uint8_t spi1MasterApp = 0;
+        uint8_t rtc = 0;
+        uint8_t config = 0;
+        uint8_t cspHandler = 0;
+        uint8_t dataBuffering1 = 0;
+        uint8_t dataBuffering2 = 0;
+        uint8_t dataBuffering3 = 0;
+        uint8_t dataBuffering4 = 0;
+        uint8_t fwUpd = 0;
+        uint8_t fileSystem = 0;
+        uint8_t fileTransfer = 0;
+        uint8_t timeSync = 0;
+        uint8_t sysTask = 0;
+        uint8_t generalTelemetryCollector = 0;
+} Get_StartupTelemetry_RX;

@@ -1,0 +1,43 @@
+typedef struct 
+{
+        uint32_t timestamp = 0;
+        uint32_t uptimeInS = 0;
+        uint32_t bootCount = 0;
+        uint32_t lastResetCause = 0;
+        int16_t tempMcuInDeciC = 0;   /* 1/10 C */
+
+        bool sunSensorsIsPowerOn;
+        uint32_t sunSensorsNumOfOvercurrentChecks = 0;
+        uint16_t sunSensorsNumOfOvercurrentsDetected = 0;
+
+        bool gpsIsPowerOn = false;
+        uint32_t gpsNumOfOvercurrentChecks = 0;
+        uint16_t gpsNumOfOvercurrentsDetected = 0;
+
+        bool extTempAndMagneticSensorsIsPowerOn = false;
+        uint32_t extTempAndMagneticSensorsNumOfOvercurrentChecks = 0;
+        uint16_t extTempAndMagneticSensorsNumOfOvercurrentsDetected = 0;
+
+        float mtqVoltageMV = 0;
+        float mtqCurrentMA = 0;
+        float sunSensorsCurrentMA = 0;
+        float gpsCurrentMA = 0;
+        float extTempAndMagneticSensorsTempMA = 0;
+
+        float solarPanelTemp1 = 0;
+        float solarPanelTemp2 = 0;
+        float solarPanelTemp3 = 0;
+        float solarPanelTemp4 = 0;
+        float solarPanelTemp5 = 0;
+        float solarPanelTemp6 = 0;
+
+        uint32_t gpsUtcTime = 0;
+        uint8_t gpsFixQual = 0;
+        float gpsLatitude = 0;
+        float gpsLongitude = 0;
+        float gpsGroundSpeed = 0;
+        uint32_t gpsNumOfSatsTracked = 0;
+        uint32_t gpsNumOfSatsInView = 0;
+        float gpsHDilutionOfPos = 0;
+
+} fc_telemetry;

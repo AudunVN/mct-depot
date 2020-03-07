@@ -1,0 +1,23 @@
+typedef struct 
+{
+        uint32_t timestamp = 0;
+        uint32_t uptimeInS = 0;
+        uint32_t bootCount = 0;
+        uint32_t lastResetCause = 0;
+        int16_t tempMcuInDeciC = 0; /* 1/10 C */
+        /* Data buffering payload 1 */
+        uint32_t payload_1_total_bytes = 0;
+        uint32_t payload_1_total_requests = 0;
+        uint32_t payload_1_written_requests = 0;
+        uint32_t payload_1_on_busy_requests = 0;
+        uint16_t payload_1_min_pkt_len = 0;
+        uint16_t payload_1_max_pkt_len = 0;
+        /* Data buffering payload 2 */
+        uint32_t payload_2_total_bytes = 0;
+        uint32_t payload_2_total_requests = 0;
+        uint32_t payload_2_written_requests = 0;
+        uint32_t payload_2_on_busy_requests = 0;
+        uint16_t payload_2_min_pkt_len = 0;
+        uint16_t payload_2_max_pkt_len = 0;
+
+} pc_telemetry;
