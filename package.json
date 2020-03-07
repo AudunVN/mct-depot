@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/audunvn/placeholder.git"
+    "url": "git+https://github.com/AudunVN/hypso-openmct.git"
   },
   "author": "AudunVN",
   "bugs": {
-    "url": "https://github.com/audunvn/placeholder/issues"
+    "url": "https://github.com/AudunVN/hypso-openmct/issues"
   },
-  "homepage": "https://github.com/audunvn/placeholder#readme",
+  "homepage": "https://github.com/AudunVN/hypso-openmct#readme",
   "dependencies": {
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
@@ -23,7 +23,7 @@
     "node-fetch": "^2.6.0",
     "ezstruct": "^0.0.3",
     "sqlite3": "^4.1.1",
-    "openmct": "https://github.com/Srokap/openmct.git#css_build_fix",
+    "openmct": "git+https://github.com/KhaledSharif/openmct",
     "jest": "^25.1.0",
     "supertest": "^4.0.2",
     "simple-node-logger": "^18.12.24"
