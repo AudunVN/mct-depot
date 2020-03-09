@@ -1,6 +1,6 @@
 "use strict";
 
-var Config = require('../config');
+var Config = require('./config');
 
 var StaticServer = require('./static-server');
 
