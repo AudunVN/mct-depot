@@ -3,6 +3,7 @@
 var Config = require('./config');
 
 var StaticServer = require('./static-server');
+var DbManager = require('./db/DbManager');
 
 var expressWs = require('express-ws');
 var server = require('express')();
