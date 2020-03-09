@@ -12,7 +12,7 @@ class Config
         this.defsPath = "defs";
 
         this.serverPollRate = 10000 /* milliseconds */;
-        this.dbPollRate = 1000 /* milliseconds */;
+        this.dbPollRate = 100 /* milliseconds */;
     }
 }
 
