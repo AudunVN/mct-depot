@@ -18,6 +18,8 @@ class NATelemetryDefinition extends TelemetryDefinition
             structString = structString.replace(structNameRegex, "} telemetry;");
 
             this.context = ezstruct(structString);
+
+            this.byteLength = Buffer.byteLength(this.context.telemetry.toBinary({}));
         } catch(e) {
             console.log("Error while creating ezstruct context: ", e.stack);
         }
@@ -27,16 +29,18 @@ class NATelemetryDefinition extends TelemetryDefinition
         return this.context.telemetry.toBinary(object);
     }
 
-    isPackable(object) {
+    canPack(object) {
         return true;
     }
 
     unpack(string) {
-        return this.context.telemetry.fromBinary(string);
+        var buffer = Buffer.from(string, "hex");
+        return this.context.telemetry.fromBinary(buffer);
     }
 
-    isUnpackable(object) {
-        return true;
+    canUnpack(string) {
+        var buffer = Buffer.from(string, "hex");
+        return (Buffer.byteLength(buffer) === this.byteLength);
     }
 }
 

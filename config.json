@@ -2,18 +2,33 @@
 	"port": 8471,
     "defs": [
         {
-			"id": "eps",
-			"name": "Electronic Power System",
+            "id": "eps",
+            "type": "NA",
+            "provides": {
+                "realtime": true,
+                "history": true
+            },
+            "name": "Electronic Power System",
             "structPath": "defs/eps_telemetry_struct.txt"
         },
         {
-			"id": "fc",
-			"name": "Flight Computer",
+            "id": "fc",
+            "type": "NA",
+            "provides": {
+                "realtime": true,
+                "history": true
+            },
+            "name": "Flight Computer",
             "structPath": "defs/fc_v0.0.3_GeneralT_file.txt"
         },
         {
-			"id": "pc",
-			"name": "Payload Controller",
+            "id": "pc",
+            "type": "NA",
+            "provides": {
+                "realtime": true,
+                "history": true
+            },
+            "name": "Payload Controller",
             "structPath": "defs/pc_v0.0.3_GeneralT_file.txt"
         }
     ]

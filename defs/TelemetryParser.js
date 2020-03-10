@@ -1,65 +1,44 @@
 "use strict";
 
-const Config = require('../../shared/Config');
+var TelemetryDefinition = require("./TelemetryDefinition");
+var NATelemetryDefinition = require("./NATelemetryDefinition");
 
-const DbReader = require('./DbReader');
-const DbWriter = require('./DbWriter');
-
-const sqlite3 = require('sqlite3').verbose();
-
-const config = new Config();
-
-class DbManager
+class TelemetryParser
 {
-    constructor()
+    constructor(defs)
     {
-        if (config.debug) {
-            this.db = new sqlite3.Database(":memory:", (err) => {
-                if (err) {
-                    console.error(err.message);
-                }
+        this.definitions = [];
 
-                console.log("Connected to in-memory telemetry database");
-            });
-        } else {
-            this.db = new sqlite3.Database(config.dbPath, (err) => {
-                if (err) {
-                    console.error(err.message);
-                }
+        defs.forEach(function (def) {
+            let definition = new TelemetryDefinition(def.id);
 
-                console.log("Connected to database at " + config.dbPath);
-            });
-        }
+            if (def.type === "NA") {
+                definition = new NATelemetryDefinition(def.id, def.structPath);
+            }
 
-        this.db.run(
-            "CREATE TABLE IF NOT EXISTS telemetry ( \
-                id INTEGER PRIMARY KEY, \
-                type TEXT, \
-                timestamp INTEGER, \
-                data TEXT \
-            );"
-        );
-
-        this.reader = new DbReader(this.db);
-        this.writer = new DbWriter(this.db);
+            this.definitions.push(definition);
+        });
     }
 
-    clearRows() {
-        this.db.run("DELETE FROM telemetry;");
-        console.log("Removed all rows from telemetry database");
+    getType(string) {
+        this.definitions.forEach(function (def) {
+            if (def.canUnpack(string)) {
+                return def.type;
+            }
+        });
 
-        return true;
+        return null;
     }
 
-    destroy() {
-        this.db.close();
+    getDefinition(type) {
+        this.definitions.forEach(function (def) {
+            if (def.type === type) {
+                return def;
+            }
+        });
 
-        this.reader.destroy();
-        this.reader = null;
-
-        this.writer.destroy();
-        this.writer = null;
+        return null;
     }
 }
 
-module.exports = DbManager;
+module.exports = TelemetryParser;

@@ -1,17 +1,13 @@
 "use strict";
 
-const Config = require('../../shared/Config');
-
 const DbReader = require('./DbReader');
 const DbWriter = require('./DbWriter');
 
 const sqlite3 = require('sqlite3').verbose();
 
-const config = new Config();
-
 class DbManager
 {
-    constructor()
+    constructor(config)
     {
         if (config.debug) {
             this.db = new sqlite3.Database(":memory:", (err) => {

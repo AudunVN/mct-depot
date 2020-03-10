@@ -1,41 +1,47 @@
 "use strict";
 
-var Config = require('./config');
+const Config = require('./config');
 
-var StaticServer = require('./static-server');
-var DbManager = require('./db/DbManager');
+const StaticServer = require('./static-server');
+const DbManager = require('./db/DbManager');
+const TelemetryParser = require('../defs/TelemetryParser');
+const TelemetryFetcher = require('./Telemetry/TelemetryFetcher');
+const TelemetryServer = require('./Telemetry/TelemetryServer');
 
-var expressWs = require('express-ws');
-var server = require('express')();
+const expressWs = require('express-ws');
+const server = require('express')();
 
 expressWs(server);
 
-var config = new Config();
+let config = new Config();
 
-var db = new DbManager();
+let db = new DbManager(config);
 
-var provider = new TelemetryProvider(config);
+let parser = new TelemetryParser(config.defs);
 
-var parser = new TelemetryParser(config);
+let telemetryServers = [];
 
-var telemetryServers = [];
-
-var port = config.port || 8080;
+let port = config.port || 8471;
 
 config.defs.forEach(function (def) {
-    // new TelemetryServer("eps/fc/pc", config, db, parser)
-    var telemetryServer = new TelemetryServer(def, config, db, parser);
+    let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
 
-    server.use('/' + def.id + '/realtime', telemetryServer.realtimeServer);
-    console.log(def.id.toUpperCase() + ' realtime available at ws://localhost:' + port + '/' + def.id + '/realtime');
+    let telemetryServer = new TelemetryServer(def, config, db, parser);
 
-    server.use('/' + def.id + '/history', telemetryServer.historyServer);
-    console.log(def.id.toUpperCase() + ' history available at http://localhost:' + port + '/' + def.id + '/history');
+    if (def.provides.realtime) {
+        server.use('/' + def.id + '/realtime', telemetryServer.realtimeServer);
+        console.log(def.id.toUpperCase() + ' realtime available at ws://localhost:' + port + '/' + def.id + '/realtime');
+    }
+
+    if (def.provides.history) {
+        server.use('/' + def.id + '/history', telemetryServer.historyServer);
+        console.log(def.id.toUpperCase() + ' history available at http://localhost:' + port + '/' + def.id + '/history');
+    }
 
     telemetryServers.push(telemetryServer);
 });
 
-var staticServer = new StaticServer();
+let staticServer = new StaticServer();
 
 server.use('/', staticServer);
 

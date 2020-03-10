@@ -11,7 +11,7 @@ class TelemetryDefinition
         return "Packing not implemented for type " + this.type;
     }
 
-    isPackable(object) {
+    canPack(object) {
         return false;
     }
 
@@ -19,7 +19,7 @@ class TelemetryDefinition
         return {errorMessage: "Unpacking not implemented for type " + this.type};
     }
 
-    isUnpackable(object) {
+    canUnpack(string) {
         return false;
     }
 }
