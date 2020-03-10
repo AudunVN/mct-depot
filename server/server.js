@@ -19,12 +19,16 @@ let db = new DbManager(config);
 
 let parser = new TelemetryParser(config.defs);
 
+let telemetryFetchers = [];
+
 let telemetryServers = [];
 
 let port = config.port || 8471;
 
 config.defs.forEach(function (def) {
     let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
+
+    telemetryFetchers.push(telemetryFetcher);
 
     let telemetryServer = new TelemetryServer(def, config, db, parser);
 
