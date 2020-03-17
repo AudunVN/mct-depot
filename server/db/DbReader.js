@@ -14,7 +14,8 @@ class DbReader
             SELECT 
                 type,
                 timestamp,
-                data
+                data,
+                metadata
             FROM telemetry
             WHERE
                 type = $type,
