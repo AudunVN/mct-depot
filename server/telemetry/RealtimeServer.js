@@ -14,8 +14,6 @@ class RealtimeServer
         this.def = def;
 
         this.start();
-
-        return this.router;
     }
 
     start()

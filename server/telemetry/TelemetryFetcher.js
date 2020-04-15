@@ -8,36 +8,40 @@ class TelemetryFetcher
         this.def = def;
         this.config = config;
         this.callback = callback;
-        this.polling = false;
+        this.running = false;
 
-        this.lastPollTime = 0;
+        this.lastRunTime = 0;
     }
 
     start() {
-        this.polling = true;
-        this.lastPollTime = Date.now();
+        this.running = true;
+        this.lastRunTime = Date.now();
 
-        this.poll();
+        this.run();
     }
 
-    poll() {
-        if (this.polling) {
+    fetch() {
+        return {errorMessage: "Fetching not implemented for type " + this.def.type};
+    }
+
+    run() {
+        if (this.running) {
             let currentTime = Date.now();
 
-            let results = this.db.read(this.def.type, this.lastPollTime, currentTime);
+            let results = this.fetch();
 
-            this.lastPollTime = currentTime;
+            this.lastRunTime = currentTime;
 
             if (results.length > 0) {
                 this.callback(results);
             }
 
-            setTimeout(this.poll, this.config.dbPollRate);
+            setTimeout(this.run, this.def.fetchRate);
         }
     }
 
     stop() {
-        this.polling = false;
+        this.running = false;
     }
 
     destroy() {

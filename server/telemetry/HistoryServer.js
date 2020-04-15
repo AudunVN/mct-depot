@@ -14,8 +14,6 @@ class HistoryServer
         this.config = config;
 
         this.start();
-
-        return this.router;
     }
 
     start()
