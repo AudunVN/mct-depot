@@ -12,8 +12,6 @@ class RealtimeServer
         this.config = config;
 
         this.def = def;
-
-        this.start();
     }
 
     start()

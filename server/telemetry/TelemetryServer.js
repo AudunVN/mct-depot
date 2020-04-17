@@ -11,22 +11,32 @@ class TelemetryServer
         this.def = def;
         this.config = config;
 
+        this.running = false;
+
         this.realtimeServer = new RealtimeServer(this.def, this.db, this.config);
         this.historyServer = new HistoryServer(this.def, this.db, this.config);
     }
 
     start()
     {
+        this.running = true;
 
+        this.realtimeServer.start();
+        this.historyServer.start();
     }
 
     stop()
     {
+        this.running = false;
 
+        this.realtimeServer.stop();
+        this.historyServer.stop();
     }
 
     destroy()
     {
+        this.stop();
+
         this.db = null;
         this.def = null;
         this.config = null;

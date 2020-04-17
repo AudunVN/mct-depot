@@ -12,8 +12,6 @@ class HistoryServer
         this.def = def;
         this.db = db;
         this.config = config;
-
-        this.start();
     }
 
     start()
