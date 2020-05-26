@@ -3,9 +3,7 @@
 <head>
     <title>Hypso OpenMCT</title>
     <script src="openmct/openmct.js"></script>
-    <script src="plugins/dictionary-plugin.js"></script>
-    <script src="plugins/historical-telemetry-plugin.js"></script>
-    <script src="plugins/realtime-telemetry-plugin.js"></script>
+    <script src="client/plugins/HypsoPlugin.js"></script>
 </head>
 <body>
     <script>
@@ -17,9 +15,7 @@
         openmct.time.timeSystem('utc');
         openmct.install(openmct.plugins.Espresso());
 
-        openmct.install(DictionaryPlugin());
-        openmct.install(HistoricalTelemetryPlugin());
-        openmct.install(RealtimeTelemetryPlugin());
+        openmct.install(HypsoPlugin());
 
         openmct.start();
     </script>

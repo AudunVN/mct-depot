@@ -7,6 +7,14 @@ class TelemetryDefinition
         this.type = type;
     }
 
+    getMetadataProvider() {
+        return "Metadata provider not found for " + this.type;
+    }
+
+    getDataProvider() {
+        return "Data provider not found for " + this.type;
+    }
+
     pack(object) {
         return "Packing not implemented for type " + this.type;
     }
