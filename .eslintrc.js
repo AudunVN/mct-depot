@@ -1,14 +1,20 @@
 module.exports = {
+    "plugins": [
+        "jest"
+    ],
     "env": {
         "node": true,
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest": true,
+        "jest/globals": true
     },
     "globals": {
         "_": "readonly"
     },
     "extends": [
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:jest/recommended"
     ],
     "parserOptions": {
         "allowImportExportEverywhere": true,
@@ -62,5 +68,15 @@ module.exports = {
         ],
         "dot-notation": "error",
         "indent": ["error", 4]
-    }
+    },
+    "overrides": [
+        {
+            "files": [
+                "**/*.test.js"
+            ],
+            "env": {
+                "jest": true
+            }
+        }
+    ]
 };

@@ -1,7 +1,7 @@
 "use strict";
 
-var TelemetryDefinition = require("./TelemetryDefinition");
-var NATelemetryDefinition = require("./NATelemetryDefinition");
+const TelemetryDefinition = require("./TelemetryDefinition");
+const NATelemetryDefinition = require("./NATelemetryDefinition");
 
 class TelemetryParser
 {
