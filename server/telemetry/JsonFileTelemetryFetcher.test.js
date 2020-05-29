@@ -20,3 +20,19 @@ test('valid input file yields non-empty output', () => {
     expect(result).not.toEqual([]);
     expect(result.length).toBeGreaterThan(0);
 });
+
+test('starting fetcher returns data to callback', done => {
+    function callback(data) {
+        try {
+            expect(data).not.toEqual([]);
+            expect(data.length).toBeGreaterThan(0);
+            done();
+        } catch (error) {
+            done(error);
+        }
+    }
+
+    let fetcher = new JsonFileTelemetryFetcher("samples/fc_archive_v.json");
+    fetcher.callback = callback;
+    fetcher.start();
+});
