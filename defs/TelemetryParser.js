@@ -16,6 +16,10 @@ class TelemetryParser
                 definition = new NATelemetryDefinition(def.id, def.structPath);
             }
 
+            if (def.type === "JSON") {
+                definition = new JsonTelemetryDefinition(def.id);
+            }
+
             this.definitions.push(definition);
         });
     }
