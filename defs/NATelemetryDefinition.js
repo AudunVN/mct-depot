@@ -15,7 +15,7 @@ class NATelemetryDefinition extends TelemetryDefinition
             let defaultValueRegex = / *= *[^;]*/g;
 
             let structString = fs.readFileSync(structPath, "utf8");
-            
+
             structString = structString.replace(structNameRegex, "} telemetry;");
             structString = structString.replace(defaultValueRegex, "");
 
@@ -28,7 +28,7 @@ class NATelemetryDefinition extends TelemetryDefinition
     }
 
     pack(object) {
-        return this.context.telemetry.toBinary(object);
+        return "\\x" + this.context.telemetry.toBinary(object).toString("hex");
     }
 
     canPack(object) {
