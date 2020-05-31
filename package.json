@@ -2,9 +2,9 @@
   "name": "hypso-openmct",
   "version": "0.0.1",
   "description": "OpenMCT implementation for the HYPSO satellite",
-  "main": "server/server.js",
+  "main": "server/run.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/run.js",
     "test": "jest"
   },
   "repository": {

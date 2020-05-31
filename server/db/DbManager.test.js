@@ -31,3 +31,9 @@ test('can read from in-memory database', () => {
 
     expect(results.length).toEqual(1);
 });
+
+test('database read timestamp boundaries are inclusive', () => {
+    let results = manager.reader.read(type, timestamp, timestamp);
+
+    expect(results.length).toEqual(1);
+});
