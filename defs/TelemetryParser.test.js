@@ -13,7 +13,7 @@ const fcTelemetrySample = JSON.stringify({"fca_id":5744,"fca_init_ts":"2020-02-0
 test('can load definitions', () => {
     let parser = new TelemetryParser(TestDefinitions);
 
-    expect(parser.definitions.count).toEqual(TestDefinitions.count);
+    expect(parser.definitions.length).toEqual(TestDefinitions.length);
 });
 
 test('can get type for FC telemetry string', () => {

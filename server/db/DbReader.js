@@ -8,38 +8,20 @@ class DbReader
     }
 
     read(type, startTime, endTime) {
-        let results = [];
+        const statement = this.db.prepare("\
+            SELECT \
+                type, \
+                data, \
+                metadata, \
+                timestamp \
+            FROM telemetry \
+            WHERE \
+                type = ? AND \
+                timestamp BETWEEN ? AND ? \
+            ORDER BY timestamp ASC \
+        ");
 
-        let query = `
-            SELECT 
-                type,
-                timestamp,
-                data,
-                metadata
-            FROM telemetry
-            WHERE
-                type = $type,
-                timestamp BETWEEN $startTime AND $endTime
-            ORDER BY timestamp ASC
-        `;
-
-        let parameters = {
-            $type: type,
-            $startTime: startTime,
-            $endTime: endTime
-        }
-
-        this.db.each(query, parameters, (err, row) => {
-            if (err) {
-                console.error(err.message);
-            }
-
-            console.log(`${row.type} ${row.timestamp} - ${row.data}`);
-
-            results.push(row);
-        });
-
-        return results;
+        return statement.all(type, startTime, endTime);
     }
 
     destroy() {

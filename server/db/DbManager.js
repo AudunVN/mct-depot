@@ -3,36 +3,25 @@
 const DbReader = require('./DbReader');
 const DbWriter = require('./DbWriter');
 
-const sqlite3 = require('sqlite3').verbose();
+const Database = require('better-sqlite3');
 
 class DbManager
 {
     constructor(config)
     {
         if (config.debug) {
-            this.db = new sqlite3.Database(":memory:", (err) => {
-                if (err) {
-                    console.error(err.message);
-                }
-
-                console.log("Connected to in-memory telemetry database");
-            });
+            this.db = new Database(":memory:");
         } else {
-            this.db = new sqlite3.Database(config.dbPath, (err) => {
-                if (err) {
-                    console.error(err.message);
-                }
-
-                console.log("Connected to database at " + config.dbPath);
-            });
+            this.db = new Database(config.dbPath);
         }
 
-        this.db.run(
+        this.db.exec(
             "CREATE TABLE IF NOT EXISTS telemetry ( \
                 id INTEGER PRIMARY KEY, \
                 type TEXT, \
-                timestamp INTEGER, \
-                data TEXT \
+                data TEXT, \
+                metadata TEXT, \
+                timestamp INTEGER \
             );"
         );
 
@@ -41,7 +30,7 @@ class DbManager
     }
 
     clearRows() {
-        this.db.run("DELETE FROM telemetry;");
+        this.db.exec("DELETE FROM telemetry;");
         console.log("Removed all rows from telemetry database");
 
         return true;

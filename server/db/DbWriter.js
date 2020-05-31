@@ -8,27 +8,14 @@ class DbWriter
     }
 
     write(type, data, metadata, timestamp) {
-        let query = `
-            INSERT INTO telemetry(type, data, metadata, timestamp)
-            VALUES ($type, $data, $metadata, $timestamp)
-        `;
+        const statement = this.db.prepare("\
+            INSERT INTO telemetry(type, data, metadata, timestamp) \
+            VALUES (?, ?, ?, ?) \
+        ");
 
-        let parameters = {
-            $type: type,
-            $data: data,
-            $metadata: metadata,
-            $timestamp: timestamp || null
-        }
+        const result = statement.run(type, data, metadata, timestamp);
 
-        // insert row of telemetry data
-        this.db.run(query, parameters, function (err) {
-            if (err) {
-                console.error(err.message);
-                return false;
-            }
-
-            console.log(`Inserted new telemetry with ID ${this.lastID}`);
-        });
+        //console.log(`Inserted new telemetry with ID ${result.lastInsertRowid}`);
 
         return true;
     }

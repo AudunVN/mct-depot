@@ -37,7 +37,6 @@ test('can unpack FC telemetry string', () => {
 
 test('unpacked data from FC telemetry string is valid', () => {
     let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
-    
     let result = definition.unpack(fcTelemetrySample);
 
     expect(result["unpacked_data"].timestamp).toEqual(1581431848);
@@ -45,9 +44,7 @@ test('unpacked data from FC telemetry string is valid', () => {
 
 test('packed data is valid', () => {
     let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
-
     let input = definition.unpack(fcTelemetrySample);
-    
     let result = definition.unpack(definition.pack(input));
 
     expect(result["unpacked_data"].timestamp).toEqual(1581431848);
