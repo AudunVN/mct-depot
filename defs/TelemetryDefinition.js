@@ -2,21 +2,21 @@
 
 class TelemetryDefinition
 {
-    constructor(type)
+    constructor(id)
     {
-        this.type = type;
+        this.id = id;
     }
 
     getMetadataProvider() {
-        return "Metadata provider not found for " + this.type;
+        return "Metadata provider not found for " + this.id;
     }
 
     getDataProvider() {
-        return "Data provider not found for " + this.type;
+        return "Data provider not found for " + this.id;
     }
 
     pack(object) {
-        return "Packing not implemented for type " + this.type;
+        return "Packing not implemented for type " + this.id;
     }
 
     canPack(object) {
@@ -24,7 +24,7 @@ class TelemetryDefinition
     }
 
     unpack(string) {
-        return {errorMessage: "Unpacking not implemented for type " + this.type};
+        return {errorMessage: "Unpacking not implemented for type " + this.id};
     }
 
     canUnpack(string) {

@@ -2,6 +2,7 @@
 
 const TelemetryDefinition = require("./TelemetryDefinition");
 const NATelemetryDefinition = require("./NATelemetryDefinition");
+const JsonTelemetryDefinition = require("./JsonTelemetryDefinition");
 
 class TelemetryParser
 {
@@ -9,7 +10,7 @@ class TelemetryParser
     {
         this.definitions = [];
 
-        defs.forEach(function (def) {
+        defs.forEach((def) => {
             let definition = new TelemetryDefinition(def.id);
 
             if (def.type === "NA") {
@@ -25,23 +26,27 @@ class TelemetryParser
     }
 
     getType(string) {
+        let result = null;
+        
         this.definitions.forEach(function (def) {
             if (def.canUnpack(string)) {
-                return def.type;
+                result = def.id;
             }
         });
 
-        return null;
+        return result;
     }
 
-    getDefinition(type) {
+    getDefinition(id) {
+        let result = null;
+
         this.definitions.forEach(function (def) {
-            if (def.type === type) {
-                return def;
+            if (def.id === id) {
+                result = def;
             }
         });
 
-        return null;
+        return result;
     }
 }
 

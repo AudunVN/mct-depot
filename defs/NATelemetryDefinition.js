@@ -28,25 +28,45 @@ class NATelemetryDefinition extends TelemetryDefinition
     }
 
     pack(object) {
-        return "\\x" + this.context.telemetry.toBinary(object).toString("hex");
+        object["packed_data"] = "\\x" + this.context.telemetry.toBinary(object["unpacked_data"]).toString("hex");
+
+        return JSON.stringify(object);
     }
 
     canPack(object) {
         return true;
     }
 
-    unpack(string) {
-        var rawHexString = string.replace('\\x', '');
-        var buffer = Buffer.from(rawHexString, "hex");
+    getDataBuffer(telemetry) {
+        let dataKey = Object.keys(telemetry).find(k=>typeof telemetry[k]==="string" && telemetry[k].slice(0,2)==="\\x");
+        
+        let packedDataString = telemetry[dataKey];
+        let rawHexString = packedDataString.replace('\\x', '');
+        return Buffer.from(rawHexString, "hex");
+    }
 
-        return this.context.telemetry.fromBinary(buffer);
+    unpack(string) {
+        let telemetry = JSON.parse(string);
+        
+        let buffer = this.getDataBuffer(telemetry);
+
+        telemetry["unpacked_data"] = this.context.telemetry.fromBinary(buffer);
+
+        return telemetry;
     }
 
     canUnpack(string) {
-        var rawHexString = string.replace('\\x', '');
-        var buffer = Buffer.from(rawHexString, "hex");
+        try {
+            let telemetry = JSON.parse(string);
+            
+            let buffer = this.getDataBuffer(telemetry);
 
-        return (Buffer.byteLength(buffer) === this.byteLength);
+            return (Buffer.byteLength(buffer) === this.byteLength);
+        } catch(e) {
+
+        }
+
+        return false;
     }
 }
 
