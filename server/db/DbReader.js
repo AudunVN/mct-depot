@@ -11,9 +11,10 @@ class DbReader
         const statement = this.db.prepare("\
             SELECT \
                 type, \
+                timestamp, \
                 data, \
                 metadata, \
-                timestamp \
+                original \
             FROM telemetry \
             WHERE \
                 type = ? AND \

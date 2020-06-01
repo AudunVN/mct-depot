@@ -20,6 +20,11 @@ class TelemetryFetcher
         this.run();
     }
 
+    store() {
+        let results = manager.reader.read(type, timestamp, timestamp);
+        this.db.writer.write();
+    }
+
     fetch() {
         return {errorMessage: "Fetching not implemented for type " + this.def.type};
     }

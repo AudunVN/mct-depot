@@ -19,9 +19,10 @@ class DbManager
             "CREATE TABLE IF NOT EXISTS telemetry ( \
                 id INTEGER PRIMARY KEY, \
                 type TEXT, \
+                timestamp INTEGER, \
                 data TEXT, \
                 metadata TEXT, \
-                timestamp INTEGER \
+                original TEXT \
             );"
         );
 
