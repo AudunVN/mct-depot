@@ -16,7 +16,7 @@ test('can load custom config from file', () => {
     expect(result).toEqual(true);
 });
 
-test('can reset default config', () => {
+test('can reset to default config', () => {
     let config = new Config();
     let defaultConfigPort = config.port;
     
