@@ -1,23 +1,20 @@
 "use strict";
 
-const Config = require('./config');
-
-const StaticServer = require('./static-server');
+const StaticServer = require('./StaticServer');
 const DbManager = require('./db/DbManager');
 const TelemetryParser = require('../defs/TelemetryParser');
 const TelemetryFetcher = require('./Telemetry/TelemetryFetcher');
 const TelemetryServer = require('./Telemetry/TelemetryServer');
 
 const expressWs = require('express-ws');
-const server = require('express')();
 
-class DbManager
+class Server
 {
     constructor(config)
     {
-        expressWs(server);
+        this.server = require('express')();
 
-        let config = new Config();
+        expressWs(this.server);
 
         let db = new DbManager(config);
 
@@ -37,12 +34,12 @@ class DbManager
             let telemetryServer = new TelemetryServer(def, config, db, parser);
 
             if (def.provides.realtime) {
-                server.use('/' + def.id + '/realtime', telemetryServer.realtimeServer);
+                this.server.use('/' + def.id + '/realtime', telemetryServer.realtimeServer);
                 console.log(def.id.toUpperCase() + ' realtime available at ws://localhost:' + port + '/' + def.id + '/realtime');
             }
 
             if (def.provides.history) {
-                server.use('/' + def.id + '/history', telemetryServer.historyServer);
+                this.server.use('/' + def.id + '/history', telemetryServer.historyServer);
                 console.log(def.id.toUpperCase() + ' history available at http://localhost:' + port + '/' + def.id + '/history');
             }
 
@@ -51,10 +48,8 @@ class DbManager
 
         let staticServer = new StaticServer();
 
-        server.use('/', staticServer);
+        this.server.use('/', staticServer);
     }
 }
 
-server.listen(port, function () {
-    console.log('OpenMCT available at http://localhost:' + port);
-});
+module.exports = Server;

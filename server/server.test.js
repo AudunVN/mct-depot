@@ -1,5 +1,21 @@
 "use strict";
 
-const server = require('./Server');
+const Server = require('./Server');
+const Config = require('./Config');
 const supertest = require('supertest');
-const request = supertest(server);
+
+let config = new Config();
+config.debug = true;
+
+const serverInstance = new Server(config);
+const request = supertest(serverInstance.server);
+
+test('static server responds to HTTP GET', async () => {
+    const response = await request.get("/");
+    expect(response.statusCode).toBe(200);
+});
+
+test('static server responds with OpenMCT index page', async () => {
+    const response = await request.get("/");
+    expect(response.text.indexOf("OpenMCT")).not.toBe(-1);
+});
