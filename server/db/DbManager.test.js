@@ -14,7 +14,7 @@ let telemetryPoint = {
     data: JSON.stringify({yes: true}),
     metadata: JSON.stringify({is_test: true}),
     original: ""
-}
+};
 
 telemetryPoint.original = JSON.stringify(telemetryPoint);
 
@@ -39,6 +39,7 @@ test('can read from in-memory database', () => {
     );
 
     expect(results.length).toEqual(1);
+    expect(JSON.stringify(results[0])).toEqual(JSON.stringify(telemetryPoint));
 });
 
 test('database read timestamp boundaries are inclusive', () => {
@@ -49,4 +50,5 @@ test('database read timestamp boundaries are inclusive', () => {
     );
 
     expect(results.length).toEqual(1);
+    expect(JSON.stringify(results[0])).toEqual(JSON.stringify(telemetryPoint));
 });

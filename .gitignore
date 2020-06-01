@@ -1,5 +1,5 @@
 node_modules
 npm-debug.log
 openmct
-*.sqlite
+*.sqlite3
 .VSCodeCounter
