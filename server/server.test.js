@@ -1,7 +1,7 @@
 "use strict";
 
 const Server = require('./Server');
-const Config = require('./Config');
+const Config = require('../shared/Config');
 const supertest = require('supertest');
 
 let config = new Config();

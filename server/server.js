@@ -33,12 +33,12 @@ class Server
 
             let telemetryServer = new TelemetryServer(def, config, db, parser);
 
-            if (def.provides.realtime) {
+            if (def.provides.realtime && typeof telemetryServer.realtimeServer !== "undefined") {
                 this.server.use('/' + def.id + '/realtime', telemetryServer.realtimeServer);
                 console.log(def.id.toUpperCase() + ' realtime available at ws://localhost:' + port + '/' + def.id + '/realtime');
             }
 
-            if (def.provides.history) {
+            if (def.provides.history && typeof telemetryServer.historyServer !== "undefined") {
                 this.server.use('/' + def.id + '/history', telemetryServer.historyServer);
                 console.log(def.id.toUpperCase() + ' history available at http://localhost:' + port + '/' + def.id + '/history');
             }

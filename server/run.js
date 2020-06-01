@@ -1,5 +1,9 @@
-const server = require('./Server.js');
+const Server = require('./Server');
+const Config = require('../shared/Config');
 
-server.listen(8471, function () {
-    console.log('OpenMCT available at http://localhost:' + port);
+const configInstance = new Config();
+const serverInstance = new Server(configInstance);
+
+serverInstance.server.listen(configInstance.port, function () {
+    console.log('OpenMCT available at http://localhost:' + configInstance.port);
 });
