@@ -6,11 +6,11 @@ const JsonTelemetryDefinition = require("./JsonTelemetryDefinition");
 
 class TelemetryParser
 {
-    constructor(defs)
+    constructor(definitions)
     {
         this.definitions = [];
 
-        defs.forEach((def) => {
+        definitions.forEach((def) => {
             let definition = new TelemetryDefinition(def.id);
 
             if (def.type === "NA") {
@@ -25,23 +25,33 @@ class TelemetryParser
         });
     }
 
+    canParse(type) {
+        return (this.getDefinition(type) != null);
+    }
+
+    parse(type, dataString) {
+        let definition = this.getDefinition(type);
+
+        return definition.parse(dataString);
+    }
+
     getType(string) {
         let result = null;
         
         this.definitions.forEach(function (def) {
             if (def.canUnpack(string)) {
-                result = def.id;
+                result = def.type;
             }
         });
 
         return result;
     }
 
-    getDefinition(id) {
+    getDefinition(type) {
         let result = null;
 
         this.definitions.forEach(function (def) {
-            if (def.id === id) {
+            if (def.type === type) {
                 result = def;
             }
         });
