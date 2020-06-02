@@ -27,46 +27,53 @@ class NATelemetryDefinition extends TelemetryDefinition
         }
     }
 
-    pack(object) {
-        object["packed_data"] = "\\x" + this.context.telemetry.toBinary(object["unpacked_data"]).toString("hex");
+    parse(telemetryString) {
+        let telemetryPoint = {
+            type: this.type,
+            timestamp: 0,
+            data: "",
+            metadata: "",
+            original: telemetryString
+        }
 
-        return JSON.stringify(object);
-    }
+        let telemetry = JSON.parse(telemetryString);
 
-    canPack(object) {
-        return true;
-    }
-
-    getDataBuffer(telemetry) {
         let dataKey = Object.keys(telemetry).find(k=>typeof telemetry[k]==="string" && telemetry[k].slice(0,2)==="\\x");
         
         let packedDataString = telemetry[dataKey];
+
+        telemetryPoint.data = this.unpack(packedDataString);
+
+        delete telemetry[dataKey];
+
+        telemetryPoint.metadata = telemetry;
+
+        return telemetryPoint;
+    }
+
+    pack(data) {
+        return "\\x" + this.context.telemetry.toBinary(data).toString("hex");
+    }
+
+    canPack(data) {
+        return true;
+    }
+
+    getDataBuffer(packedDataString) {
         let rawHexString = packedDataString.replace('\\x', '');
         return Buffer.from(rawHexString, "hex");
     }
 
-    unpack(string) {
-        let telemetry = JSON.parse(string);
-        
-        let buffer = this.getDataBuffer(telemetry);
+    unpack(packedDataString) {
+        let buffer = this.getDataBuffer(packedDataString);
 
-        telemetry["unpacked_data"] = this.context.telemetry.fromBinary(buffer);
-
-        return telemetry;
+        return this.context.telemetry.fromBinary(buffer);
     }
 
-    canUnpack(string) {
-        try {
-            let telemetry = JSON.parse(string);
-            
-            let buffer = this.getDataBuffer(telemetry);
+    canUnpack(packedDataString) {
+        let buffer = this.getDataBuffer(packedDataString);
 
-            return (Buffer.byteLength(buffer) === this.byteLength);
-        } catch(e) {
-
-        }
-
-        return false;
+        return (Buffer.byteLength(buffer) === this.byteLength);
     }
 }
 

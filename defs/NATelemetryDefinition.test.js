@@ -30,22 +30,22 @@ test('unpacked data from EPS telemetry string is valid', () => {
 
 test('can unpack FC telemetry string', () => {
     let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
-    let result = definition.canUnpack(fcTelemetrySample);
+    let result = definition.canUnpack(fcGeneralSampleString);
 
     expect(result).toEqual(true);
 });
 
 test('unpacked data from FC telemetry string is valid', () => {
     let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
-    let result = definition.unpack(fcTelemetrySample);
+    let result = definition.unpack(fcGeneralSampleString);
 
-    expect(result["unpacked_data"].timestamp).toEqual(1581431848);
+    expect(result.timestamp).toEqual(1581431848);
 });
 
 test('packed data is valid', () => {
     let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
-    let input = definition.unpack(fcTelemetrySample);
+    let input = definition.unpack(fcGeneralSampleString);
     let result = definition.unpack(definition.pack(input));
 
-    expect(result["unpacked_data"].timestamp).toEqual(1581431848);
+    expect(result.timestamp).toEqual(1581431848);
 });
