@@ -1,7 +1,7 @@
 "use strict";
 
-var RealtimeServer = require('../telemetry/RealtimeServer');
-var HistoryServer = require('../telemetry/HistoryServer');
+const RealtimeServer = require('../telemetry/RealtimeServer');
+const HistoryServer = require('../telemetry/HistoryServer');
 
 class TelemetryServer
 {

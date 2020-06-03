@@ -6,6 +6,7 @@ const TelemetryParser = require('../defs/TelemetryParser');
 const TelemetryFetcher = require('./Telemetry/TelemetryFetcher');
 const TelemetryServer = require('./Telemetry/TelemetryServer');
 
+var bodyParser = require('body-parser')
 const expressWs = require('express-ws');
 
 class Server
@@ -13,6 +14,9 @@ class Server
     constructor(config)
     {
         this.server = require('express')();
+
+        this.server.use(bodyParser.json())
+        this.server.use(bodyParser.urlencoded({ extended: false }))
 
         expressWs(this.server);
 
