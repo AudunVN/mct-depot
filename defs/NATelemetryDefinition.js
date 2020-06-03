@@ -38,8 +38,8 @@ class NATelemetryDefinition extends TelemetryDefinition
 
         let telemetry = JSON.parse(telemetryString);
 
-        let dataKey = Object.keys(telemetry).find(k=>typeof telemetry[k]==="string" && telemetry[k].slice(0,2)==="\\x");
-        
+        let dataKey = Object.keys(telemetry).find(k=>typeof telemetry[k]==="string" && telemetry[k].slice(0,2) === "\\x");
+
         let packedDataString = telemetry[dataKey];
 
         telemetryPoint.data = this.unpack(packedDataString);
@@ -47,6 +47,10 @@ class NATelemetryDefinition extends TelemetryDefinition
         delete telemetry[dataKey];
 
         telemetryPoint.metadata = telemetry;
+
+        let timestampKey = Object.keys(telemetryPoint.data).find(k => k.indexOf("timestamp") != -1 && typeof telemetryPoint.data[k] === "number" && 0 < telemetryPoint.data[k] < Date.now()/1000);
+
+        telemetryPoint.timestamp = telemetryPoint.data[timestampKey];
 
         return telemetryPoint;
     }

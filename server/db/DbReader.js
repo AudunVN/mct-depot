@@ -22,7 +22,14 @@ class DbReader
             ORDER BY timestamp ASC \
         ");
 
-        return statement.all(type, startTime, endTime);
+        let results = statement.all(type, startTime, endTime);
+
+        results.forEach((result) => {
+            result.data = JSON.parse(result.data);
+            result.metadata = JSON.parse(result.metadata);
+        });
+
+        return results;
     }
 
     isPointNew(point) {
@@ -45,11 +52,11 @@ class DbReader
         for (let i = 0; i < existingPoints.length; i++) {
             let storedPoint = existingPoints[i];
 
-            if (point.metadata != storedPoint.metadata) {
+            if (JSON.stringify(point.metadata) != storedPoint.metadata) {
                 return true;
             }
 
-            if (point.data != storedPoint.data) {
+            if (JSON.stringify(point.data) != storedPoint.data) {
                 return true;
             }
 

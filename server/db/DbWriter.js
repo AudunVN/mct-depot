@@ -23,24 +23,18 @@ class DbWriter
             return false;
         }
 
-        if (typeof telemetryPoint.data !== "string") {
-            console.log("Telemetry data needs to be a string");
-            return false;
-        }
-
-        if (typeof telemetryPoint.metadata !== "string") {
-            console.log("Telemetry metadata needs to be a string");
-            return false;
-        }
-
         if (typeof telemetryPoint.original !== "string") {
             console.log("Telemetry original needs to be a string");
             return false;
         }
 
-        const result = statement.run(telemetryPoint.type, telemetryPoint.timestamp, telemetryPoint.data, telemetryPoint.metadata, telemetryPoint.original);
-
-        //console.log(`Inserted new telemetry with ID ${result.lastInsertRowid}`);
+        const result = statement.run(
+            telemetryPoint.type,
+            telemetryPoint.timestamp,
+            JSON.stringify(telemetryPoint.data),
+            JSON.stringify(telemetryPoint.metadata),
+            telemetryPoint.original
+        );
 
         return true;
     }

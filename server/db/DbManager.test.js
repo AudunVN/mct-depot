@@ -2,7 +2,7 @@
 
 const DbManager = require('./DbManager');
 
-const Config = {
+const config = {
     "debug": true
 };
 
@@ -19,7 +19,7 @@ let telemetryPoint = {
 telemetryPoint.original = JSON.stringify(telemetryPoint);
 
 test('can create in-memory database', () => {
-    manager = new DbManager(Config);
+    manager = new DbManager(config);
 
     expect(manager.reader.db).toEqual(manager.db);
     expect(manager.writer.db).toEqual(manager.db);

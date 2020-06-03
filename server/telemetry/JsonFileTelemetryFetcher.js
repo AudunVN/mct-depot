@@ -5,13 +5,9 @@ const TelemetryFetcher = require('./TelemetryFetcher.js');
 
 class JsonFileTelemetryFetcher extends TelemetryFetcher
 {
-    constructor(filePath)
+    constructor(def, db, config, parser, callback)
     {
-        let type = "json";
-        
-        super(type);
-
-        this.filePath = filePath;
+        super(def, db, config, parser, callback);
     }
 
     fetch() {
@@ -19,7 +15,7 @@ class JsonFileTelemetryFetcher extends TelemetryFetcher
         let data = [];
 
         try {
-            fileString = fs.readFileSync(this.filePath, "utf8");
+            fileString = fs.readFileSync(this.def.filePath, "utf8");
             data = JSON.parse(fileString); 
         } catch(exception) {
             console.log("Error while reading file: ", exception.stack);

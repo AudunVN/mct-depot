@@ -2,13 +2,18 @@
 
 class TelemetryFetcher
 {
-    constructor(def, db, config, callback)
+    constructor(def, db, config, parser, callback)
     {
         this.db = db;
         this.def = def;
         this.config = config;
-        this.callback = callback;
+        this.parser = parser;
         this.running = false;
+        this.callback = this.store;
+
+        if (typeof callback == "function") {
+            this.callback = callback;
+        }
 
         this.lastRunTime = 0;
     }
@@ -20,9 +25,20 @@ class TelemetryFetcher
         this.run();
     }
 
-    store() {
-        let results = manager.reader.read(type, timestamp, timestamp);
-        this.db.writer.write();
+    store(points) {
+        if (this.parser.canParse(this.def.type)) {
+            for (let i = 0; i < points.length; i++) {
+                let point = JSON.stringify(points[i]);
+
+                let unpackedPoint = this.parser.parse(this.def.type, point);
+
+                if (this.db.reader.isPointNew(unpackedPoint)) {
+                    this.db.writer.write(unpackedPoint);
+                }
+            }
+        } else {
+            console.log("Cannot store point type " + this.def.type + ": No parser found");
+        }
     }
 
     fetch() {
