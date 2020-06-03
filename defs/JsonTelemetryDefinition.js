@@ -9,6 +9,24 @@ class JsonTelemetryDefinition extends TelemetryDefinition
         super(type);
     }
 
+    parse(telemetryString) {
+        let telemetryPoint = {
+            type: this.type,
+            timestamp: thistimestam,
+            data: "",
+            metadata: "",
+            original: telemetryString
+        }
+
+        telemetryPoint.data = JSON.parse(telemetryString);
+        
+        telemetryPoint.timestamp = telemetryPoint.data.timestamp;
+
+        delete telemetryPoint.data.timestamp;
+
+        return telemetryPoint;
+    }
+
     pack(object) {
         return JSON.stringify(object);
     }

@@ -32,8 +32,7 @@ class DbManager
 
     clearRows() {
         this.db.exec("DELETE FROM telemetry;");
-        console.log("Removed all rows from telemetry database");
-
+        
         return true;
     }
 
