@@ -12,9 +12,7 @@ config.debug = true;
 const def = {
     parser: "JSON",
     fetcher: "JSON",
-    type: "test",
-    structPath: "defs/structs/fc_v0.0.3_GeneralT_file.txt",
-    filePath: ""
+    type: "test"
 };
 
 const body = {
@@ -65,7 +63,7 @@ test('can get telemetry point from db', async () => {
     expect(response.body).toEqual([telemetryPoint]);
 });
 
-test('can get telemetry points from db', async () => {
+test('can get multiple telemetry points from db', async () => {
     db.writer.write(telemetryPoint);
 
     const response = await request.post(testUrl).send(body);
