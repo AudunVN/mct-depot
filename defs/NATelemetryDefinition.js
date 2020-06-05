@@ -27,6 +27,58 @@ class NATelemetryDefinition extends TelemetryDefinition
         }
     }
 
+    getMctData(telemetryPoint) {
+        /* gets data object for OpenMCT */
+
+    }
+
+    getMctMetadata() {
+        /* gets metadata object for OpenMCT */
+        let values = [];
+
+        console.log(this.context.telemetry.fields);
+        for (const field of Object.values(this.context.telemetry.fields)) {
+            let value = {
+                "key": field.name,
+                /*"name": "Value",
+                "units": "kilograms",
+                "format": "float",
+                "min": 0,
+                "max": 100,*/
+                "hints": {
+                    "range": 1
+                }
+            };
+            values.push(value);
+        }
+
+        let metadata = {
+            "identifier": {
+                "namespace": "example.taxonomy",
+                "key": "prop.fuel"
+            },
+            "name": "Fuel",
+            "type": "example.telemetry",
+            "telemetry": {
+                "values": values
+            }
+        };
+
+        let timeValue = {
+            "key": "utc",
+            "source": "timestamp",
+            "name": "Timestamp",
+            "format": "utc",
+            "hints": {
+                "domain": 1
+            }
+        };
+
+        metadata.telemetry.values.push(timeValue);
+
+        return metadata;
+    }
+
     parse(telemetryString) {
         let telemetryPoint = {
             type: this.type,

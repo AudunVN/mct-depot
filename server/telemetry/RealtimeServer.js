@@ -1,7 +1,7 @@
 "use strict";
 
-var express = require('express');
-var DbPoller = require('../db/DbPoller');
+const express = require('express');
+const DbPoller = require('../db/DbPoller');
 
 class RealtimeServer
 {
@@ -17,9 +17,9 @@ class RealtimeServer
     start()
     {
         this.router.ws('/', function (ws) {
-            var dbPoller = new DbPoller(this.def, this.db, this.config, sendUpdate);
-            var subscribedValues = {};
-            var messageHandlers = {
+            let dbPoller = new DbPoller(this.def, this.db, this.config, sendUpdate);
+            let subscribedValues = {};
+            let messageHandlers = {
                 subscribe: function (id) {
                     subscribedValues[id] = true;
                 },

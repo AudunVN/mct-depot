@@ -7,12 +7,8 @@ class TelemetryDefinition
         this.type = type;
     }
 
-    getMetadataProvider() {
-        return "Metadata provider not found for " + this.type;
-    }
-
-    getDataProvider() {
-        return "Data provider not found for " + this.type;
+    getMetadata() {
+        return "Metadata not found for " + this.type;
     }
 
     parse(dataString) {

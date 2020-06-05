@@ -49,3 +49,11 @@ test('packed data is valid', () => {
 
     expect(result.timestamp).toEqual(1581431848);
 });
+
+test('can get metadata', () => {
+    let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
+    console.log(definition.getMctMetadata());
+    console.log(definition.getMctMetadata().telemetry.values)
+
+    expect(result.timestamp).toEqual(1581431848);
+});

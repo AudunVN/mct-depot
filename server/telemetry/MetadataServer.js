@@ -2,26 +2,23 @@
 
 const express = require('express');
 
-class HistoryServer
+class MetadataServer
 {
-    constructor(def, db, config)
+    constructor(def)
     {
         this.router = express.Router();
         this.router.use(express.json());
         
         this.def = def;
-        this.db = db;
-        this.config = config;
     }
 
     start()
     {
-        let db = this.db;
         let def = this.def;
 
         this.router.post('/', function (request, response) {
-            let data = db.reader.read(def.type, request.body.startTime, request.body.endTime);
-            response.status(200).send(data);
+            let metadata = db.reader.read(def.type, request.body.startTime);
+            response.status(200).send(metadata);
         });
     }
 
@@ -33,4 +30,4 @@ class HistoryServer
     }
 }
 
-module.exports = HistoryServer;
+module.exports = MetadataServer;
