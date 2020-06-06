@@ -3,21 +3,41 @@
 <head>
     <title>Hypso OpenMCT</title>
     <script src="openmct/openmct.js"></script>
-    <script src="plugins/HypsoPlugin.js"></script>
+    <script src="plugins/MctPlugin.js"></script>
 </head>
 <body>
     <script>
-        openmct.setAssetPath('openmct');
-        openmct.install(openmct.plugins.LocalStorage());
-        openmct.install(openmct.plugins.MyItems());
-        openmct.install(openmct.plugins.UTCTimeSystem());
-        openmct.time.clock('local', {start: -15 * 60 * 1000, end: 0});
-        openmct.time.timeSystem('utc');
-        openmct.install(openmct.plugins.Espresso());
+        function fetchConfig(callback) {
+            fetch("/config")
+            .then(response => response.json())
+            .then(json => callback(null, json))
+            .catch(error => callback(error, null));
+        }
 
-        openmct.install(HypsoPlugin());
+        function startOpenMct() {
+            openmct.setAssetPath('openmct');
+            openmct.install(openmct.plugins.LocalStorage());
+            openmct.install(openmct.plugins.MyItems());
+            openmct.install(openmct.plugins.UTCTimeSystem());
+            openmct.time.clock('local', {start: -15 * 60 * 1000, end: 0});
+            openmct.time.timeSystem('utc');
+            openmct.install(openmct.plugins.Espresso());
 
-        openmct.start();
+            let mctPlugin = new MctPlugin(config);
+
+            openmct.install(mctPlugin);
+
+            openmct.start();
+        }
+
+        fetchConfig((error, config) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(config);
+                startOpenMct(config);
+            }
+        });
     </script>
 </body>
 </html>

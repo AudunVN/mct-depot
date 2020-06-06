@@ -18,7 +18,7 @@ class JsonTelemetryDefinition extends TelemetryDefinition
             original: telemetryString
         }
 
-        telemetryPoint.data = JSON.parse(telemetryString);
+        telemetryPoint.data = this.unpack(telemetryString);
         
         telemetryPoint.timestamp = telemetryPoint.data.timestamp;
 

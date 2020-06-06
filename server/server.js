@@ -1,6 +1,7 @@
 "use strict";
 
 const StaticServer = require('./StaticServer');
+const ConfigServer = require('../server/telemetry/ConfigServer');
 const DbManager = require('./db/DbManager');
 const TelemetryParser = require('../defs/TelemetryParser');
 const TelemetryFetcher = require('./Telemetry/TelemetryFetcher');
@@ -15,8 +16,8 @@ class Server
     {
         this.server = require('express')();
 
-        this.server.use(bodyParser.json())
-        this.server.use(bodyParser.urlencoded({ extended: false }))
+        this.server.use(bodyParser.json());
+        this.server.use(bodyParser.urlencoded({ extended: false }));
 
         expressWs(this.server);
 
@@ -29,6 +30,12 @@ class Server
         let telemetryServers = [];
 
         let port = config.port || 8471;
+        
+        let configUrl = '/config';
+        let configServer = new ConfigServer(config);
+        
+        this.server.use(configUrl, configServer.router);
+        console.log('server config available at http://localhost:' + port + configUrl);
 
         config.defs.forEach(function (def) {
             let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
@@ -38,13 +45,24 @@ class Server
             let telemetryServer = new TelemetryServer(def, config, db, parser);
 
             if (def.provides.realtime && typeof telemetryServer.realtimeServer !== "undefined") {
-                this.server.use('/' + def.type + '/realtime', telemetryServer.realtimeServer);
-                console.log(def.id.toUpperCase() + ' realtime available at ws://localhost:' + port + '/' + def.id + '/realtime');
+                let realtimeUrl = '/' + def.type + '/realtime';
+
+                this.server.use(realtimeUrl, telemetryServer.realtimeServer.router);
+                console.log(def.type + ' realtime available at ws://localhost:' + port + realtimeUrl);
             }
 
             if (def.provides.history && typeof telemetryServer.historyServer !== "undefined") {
-                this.server.use('/' + def.type + '/history', telemetryServer.historyServer);
-                console.log(def.id.toUpperCase() + ' history available at http://localhost:' + port + '/' + def.id + '/history');
+                let historyUrl = '/' + def.type + '/history';
+
+                this.server.use(historyUrl, telemetryServer.historyServer.router);
+                console.log(def.type + ' history available at http://localhost:' + port + historyUrl);
+            }
+
+            if (def.provides.metadata && typeof telemetryServer.metadataServer !== "undefined") {
+                let metadataUrl = '/' + def.type + '/metadata';
+
+                this.server.use(metadataUrl, telemetryServer.metadataServer.router);
+                console.log(def.type + ' metadata available at http://localhost:' + port + metadataUrl);
             }
 
             telemetryServers.push(telemetryServer);

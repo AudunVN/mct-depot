@@ -2,23 +2,22 @@
 
 const express = require('express');
 
-class MetadataServer
+class ConfigServer
 {
-    constructor(def, metadata)
+    constructor(config)
     {
         this.router = express.Router();
         this.router.use(express.json());
-        
-        this.def = def;
-        this.metadata = metadata;
+
+        this.config = config;
     }
 
     start()
     {
-        let metadata = this.metadata;
+        let config = this.config;
         
         this.router.get('/', function (request, response) {
-            response.status(200).send(metadata);
+            response.status(200).send(config);
         });
     }
 
@@ -30,4 +29,4 @@ class MetadataServer
     }
 }
 
-module.exports = MetadataServer;
+module.exports = ConfigServer;

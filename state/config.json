@@ -9,7 +9,8 @@
             "filePath": "samples/fc_test_archive_v.json",
             "provides": {
                 "realtime": true,
-                "history": true
+                "history": true,
+                "metadata": true
             },
             "mctDef": {
                 "documentation": "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",

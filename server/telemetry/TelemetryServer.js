@@ -2,6 +2,7 @@
 
 const RealtimeServer = require('../telemetry/RealtimeServer');
 const HistoryServer = require('../telemetry/HistoryServer');
+const MetadataServer = require('../telemetry/MetadataServer');
 
 class TelemetryServer
 {
@@ -15,6 +16,7 @@ class TelemetryServer
 
         this.realtimeServer = new RealtimeServer(this.def, this.db, this.config);
         this.historyServer = new HistoryServer(this.def, this.db, this.config);
+        this.metadataServer = new MetadataServer(this.def, this.db, this.config);
     }
 
     start()
@@ -23,6 +25,7 @@ class TelemetryServer
 
         this.realtimeServer.start();
         this.historyServer.start();
+        this.metadataServer.start();
     }
 
     stop()
@@ -31,6 +34,7 @@ class TelemetryServer
 
         this.realtimeServer.stop();
         this.historyServer.stop();
+        this.metadataServer.stop();
     }
 
     destroy()
@@ -43,6 +47,7 @@ class TelemetryServer
 
         this.realtimeServer = null;
         this.historyServer = null;
+        this.metadataServer = null;
     }
 }
 
