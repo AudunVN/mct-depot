@@ -4,9 +4,9 @@ const TelemetryDefinition = require('./TelemetryDefinition.js');
 
 class JsonTelemetryDefinition extends TelemetryDefinition
 {
-    constructor(type, structPath)
+    constructor(def)
     {
-        super(type);
+        super(def);
     }
 
     parse(telemetryString) {

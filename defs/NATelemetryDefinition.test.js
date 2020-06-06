@@ -10,6 +10,13 @@ let fcGeneralTelemetryObject = JSON.stringify({
     "packed_data": fcGeneralSampleString
 });
 
+const def = {
+    "type": "fc",
+    "name": "Flight Computer",
+    "parser": "NA",
+    "structPath": "defs/structs/fc_v0.0.3_GeneralT_file.txt"
+}
+
 const fcTelemetrySample = JSON.stringify({"fca_id":5744,"fca_init_ts":"2020-02-05T10:11:25.105499","fca_complete_ts":"2020-02-14T06:37:57.438591","fca_session_id":1,"fca_download":true,"fca_file_id":34,"fca_gs_id":1,"fca_entry_nr":2965,"fca_entry_data":"\\x28bc425ea95d0900160000000000fa003f01019d4fa8000000019d4fa8000000019d4fa8000000000000000080f73d00404e3e0000000000e8003e0000c07f0000c07f0000c07f0000c07f0000c07f0000c07f00000000000000c07f0000c07f0000c07f00000000000000000000c07f"});
 
 /*
@@ -29,21 +36,21 @@ test('unpacked data from EPS telemetry string is valid', () => {
 */
 
 test('can unpack FC telemetry string', () => {
-    let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
+    let definition = new NATelemetryDefinition(def);
     let result = definition.canUnpack(fcGeneralSampleString);
 
     expect(result).toEqual(true);
 });
 
 test('unpacked data from FC telemetry string is valid', () => {
-    let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
+    let definition = new NATelemetryDefinition(def);
     let result = definition.unpack(fcGeneralSampleString);
 
     expect(result.timestamp).toEqual(1581431848);
 });
 
 test('packed data is valid', () => {
-    let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
+    let definition = new NATelemetryDefinition(def);
     let input = definition.unpack(fcGeneralSampleString);
     let result = definition.unpack(definition.pack(input));
 
@@ -51,9 +58,40 @@ test('packed data is valid', () => {
 });
 
 test('can get metadata', () => {
-    let definition = new NATelemetryDefinition("fc", "defs/structs/fc_v0.0.3_GeneralT_file.txt");
-    console.log(definition.getMctMetadata());
-    console.log(definition.getMctMetadata().telemetry.values)
+    let definition = new NATelemetryDefinition(def);
+    let metadata = definition.getMctMetadata();
 
-    expect(result.timestamp).toEqual(1581431848);
+    expect(typeof metadata).not.toBe("undefined");
+});
+
+test('metadata telemetry.values has more than 0 entries', () => {
+    let definition = new NATelemetryDefinition(def);
+    let metadata = definition.getMctMetadata();
+
+    expect(metadata.telemetry.values.length).toBeGreaterThan(0);
+});
+
+test('all metadata telemetry.values have key and hint fields', () => {
+    let definition = new NATelemetryDefinition(def);
+    let metadata = definition.getMctMetadata();
+
+    let allValuesHaveKeyField = true;
+    let allValuesHaveHintsField = true;
+
+    for (let i = 0; i < metadata.telemetry.values.length; i++) {
+        let value = metadata.telemetry.values[i];
+
+        if (typeof value.key === "undefined") {
+            allValuesHaveKeyField = false;
+            console.log("Value missing key field: " + value);
+        }
+
+        if (typeof value.hints === "undefined") {
+            allValuesHaveHintsField = false;
+            console.log("Value missing hint field: " + value);
+        }
+    }
+
+    expect(allValuesHaveKeyField).toBe(true);
+    expect(allValuesHaveHintsField).toBe(true);
 });

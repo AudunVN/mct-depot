@@ -1,0 +1,40 @@
+{
+    "defs": [
+        {
+            "type": "fc",
+            "name": "Flight Computer",
+            "parser": "NA",
+            "structPath": "defs/structs/fc_v0.0.3_GeneralT_file.txt",
+            "fetcher": "JSON",
+            "filePath": "samples/fc_test_archive_v.json",
+            "provides": {
+                "realtime": true,
+                "history": true
+            },
+            "mctDef": {
+                "documentation": "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                "identifier": {
+                    "namespace": "hypso.fc.taxonomy",
+                    "key": "fc"
+                },
+                "name": "Flight Computer",
+                "type": "hypso.fc.telemetry",
+                "telemetry": {
+                    "values": [
+                        {
+                            "key": "value",
+                            "name": "Value",
+                            "units": "kilograms",
+                            "format": "float",
+                            "min": 0,
+                            "max": 100,
+                            "hints": {
+                                "range": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

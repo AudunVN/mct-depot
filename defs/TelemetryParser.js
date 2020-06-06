@@ -11,14 +11,14 @@ class TelemetryParser
         this.definitions = [];
 
         definitions.forEach((def) => {
-            let definition = new TelemetryDefinition(def.type);
+            let definition = new TelemetryDefinition(def);
 
             if (def.parser === "NA") {
-                definition = new NATelemetryDefinition(def.type, def.structPath);
+                definition = new NATelemetryDefinition(def);
             }
 
             if (def.parser === "JSON") {
-                definition = new JsonTelemetryDefinition(def.type);
+                definition = new JsonTelemetryDefinition(def);
             }
 
             this.definitions.push(definition);

@@ -6,15 +6,17 @@ const ezstruct = require("ezstruct");
 
 class NATelemetryDefinition extends TelemetryDefinition
 {
-    constructor(type, structPath)
+    constructor(def)
     {
-        super(type);
+        super(def);
+
+        this.def = def;
 
         try {
             let structNameRegex = /}[^;]*;\s*$/g;
             let defaultValueRegex = / *= *[^;]*/g;
 
-            let structString = fs.readFileSync(structPath, "utf8");
+            let structString = fs.readFileSync(def.structPath, "utf8");
 
             structString = structString.replace(structNameRegex, "} telemetry;");
             structString = structString.replace(defaultValueRegex, "");
@@ -27,16 +29,10 @@ class NATelemetryDefinition extends TelemetryDefinition
         }
     }
 
-    getMctData(telemetryPoint) {
-        /* gets data object for OpenMCT */
-
-    }
-
     getMctMetadata() {
         /* gets metadata object for OpenMCT */
         let values = [];
 
-        console.log(this.context.telemetry.fields);
         for (const field of Object.values(this.context.telemetry.fields)) {
             let value = {
                 "key": field.name,
@@ -49,16 +45,17 @@ class NATelemetryDefinition extends TelemetryDefinition
                     "range": 1
                 }
             };
+            
             values.push(value);
         }
 
         let metadata = {
             "identifier": {
-                "namespace": "example.taxonomy",
-                "key": "prop.fuel"
+                "namespace": "hypso."+ this.def.type + ".taxonomy",
+                "key": this.def.type
             },
-            "name": "Fuel",
-            "type": "example.telemetry",
+            "name": this.def.name,
+            "type": "hypso."+ this.def.type + ".telemetry",
             "telemetry": {
                 "values": values
             }

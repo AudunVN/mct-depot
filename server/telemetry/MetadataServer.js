@@ -4,28 +4,27 @@ const express = require('express');
 
 class MetadataServer
 {
-    constructor(def)
+    constructor(def, metadata)
     {
         this.router = express.Router();
         this.router.use(express.json());
         
         this.def = def;
+        this.metadata = metadata;
     }
 
     start()
     {
-        let def = this.def;
-
-        this.router.post('/', function (request, response) {
-            let metadata = db.reader.read(def.type, request.body.startTime);
+        let metadata = this.metadata;
+        this.router.get('/', function (request, response) {
             response.status(200).send(metadata);
         });
     }
 
     stop()
     {
-        this.router.post('/', function (request, response) {
-            response.status(500).json({error: "Server closed"}).send();
+        this.router.get('/', function (request, response) {
+            response.status(500).send({error: "Server closed"});
         });
     }
 }

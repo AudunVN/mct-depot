@@ -2,12 +2,13 @@
 
 class TelemetryDefinition
 {
-    constructor(type)
+    constructor(def)
     {
-        this.type = type;
+        this.def = def;
+        this.type = def.type;
     }
 
-    getMetadata() {
+    getMctMetadata() {
         return "Metadata not found for " + this.type;
     }
 
