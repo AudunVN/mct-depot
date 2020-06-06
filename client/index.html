@@ -3,7 +3,7 @@
 <head>
     <title>Hypso OpenMCT</title>
     <script src="openmct/openmct.js"></script>
-    <script src="plugins/MctPlugin.js"></script>
+    <script src="plugins/ServerPlugin.js"></script>
 </head>
 <body>
     <script>
@@ -14,7 +14,7 @@
             .catch(error => callback(error, null));
         }
 
-        function startOpenMct() {
+        function startOpenMct(config) {
             openmct.setAssetPath('openmct');
             openmct.install(openmct.plugins.LocalStorage());
             openmct.install(openmct.plugins.MyItems());
@@ -23,9 +23,9 @@
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
-            let mctPlugin = new MctPlugin(config);
+            let serverPlugin = new ServerPlugin(config, openmct);
 
-            openmct.install(mctPlugin);
+            openmct.install(serverPlugin.installer);
 
             openmct.start();
         }

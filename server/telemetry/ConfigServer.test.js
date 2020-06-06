@@ -15,8 +15,6 @@ config.debug = true;
 
 const configServer = new ConfigServer(config);
 
-configServer.start();
-
 const testUrl = '/testconfig';
 
 serverInstance.server.use(testUrl, configServer.router);

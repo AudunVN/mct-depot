@@ -20,8 +20,6 @@ const serverInstance = new Server(config);
 const definition = new NATelemetryDefinition(def);
 const metadataServer = new MetadataServer(def, definition.getMctMetadata());
 
-metadataServer.start();
-
 const testUrl = '/' + def.type + '/metadata';
 
 serverInstance.server.use(testUrl, metadataServer.router);

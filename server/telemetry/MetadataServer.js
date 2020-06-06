@@ -11,6 +11,8 @@ class MetadataServer
         
         this.def = def;
         this.metadata = metadata;
+
+        this.start();
     }
 
     start()

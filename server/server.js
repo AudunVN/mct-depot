@@ -37,7 +37,7 @@ class Server
         this.server.use(configUrl, configServer.router);
         console.log('server config available at http://localhost:' + port + configUrl);
 
-        config.defs.forEach(function (def) {
+        config.defs.forEach((def) => {
             let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
 
             telemetryFetchers.push(telemetryFetcher);

@@ -33,8 +33,6 @@ let db = new DbManager(config);
 const serverInstance = new Server(config);
 const historyServer = new HistoryServer(def, db, config);
 
-historyServer.start();
-
 const testUrl = '/' + def.type + '/history';
 
 serverInstance.server.use(testUrl, historyServer.router);

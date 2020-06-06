@@ -1,7 +1,7 @@
 const Server = require('./Server');
 const Config = require('../shared/Config');
 
-const configInstance = new Config();
+const configInstance = new Config("state/config.json");
 const serverInstance = new Server(configInstance);
 
 serverInstance.server.listen(configInstance.port, function () {

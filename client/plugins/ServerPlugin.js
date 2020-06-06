@@ -1,21 +1,37 @@
 "use strict";
 
-class MctPlugin {
-    constructor(config) {
+class ServerPlugin {
+    constructor(config, openmct) {
         this.config = config;
+        openmct.serverplugin = this;
     }
 
-    install(openmct) {
-        let config = this.config;
+    installer(openmct) {
+        let config = openmct.serverplugin.config;
 
-         // add root object (accessible from left side panel)
+        /*config.roots.forEach((root) => {
+
+        });*/
+
         openmct.objects.addRoot({
-            namespace: 'hypso',
-            key: 'spacecraft'
+            namespace: 'omctserver',
+            key: 'omctserver-root'
+        });
+
+        openmct.objects.addProvider('omctserver', {
+            get: function (identifier) {
+                if (identifier.key === "omctserver-root") {
+                    return Promise.resolve({
+                        identifier: identifier,
+                        name: 'OpenMCT Server',
+                        type: 'folder'
+                    });
+                }
+            }
         });
 
         config.defs.forEach((def) => {
-            openmct.telemetry.addProvider(this.getProvider(def));
+            openmct.telemetry.addProvider("omctserver", openmct.serverplugin.getProvider(def));
         });
 
         console.log("OpenMCT client plugin installed");
@@ -77,7 +93,7 @@ class MctPlugin {
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = MctPlugin;
+    module.exports = ServerPlugin;
 } else {
-    window.MctPlugin = MctPlugin;
+    window.ServerPlugin = ServerPlugin;
 }

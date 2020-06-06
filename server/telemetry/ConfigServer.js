@@ -10,6 +10,8 @@ class ConfigServer
         this.router.use(express.json());
 
         this.config = config;
+        
+        this.start();
     }
 
     start()

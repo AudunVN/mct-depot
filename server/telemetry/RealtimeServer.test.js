@@ -32,9 +32,6 @@ let db = new DbManager(config);
 
 const serverInstance = new Server(config);
 const realtimeServer = new RealtimeServer(def, db, config);
-
-realtimeServer.start();
-
 const testUrl = '/' + def.type + '/realtime';
 
 serverInstance.server.use(testUrl, realtimeServer.router);

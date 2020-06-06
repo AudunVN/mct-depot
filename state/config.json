@@ -1,6 +1,14 @@
 {
+    "roots": [
+        {
+            "namespace": "omctserver",
+            "key": "hypso-test-spacecraft",
+            "name": "Hypso Test Spacecraft"
+        }
+    ],
     "defs": [
         {
+            "root": "hypso-test-spacecraft",
             "type": "fc",
             "name": "Flight Computer",
             "parser": "NA",
