@@ -39,16 +39,18 @@ class ServerPlugin {
 
             console.log(md);
 
-            openmct.types.addType('omctserver.' + def.type, {
+            openmct.types.addType('omctserver.' + md.identifier.key, {
                 name: def.name,
                 description: 'Telemetry point',
                 cssClass: 'icon-telemetry'
             });
 
-            console.log(config.defs.map(function (m) {
+            console.log(openmct.types);
+
+            console.log(md.telemetry.values.map(function (m) {
                 return {
                     namespace: 'omctserver',
-                    key: m.type
+                    key: m.key
                 };
             }));
     
@@ -58,22 +60,32 @@ class ServerPlugin {
                            domainObject.type === 'folder';
                 },
                 load: function (domainObject) {
-                    return {
-                        then() {
-                            return md.telemetry.values.map(function (m) {
-                                return {
-                                    namespace: 'omctserver',
-                                    key: m.key
-                                };
-                            });
-                        }
-                    }
+                    return Promise.resolve(
+                        md.telemetry.values.map(function (m) {
+                            return {
+                                namespace: 'omctserver.' + md.identifier.key,
+                                key: m.key
+                            };
+                        })
+                    );
                 }
             };
             
             openmct.composition.addProvider(compositionProvider);
+            
+            openmct.objects.addProvider('omctserver.' + md.identifier.key, {
+                get: function (identifier) {
+                    if (identifier.namespace === 'omctserver.' + md.identifier.key) {
+                        return Promise.resolve({
+                            identifier: identifier,
+                            name: identifier.key,
+                            type: 'omctserver.' + md.identifier.key
+                        });
+                    }
+                }
+            });
 
-            openmct.telemetry.addProvider("omctserver", openmct.serverplugin.getProvider(def));
+            openmct.telemetry.addProvider(openmct.serverplugin.getProvider(def));
         });
 
         console.log("OpenMCT client plugin installed");
@@ -81,13 +93,18 @@ class ServerPlugin {
 
     getProvider(def) {
         let provider = {
-            supportsSubscribe(domainObject, callback, options) { return false; },
+            supportsSubscribe(domainObject, callback, options) {
+                console.log("Supports subscribe: " + domainObject);
+                return false;
+            },
             /* 
                 optional. Must be implemented to provide realtime telemetry. Should return true if
                 the provider supports subscriptions for the given domain object (and request options). 
             */
 
-            subscribe(domainObject, callback, options) {},
+            subscribe(domainObject, callback, options) {
+                console.log("Subscribe: " + domainObject);
+            },
             /* 
                 required if supportsSubscribe is implemented. Establish a subscription for realtime data for 
                 the given domain object. Should invoke callback with a single telemetry datum every time data 
@@ -95,36 +112,76 @@ class ServerPlugin {
                 object, so it should always return a new unsubscribe function.
             */
 
-            supportsRequest(domainObject, options) { return false; },
+            supportsRequest(domainObject, options) { 
+                console.log("Supports request: " + domainObject);
+                return false;
+            },
             /*
                 optional. Must be implemented to provide historical telemetry. Should return true if
                 the provider supports historical requests for the given domain object.
             */
 
-            request(domainObject, options) {},
+            request(domainObject, options) {
+                console.log("Request: " + domainObject);
+            },
             /*
                 required if supportsRequest is implemented. Must return a promise for an array of
                 telemetry datums that fulfills the request. The options argument will include a
                 start, end, and domain attribute representing the query bounds.
             */
 
-            supportsMetadata(domainObject) { return false; },
+            supportsMetadata(domainObject) { 
+                console.log("Supports metadata: " + domainObject);
+                let identifier = domainObject.identifier;
+                console.log(identifier.namespace + " - " + identifier.key);
+
+                let metadata = openmct.serverplugin.metadata;
+                console.log(metadata);
+
+                let defMd = metadata.find(m => {
+                    return m.identifier.namespace === identifier.namespace;
+                });
+
+                console.log(defMd);
+
+                return (typeof defMd !== "undefined");
+            },
             /*
                 optional. Implement and return true for objects that you want to provide dynamic metadata for.
             */
 
-            getMetadata(domainObject) {},
+            getMetadata(domainObject) {
+                console.log("Get metadata: " + domainObject);
+                let identifier = domainObject.identifier;
+                console.log(identifier.namespace + " - " + identifier.key);
+
+                let metadata = openmct.serverplugin.metadata;
+                console.log(metadata);
+
+                let defMd = metadata.find(m => {
+                    return m.identifier.namespace === identifier.namespace;
+                });
+
+                console.log(defMd.telemetry);
+
+                return defMd.telemetry;
+            },
             /*
                 required if supportsMetadata is implemented. Must return a valid telemetry
                 metadata definition that includes at least one valueMetadata definition.
             */
 
-            supportsLimits(domainObject) { return false; },
+            supportsLimits(domainObject) {
+                console.log("Supports limits: " + domainObject);
+                return false;
+            },
             /*
                 optional. Implement and return true for domain objects that you want to provide a limit evaluator for.
             */
 
-            getLimitEvaluator(domainObject) {}
+            getLimitEvaluator(domainObject) {
+                console.log("Get limits: " + domainObject);
+            }
             /*
                 required if supportsLimits is implemented. Must return a valid LimitEvaluator for a given domain object.
             */

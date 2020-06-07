@@ -51,11 +51,11 @@ class NATelemetryDefinition extends TelemetryDefinition
 
         let metadata = {
             "identifier": {
-                "namespace": "hypso."+ this.def.type + ".taxonomy",
+                "namespace": "omctserver."+ this.def.type,
                 "key": this.def.type
             },
             "name": this.def.name,
-            "type": "hypso."+ this.def.type + ".telemetry",
+            "type": "omctserver."+ this.def.type,
             "telemetry": {
                 "values": values
             }

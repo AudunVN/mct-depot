@@ -23,20 +23,18 @@
             "mctDef": {
                 "documentation": "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
                 "identifier": {
-                    "namespace": "hypso.fc.taxonomy",
+                    "namespace": "omctserver.fc",
                     "key": "fc"
                 },
                 "name": "Flight Computer",
-                "type": "hypso.fc.telemetry",
+                "type": "omctserver.fc",
                 "telemetry": {
                     "values": [
                         {
-                            "key": "value",
-                            "name": "Value",
+                            "key": "bootCount",
+                            "name": "Boot Count",
                             "units": "kilograms",
-                            "format": "float",
-                            "min": 0,
-                            "max": 100,
+                            "format": "number",
                             "hints": {
                                 "range": 1
                             }
