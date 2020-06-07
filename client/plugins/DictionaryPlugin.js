@@ -1,6 +1,6 @@
 "use strict";
 
-function HistoryClient(config) {
+function DictionaryPlugin(config) {
     return function install (openmct) {
         var provider = {
             supportsRequest: function (domainObject) {
@@ -21,7 +21,7 @@ function HistoryClient(config) {
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = HistoryClient;
+    module.exports = DictionaryPlugin;
 } else {
-    window.HistoryClient = HistoryClient;
+    window.HistoryClient = DictionaryPlugin;
 }

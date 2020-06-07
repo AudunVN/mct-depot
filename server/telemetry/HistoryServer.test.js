@@ -39,7 +39,7 @@ serverInstance.server.use(testUrl, historyServer.router);
 
 const request = supertest(serverInstance.server);
 
-test('history server responds to HTTP POST for fc data', async () => {
+test('history server responds to HTTP GET for fc data', async () => {
     const response = await request.get(testUrl + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
 
     expect(response.statusCode).toBe(200);
@@ -61,6 +61,13 @@ test('can get telemetry point from db', async () => {
     expect(response.body).toEqual([telemetryPoint]);
 });
 
+test('can get telemetry point value from db', async () => {
+    const response = await request.get(testUrl + '/yes' + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body[0].value).toEqual(telemetryPoint.data.yes);
+});
+
 test('can get multiple telemetry points from db', async () => {
     db.writer.write(telemetryPoint);
 
@@ -68,4 +75,12 @@ test('can get multiple telemetry points from db', async () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([telemetryPoint,telemetryPoint]);
+});
+
+test('can get multiple telemetry point values from db', async () => {
+    const response = await request.get(testUrl + '/yes' + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body[0].value).toEqual(telemetryPoint.data.yes);
+    expect(response.body[1].value).toEqual(telemetryPoint.data.yes);
 });
