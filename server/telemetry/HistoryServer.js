@@ -21,15 +21,15 @@ class HistoryServer
         let db = this.db;
         let def = this.def;
 
-        this.router.post('/', function (request, response) {
-            let data = db.reader.read(def.type, request.body.startTime, request.body.endTime);
+        this.router.get('/', function (request, response) {
+            let data = db.reader.read(def.type, request.query.startTime, request.query.endTime);
             response.status(200).send(data);
         });
     }
 
     stop()
     {
-        this.router.post('/', function (request, response) {
+        this.router.get('/', function (request, response) {
             response.status(500).json({error: "Server closed"}).send();
         });
     }

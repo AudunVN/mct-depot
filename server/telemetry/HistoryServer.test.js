@@ -15,7 +15,7 @@ const def = {
     type: "test"
 };
 
-const body = {
+const parameters = {
     startTime: 0,
     endTime: 9999999999999999
 };
@@ -40,13 +40,13 @@ serverInstance.server.use(testUrl, historyServer.router);
 const request = supertest(serverInstance.server);
 
 test('history server responds to HTTP POST for fc data', async () => {
-    const response = await request.post(testUrl).send(body);
+    const response = await request.get(testUrl + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
 
     expect(response.statusCode).toBe(200);
 });
 
 test('empty db returns empty result', async () => {
-    const response = await request.post(testUrl).send(body);
+    const response = await request.get(testUrl + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([]);
@@ -55,7 +55,7 @@ test('empty db returns empty result', async () => {
 test('can get telemetry point from db', async () => {
     db.writer.write(telemetryPoint);
 
-    const response = await request.post(testUrl).send(body);
+    const response = await request.get(testUrl + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([telemetryPoint]);
@@ -64,7 +64,7 @@ test('can get telemetry point from db', async () => {
 test('can get multiple telemetry points from db', async () => {
     db.writer.write(telemetryPoint);
 
-    const response = await request.post(testUrl).send(body);
+    const response = await request.get(testUrl + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);
 
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([telemetryPoint,telemetryPoint]);

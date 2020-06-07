@@ -1,15 +1,14 @@
 "use strict";
 
 class ServerPlugin {
-    constructor(config, metadata, openmct) {
+    constructor(config, metadata) {
         this.config = config;
         this.metadata = metadata;
-        openmct.serverplugin = this;
     }
 
     installer(openmct) {
-        let config = openmct.serverplugin.config;
-        let metadata = openmct.serverplugin.metadata;
+        let config = openmct.serverPlugin.config;
+        let metadata = openmct.serverPlugin.metadata;
 
         /*config.roots.forEach((root) => {
 
@@ -85,7 +84,7 @@ class ServerPlugin {
                 }
             });
 
-            openmct.telemetry.addProvider(openmct.serverplugin.getProvider(def));
+            openmct.telemetry.addProvider(openmct.serverPlugin.getProvider(def));
         });
 
         console.log("OpenMCT client plugin installed");
@@ -135,7 +134,7 @@ class ServerPlugin {
                 let identifier = domainObject.identifier;
                 console.log(identifier.namespace + " - " + identifier.key);
 
-                let metadata = openmct.serverplugin.metadata;
+                let metadata = openmct.serverPlugin.metadata;
                 console.log(metadata);
 
                 let defMd = metadata.find(m => {
@@ -155,7 +154,7 @@ class ServerPlugin {
                 let identifier = domainObject.identifier;
                 console.log(identifier.namespace + " - " + identifier.key);
 
-                let metadata = openmct.serverplugin.metadata;
+                let metadata = openmct.serverPlugin.metadata;
                 console.log(metadata);
 
                 let defMd = metadata.find(m => {

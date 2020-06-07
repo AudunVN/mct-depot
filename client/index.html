@@ -23,9 +23,9 @@
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
-            let serverPlugin = new ServerPlugin(config, config.metadata, openmct);
+            openmct.serverPlugin = new ServerPlugin(config, config.metadata);
 
-            openmct.install(serverPlugin.installer);
+            openmct.install(openmct.serverPlugin.installer);
 
             openmct.start();
         }
