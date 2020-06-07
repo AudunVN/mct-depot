@@ -1,13 +1,15 @@
 "use strict";
 
 class ServerPlugin {
-    constructor(config, openmct) {
+    constructor(config, metadata, openmct) {
         this.config = config;
+        this.metadata = metadata;
         openmct.serverplugin = this;
     }
 
     installer(openmct) {
         let config = openmct.serverplugin.config;
+        let metadata = openmct.serverplugin.metadata;
 
         /*config.roots.forEach((root) => {
 
@@ -31,6 +33,46 @@ class ServerPlugin {
         });
 
         config.defs.forEach((def) => {
+            let md = metadata.find(m => {
+                return m.identifier.key === def.type;
+            });
+
+            console.log(md);
+
+            openmct.types.addType('omctserver.' + def.type, {
+                name: def.name,
+                description: 'Telemetry point',
+                cssClass: 'icon-telemetry'
+            });
+
+            console.log(config.defs.map(function (m) {
+                return {
+                    namespace: 'omctserver',
+                    key: m.type
+                };
+            }));
+    
+            let compositionProvider = {
+                appliesTo: function (domainObject) {
+                    return domainObject.identifier.namespace === 'omctserver' &&
+                           domainObject.type === 'folder';
+                },
+                load: function (domainObject) {
+                    return {
+                        then() {
+                            return md.telemetry.values.map(function (m) {
+                                return {
+                                    namespace: 'omctserver',
+                                    key: m.key
+                                };
+                            });
+                        }
+                    }
+                }
+            };
+            
+            openmct.composition.addProvider(compositionProvider);
+
             openmct.telemetry.addProvider("omctserver", openmct.serverplugin.getProvider(def));
         });
 

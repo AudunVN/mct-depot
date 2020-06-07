@@ -32,7 +32,7 @@ class Server
         let port = config.port || 8471;
         
         let configUrl = '/config';
-        let configServer = new ConfigServer(config);
+        let configServer = new ConfigServer(config, parser.getAllMctMetadata());
         
         this.server.use(configUrl, configServer.router);
         console.log('server config available at http://localhost:' + port + configUrl);

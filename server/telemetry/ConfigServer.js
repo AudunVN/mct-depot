@@ -4,12 +4,13 @@ const express = require('express');
 
 class ConfigServer
 {
-    constructor(config)
+    constructor(config, metadata)
     {
         this.router = express.Router();
         this.router.use(express.json());
 
         this.config = config;
+        this.config.metadata = metadata;
         
         this.start();
     }
