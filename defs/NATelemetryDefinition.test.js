@@ -68,11 +68,11 @@ test('can get metadata', () => {
     expect(typeof metadata).not.toBe("undefined");
 });
 
-test('metadata telemetry.values has more than 0 entries', () => {
+test('metadata has more than 0 entries', () => {
     let definition = new NATelemetryDefinition(def);
     let metadata = definition.getMctMetadata();
 
-    expect(metadata.telemetry.values.length).toBeGreaterThan(0);
+    expect(metadata.length).toBeGreaterThan(0);
 });
 
 test('all metadata telemetry.values have key and hint fields', () => {
@@ -82,17 +82,21 @@ test('all metadata telemetry.values have key and hint fields', () => {
     let allValuesHaveKeyField = true;
     let allValuesHaveHintsField = true;
 
-    for (let i = 0; i < metadata.telemetry.values.length; i++) {
-        let value = metadata.telemetry.values[i];
+    for (let i = 0; i < metadata.length; i++) {
+        let point = metadata[i];
 
-        if (typeof value.key === "undefined") {
-            allValuesHaveKeyField = false;
-            console.log("Value missing key field: " + value);
-        }
+        for (let i = 0; i < point.telemetry.values.length; i++) {
+            let value = point.telemetry.values[i];
 
-        if (typeof value.hints === "undefined") {
-            allValuesHaveHintsField = false;
-            console.log("Value missing hint field: " + value);
+            if (typeof value.key === "undefined") {
+                allValuesHaveKeyField = false;
+                console.log("Value missing key field: " + value);
+            }
+
+            if (typeof value.hints === "undefined") {
+                allValuesHaveHintsField = false;
+                console.log("Value missing hint field: " + value);
+            }
         }
     }
 

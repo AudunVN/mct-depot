@@ -33,7 +33,7 @@ class HistoryServer
             
             for (let i = 0; i < points.length; i++) {
                 let point = points[i];
-                
+
                 let value = {
                     value: point.data[request.params.valueName],
                     timestamp: point.timestamp
@@ -49,6 +49,10 @@ class HistoryServer
     stop()
     {
         this.router.get('/', function (request, response) {
+            response.status(500).json({error: "Server closed"}).send();
+        });
+
+        this.router.get('/:valueName', function (request, response) {
             response.status(500).json({error: "Server closed"}).send();
         });
     }

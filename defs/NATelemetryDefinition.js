@@ -30,14 +30,22 @@ class NATelemetryDefinition extends TelemetryDefinition
     }
 
     getMctMetadata() {
-        /* gets metadata object for OpenMCT */
-        let values = [];
+        /* gets metadata objects for OpenMCT */
+        let metadata = [];
 
         for (const field of Object.values(this.context.telemetry.fields)) {
+            let point = {
+                "key": this.def.type + "." + field.name,
+                "name": field.name,
+                "telemetry": {
+                    "values": []
+                }
+            };
+
             let value = {
-                "key": field.name,
-                /*"name": "Value",
-                "units": "kilograms",
+                "key": "value",
+                "name": "Value",
+                /*"units": "kilograms",
                 "format": "float",
                 "min": 0,
                 "max": 100,*/
@@ -45,33 +53,21 @@ class NATelemetryDefinition extends TelemetryDefinition
                     "range": 1
                 }
             };
+            point.telemetry.values.push(value);
+
+            let timeValue = {
+                "key": "utc",
+                "source": "timestamp",
+                "name": "Timestamp",
+                "format": "utc",
+                "hints": {
+                    "domain": 1
+                }
+            };
+            point.telemetry.values.push(timeValue);
             
-            values.push(value);
+            metadata.push(point);
         }
-
-        let metadata = {
-            "identifier": {
-                "namespace": "omctserver."+ this.def.type,
-                "key": this.def.type
-            },
-            "name": this.def.name,
-            "type": "omctserver."+ this.def.type,
-            "telemetry": {
-                "values": values
-            }
-        };
-
-        let timeValue = {
-            "key": "utc",
-            "source": "timestamp",
-            "name": "Timestamp",
-            "format": "utc",
-            "hints": {
-                "domain": 1
-            }
-        };
-
-        metadata.telemetry.values.push(timeValue);
 
         return metadata;
     }
