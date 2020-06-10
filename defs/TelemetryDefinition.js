@@ -6,6 +6,7 @@ class TelemetryDefinition
     {
         this.def = def;
         this.type = def.type;
+        this.name = def.name;
     }
 
     getMctMetadata() {

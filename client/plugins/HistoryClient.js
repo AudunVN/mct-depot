@@ -9,9 +9,8 @@ function HistoryClient(config) {
             request: function (domainObject, options) {
                 var url = domainObject.identifier.key + '/history/?startTime=' + options.start + '&endTime=' + options.end;
     
-                return http.get(url)
-                .then(function (response) {
-                    return response.data;
+                return fetch(url).then(function (response) {
+                    return response.json();
                 });
             }
         };

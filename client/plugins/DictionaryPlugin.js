@@ -11,12 +11,12 @@ let objectProvider = {
             if (identifier.key === 'spacecraft') {
                 return {
                     identifier: identifier,
-                    name: dictionary.name,
+                    name: identifier.key,
                     type: 'folder',
                     location: 'ROOT'
                 };
             } else {
-                let measurement = config.measurements.filter(function (m) {
+                let measurement = config.metadata.filter(function (m) {
                     return m.key === identifier.key;
                 })[0];
 
@@ -40,7 +40,7 @@ let compositionProvider = {
                domainObject.type === 'folder';
     },
     load: function (domainObject) {
-        return Promise.resolve(function (dictionary) {
+        return getConfig().then(function (config) {
             return dictionary.measurements.map(function (m) {
                 return {
                     namespace: 'omctserver.taxonomy',
@@ -58,9 +58,6 @@ class DictionaryPlugin {
     }
 
     installer(openmct) {
-        let config = this.config || openmct.serverPlugin.config;
-        let metadata = this.metadata || openmct.serverPlugin.metadata;
-
         openmct.objects.addRoot({
             namespace: 'omctserver.taxonomy',
             key: 'spacecraft'

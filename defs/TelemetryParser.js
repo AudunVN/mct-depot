@@ -59,11 +59,17 @@ class TelemetryParser
         return result;
     }
 
-    getAllMctMetadata(string) {
+    getAllMctMetadata() {
         let results = [];
         
         this.definitions.forEach(function (def) {
-            results.push(def.getMctMetadata());
+            let metadata = {
+                name: def.name,
+                key: def.type,
+                measurements: def.getMctMetadata()
+            };
+
+            results.push(metadata);
         });
 
         return results;
