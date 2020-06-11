@@ -4,6 +4,7 @@
     <title>OpenMCT</title>
     <script src="openmct/openmct.js"></script>
     <script src="plugins/ServerPlugin.js"></script>
+    <script src="plugins/DictionaryPlugin.js"></script>
 </head>
 <body>
     <script>
@@ -24,8 +25,10 @@
             openmct.install(openmct.plugins.Espresso());
 
             openmct.serverPlugin = new ServerPlugin(config, config.metadata);
+            openmct.dictionaryPlugin = new DictionaryPlugin(config, config.metadata);
 
             openmct.install(openmct.serverPlugin.installer);
+            openmct.install(openmct.dictionaryPlugin.installer);
 
             openmct.start();
         }

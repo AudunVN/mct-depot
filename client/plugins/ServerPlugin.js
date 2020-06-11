@@ -7,8 +7,8 @@ class ServerPlugin {
     }
 
     installer(openmct) {
-        let config = this.config || openmct.serverPlugin.config;
-        let metadata = this.metadata || openmct.serverPlugin.metadata;
+        let config = openmct.serverPlugin.config;
+        let metadata = openmct.serverPlugin.metadata;
 
         console.log("Open MCT server plugin installed");
     }

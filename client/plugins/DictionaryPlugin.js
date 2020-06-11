@@ -16,19 +16,27 @@ let objectProvider = {
                     location: 'ROOT'
                 };
             } else {
-                let measurement = config.metadata.filter(function (m) {
+                console.log(identifier);
+
+                let measurement = config.metadata[0].measurements.filter(function (m) {
                     return m.key === identifier.key;
                 })[0];
 
-                return {
+                console.log(measurement);
+
+                let telemetryObject = {
                     identifier: identifier,
                     name: measurement.name,
                     type: 'omctserver.telemetry',
                     telemetry: {
-                        values: measurement.values
+                        values: measurement.telemetry.values
                     },
                     location: 'omctserver.taxonomy:spacecraft'
                 };
+
+                console.log(telemetryObject);
+
+                return telemetryObject;
             }
         });
     }
@@ -41,7 +49,7 @@ let compositionProvider = {
     },
     load: function (domainObject) {
         return getConfig().then(function (config) {
-            return dictionary.measurements.map(function (m) {
+            return config.metadata[0].measurements.map(function (m) {
                 return {
                     namespace: 'omctserver.taxonomy',
                     key: m.key
