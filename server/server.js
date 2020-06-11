@@ -36,9 +36,14 @@ class Server
         let configServer = new ConfigServer(config, parser.getAllMctMetadata());
         
         this.server.use(configUrl, configServer.router);
-        console.log('server config available at http://localhost:' + port + configUrl);
+        
+        if (!config.debug) {
+            console.log('server config available at http://localhost:' + port + configUrl);
+        }
 
         config.defs.forEach((def) => {
+            console.log("Starting fetcher for " + def.type);
+
             let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
 
             if (def.fetcher == "JSON") {
@@ -46,6 +51,8 @@ class Server
             }
 
             telemetryFetchers.push(telemetryFetcher);
+
+            console.log("Starting server(s) for " + def.type);
 
             let telemetryServer = new TelemetryServer(def, config, db, parser);
 

@@ -20,7 +20,7 @@ let db = new DbManager(config);
 let parser = new TelemetryParser([def]);
 
 test('no file input yields empty output', () => {
-    let fetcher = new JsonFileTelemetryFetcher(def);
+    let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
     let result = fetcher.fetch();
 
     expect(result).toEqual([]);
@@ -29,7 +29,7 @@ test('no file input yields empty output', () => {
 test('invalid (non-JSON) file input yields empty output', () => {
     def.filePath = "server/telemetry/JsonFileTelemetryFetcher.js";
     
-    let fetcher = new JsonFileTelemetryFetcher(def);
+    let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
     let result = fetcher.fetch();
 
     expect(result).toEqual([]);
@@ -38,7 +38,7 @@ test('invalid (non-JSON) file input yields empty output', () => {
 test('valid input file yields non-empty output', () => {
     def.filePath = "samples/fc_test_archive_v.json";
 
-    let fetcher = new JsonFileTelemetryFetcher(def);
+    let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
     let result = fetcher.fetch();
     
     expect(result).not.toEqual([]);
@@ -47,7 +47,7 @@ test('valid input file yields non-empty output', () => {
 
 test('starting fetcher returns data to callback', done => {
     def.filePath = "samples/fc_test_archive_v.json";
-    let fetcher = new JsonFileTelemetryFetcher(def);
+    let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
 
     function callback(data) {
         try {

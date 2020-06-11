@@ -28,6 +28,7 @@ class TelemetryFetcher
     }
 
     store(points) {
+        let writeCount = 0;
         if (this.parser.canParse(this.def.type)) {
             for (let i = 0; i < points.length; i++) {
                 let point = JSON.stringify(points[i]);
@@ -36,11 +37,13 @@ class TelemetryFetcher
 
                 if (this.db.reader.isPointNew(unpackedPoint)) {
                     this.db.writer.write(unpackedPoint);
+                    writeCount++;
                 }
             }
         } else {
             console.log("Cannot store point type " + this.def.type + ": No parser found");
         }
+        console.log("Stored " + writeCount + " new points in database out of " + points.length + " loaded points");
     }
 
     fetch() {

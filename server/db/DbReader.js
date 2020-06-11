@@ -33,6 +33,16 @@ class DbReader
     }
 
     isPointNew(point) {
+        /*
+            doesPointExist is easier to write correct code for, but
+            we usually want the inverted function when we call it;
+            this alias for it is easier to read than !doesPointExist().
+        */
+
+        return !this.doesPointExist(point);
+    }
+
+    doesPointExist(point) {
         const statement = this.db.prepare("\
             SELECT \
                 type, \
@@ -52,23 +62,16 @@ class DbReader
         for (let i = 0; i < existingPoints.length; i++) {
             let storedPoint = existingPoints[i];
 
-            if (JSON.stringify(point.metadata) != storedPoint.metadata) {
-                return true;
+            if (JSON.stringify(point.metadata) == storedPoint.metadata) {
+                if (JSON.stringify(point.data) == storedPoint.data) {
+                    if (point.original == storedPoint.original) {
+                        return true;
+                    }
+                }
             }
-
-            if (JSON.stringify(point.data) != storedPoint.data) {
-                return true;
-            }
-
-            if (point.original != storedPoint.original) {
-                return true;
-            }
-
-            // all fields are identical
-            return false;
         }
 
-        return true;
+        return false;
     }
 
     destroy() {
