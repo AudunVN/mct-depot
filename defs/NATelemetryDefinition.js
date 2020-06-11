@@ -95,7 +95,7 @@ class NATelemetryDefinition extends TelemetryDefinition
 
         let timestampKey = Object.keys(telemetryPoint.data).find(k => k.indexOf("timestamp") != -1 && typeof telemetryPoint.data[k] === "number" && 0 < telemetryPoint.data[k] < Date.now()/1000);
 
-        telemetryPoint.timestamp = telemetryPoint.data[timestampKey];
+        telemetryPoint.timestamp = telemetryPoint.data[timestampKey]*1000;
 
         return telemetryPoint;
     }

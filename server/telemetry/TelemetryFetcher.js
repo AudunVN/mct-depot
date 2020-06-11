@@ -16,6 +16,8 @@ class TelemetryFetcher
         }
 
         this.lastRunTime = 0;
+
+        this.start();
     }
 
     start() {

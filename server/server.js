@@ -4,8 +4,9 @@ const StaticServer = require('./StaticServer');
 const ConfigServer = require('../server/telemetry/ConfigServer');
 const DbManager = require('./db/DbManager');
 const TelemetryParser = require('../defs/TelemetryParser');
-const TelemetryFetcher = require('./Telemetry/TelemetryFetcher');
-const TelemetryServer = require('./Telemetry/TelemetryServer');
+const TelemetryFetcher = require('./telemetry/TelemetryFetcher');
+const TelemetryServer = require('./telemetry/TelemetryServer');
+const JsonFileTelemetryFetcher = require('./telemetry/JsonFileTelemetryFetcher');
 
 var bodyParser = require('body-parser')
 const expressWs = require('express-ws');
@@ -39,6 +40,10 @@ class Server
 
         config.defs.forEach((def) => {
             let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
+
+            if (def.fetcher == "JSON") {
+                telemetryFetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
+            }
 
             telemetryFetchers.push(telemetryFetcher);
 

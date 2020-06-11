@@ -1,13 +1,14 @@
 "use strict";
 
-function HistoryClient(config) {
-    return function install (openmct) {
+class HistoryClient {
+    installer(openmct) {
         var provider = {
             supportsRequest: function (domainObject) {
                 return domainObject.type === 'omctserver.telemetry';
             },
             request: function (domainObject, options) {
-                var url = domainObject.identifier.key + '/history/?startTime=' + options.start + '&endTime=' + options.end;
+                let source = domainObject.identifier.key.split(".");
+                var url = source[0] + '/history/' + source[1] + '?startTime=' + options.start + '&endTime=' + options.end;
     
                 return fetch(url).then(function (response) {
                     return response.json();

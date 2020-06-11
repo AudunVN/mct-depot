@@ -28,7 +28,7 @@ class HistoryServer
 
         this.router.get('/:valueName', function (request, response) {
             let points = db.reader.read(def.type, request.query.startTime, request.query.endTime);
-
+            
             let values = [];
             
             for (let i = 0; i < points.length; i++) {
