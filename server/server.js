@@ -33,7 +33,12 @@ class Server
         let port = config.port || 8471;
         
         let configUrl = '/config';
-        let configServer = new ConfigServer(config, parser.getAllMctMetadata());
+        
+        let configServer = new ConfigServer(
+            config,
+            parser.getAllMctMetadata(),
+            parser.getAllMctMeasurements()
+        );
         
         this.server.use(configUrl, configServer.router);
         

@@ -33,13 +33,43 @@ class DbReader
     }
 
     isPointNew(point) {
+        /* faster alternative to isPointUnique, only checks original data */
+
+        const statement = this.db.prepare("\
+        SELECT \
+            type, \
+            timestamp, \
+            data, \
+            metadata, \
+            original \
+        FROM telemetry \
+        WHERE \
+            type = ? AND \
+            timestamp BETWEEN ? AND ? \
+        ORDER BY timestamp ASC \
+        ");
+
+        let existingPoints = statement.all(point.type, point.timestamp, point.timestamp);
+
+        for (let i = 0; i < existingPoints.length; i++) {
+            let storedPoint = existingPoints[i];
+
+            if (point.original == storedPoint.original) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    isPointUnique(point) {
         /*
             doesPointExist is easier to write correct code for, but
             we usually want the inverted function when we call it;
             this alias for it is easier to read than !doesPointExist().
         */
 
-        return !this.doesPointExist(point);
+       return !this.doesPointExist(point);
     }
 
     doesPointExist(point) {

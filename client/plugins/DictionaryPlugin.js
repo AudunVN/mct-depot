@@ -6,6 +6,7 @@ function getConfig() {
 
 let objectProvider = {
     get: function (identifier) {
+        console.log(identifier);
         return getConfig().then(function (config) {
             console.log(config);
             if (identifier.key === 'spacecraft') {
@@ -18,7 +19,7 @@ let objectProvider = {
             } else {
                 console.log(identifier);
 
-                let measurement = config.metadata[0].measurements.filter(function (m) {
+                let measurement = config.measurements.filter(function (m) {
                     return m.key === identifier.key;
                 })[0];
 
@@ -44,12 +45,14 @@ let objectProvider = {
 
 let compositionProvider = {
     appliesTo: function (domainObject) {
+        console.log(domainObject);
         return domainObject.identifier.namespace === 'omctserver.taxonomy' &&
                domainObject.type === 'folder';
     },
     load: function (domainObject) {
+        console.log(domainObject);
         return getConfig().then(function (config) {
-            return config.metadata[0].measurements.map(function (m) {
+            return config.measurements.map(function (m) {
                 return {
                     namespace: 'omctserver.taxonomy',
                     key: m.key

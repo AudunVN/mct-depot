@@ -74,6 +74,16 @@ class TelemetryParser
 
         return results;
     }
+
+    getAllMctMeasurements() {
+        let results = [];
+        
+        this.definitions.forEach(function (def) {
+            results = results.concat(def.getMctMetadata());
+        });
+
+        return results;
+    }
 }
 
 module.exports = TelemetryParser;

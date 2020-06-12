@@ -15,7 +15,7 @@
             "parser": "NA",
             "structPath": "defs/structs/fc_v0.0.3_GeneralT_file.txt",
             "fetcher": "JSON",
-            "filePath": "samples/fc_archive_v.json",
+            "disabled_filePath": "samples/fc_archive_v.json",
             "provides": {
                 "realtime": true,
                 "history": true,
@@ -29,6 +29,42 @@
                 },
                 "name": "Flight Computer",
                 "type": "omctserver.fc",
+                "telemetry": {
+                    "values": [
+                        {
+                            "key": "bootCount",
+                            "name": "Boot Count",
+                            "units": "kilograms",
+                            "format": "number",
+                            "hints": {
+                                "range": 1
+                            }
+                        }
+                    ] 
+                }
+            }
+        },
+        {
+            "root": "hypso-test-spacecraft",
+            "type": "eps",
+            "name": "Electronic Power Supply",
+            "parser": "NA",
+            "structPath": "defs/structs/eps_telemetry_struct_NAEPS001.txt",
+            "fetcher": "JSON",
+            "disabled_filePath": "samples/eps_archive_v.json",
+            "provides": {
+                "realtime": true,
+                "history": true,
+                "metadata": true
+            },
+            "mctDef": {
+                "documentation": "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                "identifier": {
+                    "namespace": "omctserver.eps",
+                    "key": "eps"
+                },
+                "name": "Electronic Power Supply",
+                "type": "omctserver.eps",
                 "telemetry": {
                     "values": [
                         {
