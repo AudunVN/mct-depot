@@ -55,8 +55,11 @@ let compositionProvider = {
                domainObject.type === 'folder';
     },
     load: function (domainObject) {
+        console.log(domainObject);
         return getConfig().then(function (config) {
-            return config.measurements.map(function (m) {
+            return config.measurements.filter(function (m) {
+                return m.key.split(".")[0] === domainObject.identifier.key.split(".")[0];
+            }).map(function (m) {
                 return {
                     namespace: 'omctserver.taxonomy',
                     key: m.key
