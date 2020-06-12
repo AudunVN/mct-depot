@@ -26,11 +26,9 @@
             openmct.install(openmct.plugins.Espresso());
 
             openmct.serverPlugin = new ServerPlugin(config, config.metadata);
-            openmct.dictionaryPlugin = new DictionaryPlugin(config, config.metadata);
             openmct.historyClient = new HistoryClient();
 
             openmct.install(openmct.serverPlugin.installer);
-            openmct.install(openmct.dictionaryPlugin.installer);
             openmct.install(openmct.historyClient.installer);
            
             const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
