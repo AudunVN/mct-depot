@@ -23,8 +23,14 @@ let objectProvider = {
                     return m.key === identifier.key;
                 })[0];
 
+                let type = "";
+
                 if (typeof measurement === "undefined") {
                     console.log("Could not find measurement for " + identifier.key);
+                }
+
+                if (identifier.key.indexOf(".") != -1) {
+                    type = identifier.key.split(".")[0];
                 }
 
                 let telemetryObject = {
@@ -34,7 +40,7 @@ let objectProvider = {
                     telemetry: {
                         values: measurement.telemetry.values
                     },
-                    location: 'omctserver.taxonomy:spacecraft'
+                    location: 'omctserver.taxonomy:' + type + ".rootfolder"
                 };
 
                 return telemetryObject;
