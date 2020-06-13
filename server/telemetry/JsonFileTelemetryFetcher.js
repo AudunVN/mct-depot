@@ -18,7 +18,7 @@ class JsonFileTelemetryFetcher extends TelemetryFetcher
             fileString = fs.readFileSync(this.def.filePath, "utf8");
             data = JSON.parse(fileString); 
         } catch(exception) {
-            console.log("Error while reading file: ", exception.stack);
+            console.log("[!] Error while reading file: " + exception.stack.split("\n")[0]);
         } 
 
         return data;
