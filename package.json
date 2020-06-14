@@ -5,7 +5,7 @@
   "main": "server/run.js",
   "scripts": {
     "start": "node server/run.js",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",

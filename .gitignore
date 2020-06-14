@@ -3,3 +3,4 @@ npm-debug.log
 openmct
 *.sqlite3
 .VSCodeCounter
+coverage

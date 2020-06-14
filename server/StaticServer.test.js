@@ -17,5 +17,5 @@ test('static server responds to HTTP GET', async () => {
 
 test('static server responds with OpenMCT index page', async () => {
     const response = await request.get("/");
-    expect(response.text.indexOf("OpenMCT")).not.toBe(-1);
+    expect(response.text.indexOf("openmct")).not.toBe(-1);
 });
