@@ -22,7 +22,10 @@
                 "metadata": true
             },
             "metadata": {
-                "documentation": "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                "documentation": [
+                    "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                    "https://docs.google.com/spreadsheets/d/1DCzhNcp5J5GWeUGTtZC0nzXIwu4XpLFEQB6uAN2jq2Y/edit?usp=sharing"
+                ],
                 "values": [
                     {
                         "key": "bootCount",
@@ -194,7 +197,10 @@
                 "metadata": true
             },
             "metadata": {
-                "documentation": "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                "documentation": [
+                    "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                    "https://docs.google.com/spreadsheets/d/1DCzhNcp5J5GWeUGTtZC0nzXIwu4XpLFEQB6uAN2jq2Y/edit?usp=sharing"
+                ],
                 "values": [
                     {
                         "key": "timestamp",
