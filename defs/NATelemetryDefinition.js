@@ -34,6 +34,12 @@ class NATelemetryDefinition extends TelemetryDefinition
         let metadata = [];
 
         for (const field of Object.values(this.context.telemetry.fields)) {
+            /* 
+                uncomment to log all fields in the format used for config.json
+
+                console.log('{\n    "key": "' + field.name + '",\n    "name": "'+ field.name + '"\n},');
+            */
+
             let point = {
                 "key": this.def.type + "." + field.name,
                 "name": field.name,
@@ -45,15 +51,10 @@ class NATelemetryDefinition extends TelemetryDefinition
             let value = {
                 "key": "value",
                 "name": "Value",
-                /*"units": "kilograms",
-                "format": "float",
-                "min": 0,
-                "max": 100,*/
                 "hints": {
                     "range": 1
                 }
             };
-            point.telemetry.values.push(value);
 
             let timeValue = {
                 "key": "utc",
@@ -64,6 +65,62 @@ class NATelemetryDefinition extends TelemetryDefinition
                     "domain": 1
                 }
             };
+
+            let defField = null;
+
+            try {
+                defField = this.def.metadata.values.find(function (m) {
+                    return m.key === field.name;
+                });
+            } catch(e) {
+                /* no metadata stored for field */
+            }
+
+            if (defField != null) {
+                /* load value metadata from config */
+
+                /* 
+                    defField sample:
+                    {
+                        "key": "bootCount",
+                        "name": "Boot Count",
+                        "units": "kilograms",
+                        "format": "float",
+                        "min": 0,
+                        "max": 100,
+                        "hints": {
+                            "range": 1
+                        }
+                    }
+                */
+
+                if (typeof defField.name !== "undefined") {
+                    point.name = defField.name;
+                }
+
+                if (typeof defField.units !== "undefined") {
+                    value.units = defField.units;
+                }
+
+                if (typeof defField.format !== "undefined") {
+                    value.format = defField.format;
+                }
+
+                if (typeof defField.min !== "undefined") {
+                    value.min = defField.min;
+                }
+
+                if (typeof defField.max !== "undefined") {
+                    value.max = defField.max;
+                }
+                
+                if (typeof defField.enumerations !== "undefined") {
+                    value.enumerations = defField.enumerations;
+                }
+                
+            }
+
+            point.telemetry.values.push(value);
             point.telemetry.values.push(timeValue);
             
             metadata.push(point);

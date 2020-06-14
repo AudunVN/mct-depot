@@ -8,9 +8,9 @@ let objectProvider = {
     get: function (identifier) {
         return getConfig().then(function (config) {
             if (identifier.key.indexOf(".rootfolder") != -1) {
-                let def = config.defs.filter(function (d) {
+                let def = config.defs.find(function (d) {
                     return d.type === identifier.key.split(".")[0];
-                })[0];
+                });
 
                 return {
                     identifier: identifier,
@@ -19,9 +19,9 @@ let objectProvider = {
                     location: 'ROOT'
                 };
             } else {
-                let measurement = config.measurements.filter(function (m) {
+                let measurement = config.measurements.find(function (m) {
                     return m.key === identifier.key;
-                })[0];
+                });
 
                 let type = "";
 
@@ -32,6 +32,8 @@ let objectProvider = {
                 if (identifier.key.indexOf(".") != -1) {
                     type = identifier.key.split(".")[0];
                 }
+
+                console.log(measurement);
 
                 let telemetryObject = {
                     identifier: identifier,
