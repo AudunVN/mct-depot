@@ -31,8 +31,10 @@
             openmct.install(openmct.serverPlugin.installer);
             openmct.install(openmct.historyClient.installer);
            
-            const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
             const ONE_MINUTE = 60 * 1000;
+            const ONE_HOUR = 60 * ONE_MINUTE;
+            const ONE_DAY = 24 * ONE_HOUR;
+            const ONE_YEAR = 365 * ONE_DAY;
 
             openmct.time.addTimeSystem({
                 key: 'local',
@@ -48,7 +50,7 @@
                     // 'Fixed' bounds mode configuration for UTCTimeSystem
                     {
                         timeSystem: 'utc',
-                        bounds: {start: Date.now() - 30 * ONE_MINUTE, end: Date.now()},
+                        bounds: {start: Date.now() - 7 * ONE_DAY, end: Date.now()},
                         zoomOutLimit: ONE_YEAR,
                         zoomInLimit: ONE_MINUTE
                     },
@@ -56,7 +58,7 @@
                     {
                         clock: 'local',
                         timeSystem: 'utc',
-                        clockOffsets: {start: - 30 * ONE_MINUTE, end: 0},
+                        clockOffsets: {start: - ONE_DAY, end: 0},
                         zoomOutLimit: ONE_YEAR,
                         zoomInLimit: ONE_MINUTE
                     },
@@ -64,7 +66,7 @@
                     {
                         clock: 'local',
                         timeSystem: 'local',
-                        clockOffsets: {start: - 15 * ONE_MINUTE, end: 0}
+                        clockOffsets: {start: - ONE_DAY, end: 0}
                     }
                 ]
             }));
