@@ -26,7 +26,7 @@ test('can create in-memory database', () => {
 });
 
 test('can check if telemetry point does not exist in db', () => {
-    expect(manager.reader.isPointNew(telemetryPoint)).toEqual(true);
+    expect(manager.reader.isPointNew(telemetryPoint.type, telemetryPoint.original)).toEqual(true);
 });
 
 test('can write to in-memory database', () => {
@@ -36,7 +36,7 @@ test('can write to in-memory database', () => {
 });
 
 test('can check if telemetry point exists in db', () => {
-    expect(manager.reader.isPointNew(telemetryPoint)).toEqual(false);
+    expect(manager.reader.isPointNew(telemetryPoint.type, telemetryPoint.original)).toEqual(false);
 });
 
 test('can read from in-memory database', () => {
@@ -64,5 +64,5 @@ test('database read timestamp boundaries are inclusive', () => {
 test('can check if one or more of the telemetry point is in db', () => {
     manager.writer.write(telemetryPoint);
     
-    expect(manager.reader.isPointNew(telemetryPoint)).toEqual(false);
+    expect(manager.reader.isPointNew(telemetryPoint.type, telemetryPoint.original)).toEqual(false);
 });

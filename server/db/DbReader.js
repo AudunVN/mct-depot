@@ -1,10 +1,13 @@
 "use strict";
 
+const DbHasher = require('./DbHasher');
+
 class DbReader
 {
     constructor(db)
     {
         this.db = db;
+        this.hasher = new DbHasher();
     }
 
     read(type, startTime, endTime) {
@@ -32,34 +35,23 @@ class DbReader
         return results;
     }
 
-    isPointNew(point) {
-        /* faster alternative to isPointUnique, only checks original data */
+    isPointNew(type, dataString) {
+        /* faster alternative to isPointUnique, checks hash */
 
         const statement = this.db.prepare("\
         SELECT \
             type, \
-            timestamp, \
-            data, \
-            metadata, \
-            original \
+            originalHash \
         FROM telemetry \
         WHERE \
             type = ? AND \
-            timestamp BETWEEN ? AND ? \
-        ORDER BY timestamp ASC \
+            originalHash = ?\
         ");
 
-        let existingPoints = statement.all(point.type, point.timestamp, point.timestamp);
+        let pointHash = this.hasher.hash(dataString);
+        let existingPoint = statement.get(type, pointHash);
 
-        for (let i = 0; i < existingPoints.length; i++) {
-            let storedPoint = existingPoints[i];
-
-            if (point.original == storedPoint.original) {
-                return false;
-            }
-        }
-
-        return true;
+        return (typeof existingPoint == "undefined");
     }
 
     isPointUnique(point) {

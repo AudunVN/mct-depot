@@ -15,7 +15,7 @@
             "parser": "NA",
             "structPath": "defs/structs/fc_v0.0.3_GeneralT_file.txt",
             "fetcher": "JSON",
-            "disabled_filePath": "samples/fc_archive_v.json",
+            "filePath": "samples/fc_archive_v.json",
             "provides": {
                 "realtime": true,
                 "history": true,
@@ -190,7 +190,7 @@
             "parser": "NA",
             "structPath": "defs/structs/eps_telemetry_struct_NAEPS001.txt",
             "fetcher": "JSON",
-            "disabled_filePath": "samples/eps_archive_v.json",
+            "filePath": "samples/eps_archive_v.json",
             "provides": {
                 "realtime": true,
                 "history": true,

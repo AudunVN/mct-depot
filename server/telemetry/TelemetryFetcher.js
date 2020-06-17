@@ -1,5 +1,7 @@
 "use strict";
 
+const performance = require('perf_hooks').performance;
+
 class TelemetryFetcher
 {
     constructor(def, db, config, parser, callback)
@@ -29,13 +31,22 @@ class TelemetryFetcher
 
     store(points) {
         let writeCount = 0;
+        
+        let isNewTimeSum = 0;
+
+        let startTime = performance.now();
         if (this.parser.canParse(this.def.type)) {
             for (let i = 0; i < points.length; i++) {
                 let point = JSON.stringify(points[i]);
 
-                let unpackedPoint = this.parser.parse(this.def.type, point);
+                let isNewStartTime = performance.now();
+                let isPointNew = this.db.reader.isPointNew(this.def.type, point);
+                let isNewEndTime = performance.now();
 
-                if (this.db.reader.isPointNew(unpackedPoint)) {
+                isNewTimeSum += isNewEndTime - isNewStartTime;
+
+                if (isPointNew) {
+                    let unpackedPoint = this.parser.parse(this.def.type, point);
                     this.db.writer.write(unpackedPoint);
                     writeCount++;
                 }
@@ -43,7 +54,12 @@ class TelemetryFetcher
         } else {
             console.log("Cannot store point type " + this.def.type + ": No parser found");
         }
-        console.log("Stored " + writeCount + " new points in database out of " + points.length + " loaded points");
+        let endTime = performance.now();
+
+        let totalTime = endTime - startTime;
+
+        console.log("Stored " + writeCount + " new points in database out of " + points.length + " loaded points in " + totalTime + " ms");
+        console.log("Used " + isNewTimeSum + " ms on checking if new (" + (isNewTimeSum/points.length) + " ms/check on average), " + (isNewTimeSum/totalTime) + "% of total time");
     }
 
     fetch() {

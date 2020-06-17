@@ -1,16 +1,19 @@
 "use strict";
 
+const DbHasher = require('./DbHasher');
+
 class DbWriter
 {
     constructor(db)
     {
         this.db = db;
+        this.hasher = new DbHasher();
     }
 
     write(telemetryPoint) {
         const statement = this.db.prepare("\
-            INSERT INTO telemetry(type, timestamp, data, metadata, original) \
-            VALUES (?, ?, ?, ?, ?) \
+            INSERT INTO telemetry(type, timestamp, data, metadata, original, originalHash) \
+            VALUES (?, ?, ?, ?, ?, ?) \
         ");
 
         if (typeof telemetryPoint.type !== "string") {
@@ -28,12 +31,15 @@ class DbWriter
             return false;
         }
 
+        let originalHash = this.hasher.hash(telemetryPoint.original);
+
         const result = statement.run(
             telemetryPoint.type,
             telemetryPoint.timestamp,
             JSON.stringify(telemetryPoint.data),
             JSON.stringify(telemetryPoint.metadata),
-            telemetryPoint.original
+            telemetryPoint.original,
+            originalHash
         );
 
         return true;
