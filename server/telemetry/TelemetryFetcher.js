@@ -58,8 +58,8 @@ class TelemetryFetcher
 
         let totalTime = endTime - startTime;
 
-        console.log("Stored " + writeCount + " new points in database out of " + points.length + " loaded points in " + totalTime + " ms");
-        console.log("Used " + isNewTimeSum + " ms on checking if new (" + (isNewTimeSum/points.length) + " ms/check on average), " + (isNewTimeSum/totalTime) + "% of total time");
+        console.log("Stored " + writeCount + " new points in database out of " + points.length + " loaded points in " + totalTime.toFixed(2) + " ms");
+        console.log("Used " + isNewTimeSum.toFixed(2) + " ms on checking if new (" + (isNewTimeSum/points.length).toFixed(5) + " ms/check on average), " + 100*(isNewTimeSum/totalTime).toFixed(4) + "% of total time");
     }
 
     fetch() {
