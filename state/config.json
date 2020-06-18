@@ -126,27 +126,33 @@
                     },
                     {
                         "key": "solarPanelTemp1",
-                        "name": "-X solar panel temperature"
+                        "name": "-X solar panel temperature",
+                        "units": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp2",
-                        "name": "+X solar panel temperature"
+                        "name": "+X solar panel temperature",
+                        "units": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp3",
-                        "name": "-Y solar panel temperature"
+                        "name": "-Y solar panel temperature",
+                        "units": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp4",
-                        "name": "+Y solar panel temperature"
+                        "name": "+Y solar panel temperature",
+                        "units": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp5",
-                        "name": "-Z solar panel temperature"
+                        "name": "-Z solar panel temperature",
+                        "units": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp6",
-                        "name": "+Z solar panel temperature"
+                        "name": "+Z solar panel temperature",
+                        "units": "degrees C"
                     },
                     {
                         "key": "gpsUtcTime",
@@ -289,7 +295,7 @@
                     },
                     {
                         "key": "temp",
-                        "name": "Temperatures",
+                        "name": "Temperature",
                         "units": "degrees C"
                     },
                     {
