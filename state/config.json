@@ -192,7 +192,7 @@
         {
             "root": "hypso-test-spacecraft",
             "type": "eps",
-            "name": "Electronic Power Supply",
+            "name": "Electric Power Supply",
             "parser": "NA",
             "structPath": "defs/structs/eps_telemetry_struct_NAEPS001.txt",
             "fetcher": "JSON",
