@@ -33,7 +33,31 @@ class NATelemetryDefinition extends TelemetryDefinition
         /* gets metadata objects for OpenMCT */
         let metadata = [];
 
-        for (const field of Object.values(this.context.telemetry.fields)) {
+        // expand array values
+        let uncompressedData = this.context.telemetry.fields;
+
+        for (let [key, value] of Object.entries(this.context.telemetry.fields)) {
+            let lengthMatch = value.type.match(/([^\[]*)\[(\d+)\]/);
+            let arrayLength = 0;
+            
+            if (lengthMatch != null && typeof lengthMatch[2] != "undefined") {
+                arrayLength = lengthMatch[2];
+            }
+
+            if (arrayLength != 0) {
+                for (let i = 0; i < arrayLength; i++) {
+                    let fieldName = key + "_" + i + "_AutoExpanded";
+                    uncompressedData[fieldName] = {
+                        name: fieldName,
+                        type: lengthMatch[1],
+                        bytes: value.bytes/arrayLength
+                    };
+                }
+                delete uncompressedData[key];
+            }
+        }
+
+        for (const field of Object.values(uncompressedData)) {
             /* 
                 uncomment to log all fields in the format used for config.json
 
@@ -76,6 +100,26 @@ class NATelemetryDefinition extends TelemetryDefinition
                 /* no metadata stored for field */
             }
 
+            let isArrayValue = false;
+
+            if (defField == null && field.name.indexOf("_AutoExpanded") != -1) {
+                /* autoexpanded field, check if entry exists for parent array */
+
+                let parentName = field.name.replace(/_\d+_AutoExpanded/, "");
+
+                try {
+                    defField = this.def.metadata.values.find(function (m) {
+                        return m.key === parentName;
+                    });
+                } catch(e) {
+                    /* no metadata stored for parent field */
+                }
+
+                if (defField != null) {
+                    isArrayValue = true;
+                }
+            }
+
             if (defField != null) {
                 /* load value metadata from config */
 
@@ -96,6 +140,10 @@ class NATelemetryDefinition extends TelemetryDefinition
 
                 if (typeof defField.name !== "undefined") {
                     point.name = defField.name;
+
+                    if (isArrayValue) {
+                        point.name += " " + field.name.match(/_(\d+)_AutoExpanded/)[1];
+                    }
                 }
 
                 if (typeof defField.units !== "undefined") {
@@ -158,7 +206,20 @@ class NATelemetryDefinition extends TelemetryDefinition
     }
 
     pack(data) {
-        return "\\x" + this.context.telemetry.toBinary(data).toString("hex");
+        // compress expanded array values
+        let compressedData = data;
+
+        /*for (let [key, value] of Object.entries(unpackedData)) {
+            if (Array.isArray(value)) {
+                for (let i = 0; i < value.length; i++) {
+                    uncompressedData[key + "Auto471Exp" + i] = value[i];
+                }
+                delete uncompressedData[key];
+            }
+        }*/
+
+        let packedData = "\\x" + this.context.telemetry.toBinary(compressedData).toString("hex")
+        return packedData;
     }
 
     canPack(data) {
@@ -173,7 +234,21 @@ class NATelemetryDefinition extends TelemetryDefinition
     unpack(packedDataString) {
         let buffer = this.getDataBuffer(packedDataString);
 
-        return this.context.telemetry.fromBinary(buffer);
+        let unpackedData = this.context.telemetry.fromBinary(buffer);
+
+        // expand array values
+        let uncompressedData = unpackedData;
+
+        for (let [key, value] of Object.entries(unpackedData)) {
+            if (Array.isArray(value)) {
+                for (let i = 0; i < value.length; i++) {
+                    uncompressedData[key + "_" + i + "_AutoExpanded"] = value[i];
+                }
+                delete uncompressedData[key];
+            }
+        }
+
+        return uncompressedData;
     }
 
     canUnpack(packedDataString) {

@@ -34,7 +34,6 @@ class MockNATelemetryServer
         this.router.get('/', (request, response) => {
             if (typeof request.headers.authorization !== "undefined") {
                 let data = this.getData();
-                console.log(data);
                 response.status(200).send(data);
             } else {
                 response.status(403).send();

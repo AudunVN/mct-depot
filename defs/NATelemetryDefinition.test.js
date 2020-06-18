@@ -76,23 +76,68 @@ test('can parse FC telemetry sample', () => {
     expect(result.data).not.toEqual({});
 });
 
-test('can get metadata', () => {
+test('can get FC metadata', () => {
     let definition = new NATelemetryDefinition(fc_def);
     let metadata = definition.getMctMetadata();
 
     expect(typeof metadata).not.toBe("undefined");
 });
 
-test('metadata has more than 0 entries', () => {
+test('FC metadata has more than 0 entries', () => {
     let definition = new NATelemetryDefinition(fc_def);
     let metadata = definition.getMctMetadata();
 
     expect(metadata.length).toBeGreaterThan(0);
 });
 
-test('all metadata telemetry.values have key and hint fields', () => {
+test('all FC metadata telemetry.values have key and hint fields', () => {
     let definition = new NATelemetryDefinition(fc_def);
     let metadata = definition.getMctMetadata();
+
+    let allValuesHaveKeyField = true;
+    let allValuesHaveHintsField = true;
+
+    for (let i = 0; i < metadata.length; i++) {
+        let point = metadata[i];
+
+        for (let i = 0; i < point.telemetry.values.length; i++) {
+            let value = point.telemetry.values[i];
+
+            if (typeof value.key === "undefined") {
+                allValuesHaveKeyField = false;
+                console.log("Value missing key field: " + value);
+            }
+
+            if (typeof value.hints === "undefined") {
+                allValuesHaveHintsField = false;
+                console.log("Value missing hint field: " + value);
+            }
+        }
+    }
+
+    expect(allValuesHaveKeyField).toBe(true);
+    expect(allValuesHaveHintsField).toBe(true);
+});
+
+test('can get EPS metadata', () => {
+    let definition = new NATelemetryDefinition(eps_def);
+    let metadata = definition.getMctMetadata();
+
+    expect(typeof metadata).not.toBe("undefined");
+});
+
+test('EPS metadata has more than 0 entries', () => {
+    let definition = new NATelemetryDefinition(eps_def);
+    let metadata = definition.getMctMetadata();
+
+    expect(metadata.length).toBeGreaterThan(0);
+});
+
+test('all EPS metadata telemetry.values have key and hint fields', () => {
+    let definition = new NATelemetryDefinition(eps_def);
+    let metadata = definition.getMctMetadata();
+
+    console.log(metadata);
 
     let allValuesHaveKeyField = true;
     let allValuesHaveHintsField = true;
