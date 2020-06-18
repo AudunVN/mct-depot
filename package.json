@@ -5,7 +5,8 @@
   "main": "server/run.js",
   "scripts": {
     "start": "node server/run.js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "closeTest": "jest --runInBand --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -23,12 +24,14 @@
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "ezstruct": "^0.0.3",
+    "isomorphic-ws": "^4.0.1",
     "jest": "^25.1.0",
     "node-fetch": "^2.6.0",
     "openmct": "git+https://github.com/KhaledSharif/openmct",
     "simple-node-logger": "^18.12.24",
     "sqlite3": "^4.1.1",
     "supertest": "^4.0.2",
-    "ws": "^6.1.2"
+    "uuid": "^8.1.0",
+    "ws": "^6.2.1"
   }
 }

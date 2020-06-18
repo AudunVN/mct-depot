@@ -35,6 +35,33 @@ class DbReader
         return results;
     }
 
+    readByWriteTime(type, startTime, endTime) {
+        const statement = this.db.prepare("\
+            SELECT \
+                type, \
+                timestamp, \
+                data, \
+                metadata, \
+                original, \
+                writeTimestamp \
+            FROM telemetry \
+            WHERE \
+                type = ? AND \
+                writeTimestamp BETWEEN ? AND ? \
+            ORDER BY writeTimestamp ASC \
+        ");
+
+        let results = statement.all(type, startTime, endTime);
+
+        results.forEach((result) => {
+            result.data = JSON.parse(result.data);
+            result.metadata = JSON.parse(result.metadata);
+            delete result.writeTimestamp;
+        });
+
+        return results;
+    }
+
     isPointNew(type, dataString) {
         /* faster alternative to isPointUnique, checks hash */
 

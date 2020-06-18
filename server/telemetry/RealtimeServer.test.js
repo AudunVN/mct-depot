@@ -1,23 +1,24 @@
 "use strict";
 
 const RealtimeServer = require('./RealtimeServer');
-const Server = require('../Server');
 const Config = require('../../shared/Config');
-const supertest = require('supertest');
 const DbManager = require('../db/DbManager');
+const ws = require('isomorphic-ws');
+
+const expressWs = require('express-ws');
+let server = require('express')();
+
+expressWs(server);
 
 let config = new Config();
 config.debug = true;
+config.port = 8470;
 
 const def = {
     parser: "JSON",
     fetcher: "JSON",
-    type: "test"
-};
-
-const body = {
-    startTime: 0,
-    endTime: 9999999999999999
+    type: "test",
+    dbPollRate: 100
 };
 
 let telemetryPoint = {
@@ -30,41 +31,77 @@ let telemetryPoint = {
 
 let db = new DbManager(config);
 
-const serverInstance = new Server(config);
-const realtimeServer = new RealtimeServer(def, db, config);
 const testUrl = '/' + def.type + '/realtime';
 
-serverInstance.server.use(testUrl, realtimeServer.router);
+const fullTestUrl = 'ws://localhost:' + config.port + testUrl;
 
-const request = supertest(serverInstance.server);
+const realtimeServer = new RealtimeServer(def, db, config);
 
-test('realtime server responds to subscribe request', async () => {
-    const response = await request.post(testUrl).send(body);
+server.use(testUrl, realtimeServer.router);
 
-    expect(response.statusCode).toBe(200);
+let s = server.listen(config.port, function () {
+    console.log('WS test server available at ' + fullTestUrl);
 });
 
-test('realtime server sends new data', async () => {
-    db.writer.write(telemetryPoint);
+test('realtime server responds to websocket connection request', done => {
+    let socket = new ws(fullTestUrl + '/yes');
 
-    const response = await request.post(testUrl).send(body);
+    socket.onopen = function open() {
+        socket.send("test");
+    };
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual([telemetryPoint]);
+    socket.onmessage = function incoming(data) {
+        socket.close();
+        done();
+    };
 });
 
-test('realtime server responds to unsubscribe request', async () => {
-    const response = await request.post(testUrl).send(body);
+test('realtime server sendUpdate sends data', done => {
+    let socket = new ws(fullTestUrl + '/yes');
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual([]);
+    socket.onopen = function open() {
+        realtimeServer.sendUpdate(telemetryPoint);
+    };
+
+    socket.onmessage = function incoming(data) {
+        let point = JSON.parse(data.data);
+
+        expect(point).toEqual({
+            timestamp: telemetryPoint.timestamp,
+            value: telemetryPoint.data.yes
+        });
+
+        socket.close();
+
+        done();
+    };
 });
 
-test('can get multiple telemetry points from db', async () => {
-    db.writer.write(telemetryPoint);
+test('realtime server sends new data', done => {
+    telemetryPoint.data.yes = false;
 
-    const response = await request.post(testUrl).send(body);
+    let socket = new ws(fullTestUrl + '/yes');
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual([telemetryPoint,telemetryPoint]);
+    socket.onopen = function open() {
+        db.writer.write(telemetryPoint);
+    };
+
+    socket.onmessage = function incoming(data) {
+        let point = JSON.parse(data.data);
+
+        expect(point).toEqual({
+            timestamp: telemetryPoint.timestamp,
+            value: telemetryPoint.data.yes
+        });
+
+        socket.close();
+
+        done();
+    };
 });
+
+afterAll(() => {
+    s.close();
+    return;
+});
+

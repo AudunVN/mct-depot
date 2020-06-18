@@ -23,7 +23,8 @@ class DbManager
                 data TEXT, \
                 metadata TEXT, \
                 original TEXT, \
-                originalHash TEXT \
+                originalHash TEXT, \
+                writeTimestamp INTEGER \
             );"
         );
 
@@ -35,6 +36,11 @@ class DbManager
         this.db.exec(
             "CREATE INDEX IF NOT EXISTS timestamp_index \
             ON telemetry(timestamp);"
+        );
+
+        this.db.exec(
+            "CREATE INDEX IF NOT EXISTS write_timestamp_index \
+            ON telemetry(writeTimestamp);"
         );
 
         this.reader = new DbReader(this.db);

@@ -11,6 +11,8 @@ class DbPoller
         this.polling = false;
 
         this.lastPollTime = 0;
+
+        this.start();
     }
 
     start() {
@@ -24,15 +26,17 @@ class DbPoller
         if (this.polling) {
             let currentTime = Date.now();
 
-            let results = this.db.read(this.def.type, this.lastPollTime, currentTime);
+            let results = this.db.reader.readByWriteTime(this.def.type, this.lastPollTime, currentTime);
 
             this.lastPollTime = currentTime;
 
-            if (results.length > 0) {
-                this.callback(results);
+            for (let i = 0; i < results.length; i++) {
+                this.callback(results[i]);
             }
 
-            setTimeout(this.poll, this.config.dbPollRate);
+            setTimeout(() => {
+                this.poll();
+            }, this.def.dbPollRate);
         }
     }
 

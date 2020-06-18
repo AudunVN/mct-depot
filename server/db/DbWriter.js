@@ -12,8 +12,8 @@ class DbWriter
 
     write(telemetryPoint) {
         const statement = this.db.prepare("\
-            INSERT INTO telemetry(type, timestamp, data, metadata, original, originalHash) \
-            VALUES (?, ?, ?, ?, ?, ?) \
+            INSERT INTO telemetry(type, timestamp, data, metadata, original, originalHash, writeTimestamp) \
+            VALUES (?, ?, ?, ?, ?, ?, ?) \
         ");
 
         if (typeof telemetryPoint.type !== "string") {
@@ -39,7 +39,8 @@ class DbWriter
             JSON.stringify(telemetryPoint.data),
             JSON.stringify(telemetryPoint.metadata),
             telemetryPoint.original,
-            originalHash
+            originalHash,
+            Date.now()
         );
 
         return true;
