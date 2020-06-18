@@ -33,8 +33,6 @@ let objectProvider = {
                     type = identifier.key.split(".")[0];
                 }
 
-                console.log(measurement);
-
                 let telemetryObject = {
                     identifier: identifier,
                     name: measurement.name,

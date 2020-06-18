@@ -6,6 +6,7 @@
     <script src="openmct/openmct.js"></script>
     <script src="plugins/ServerPlugin.js"></script>
     <script src="plugins/HistoryClient.js"></script>
+    <script src="plugins/RealtimeClient.js"></script>
 </head>
 <body>
     <script>
@@ -27,9 +28,11 @@
 
             openmct.serverPlugin = new ServerPlugin(config, config.metadata);
             openmct.historyClient = new HistoryClient();
+            openmct.realtimeClient = new RealtimeClient();
 
             openmct.install(openmct.serverPlugin.installer);
             openmct.install(openmct.historyClient.installer);
+            openmct.install(openmct.realtimeClient.installer);
            
             const ONE_MINUTE = 60 * 1000;
             const ONE_HOUR = 60 * ONE_MINUTE;

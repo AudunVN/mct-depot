@@ -2,13 +2,13 @@
 
 class HistoryClient {
     installer(openmct) {
-        var provider = {
+        let provider = {
             supportsRequest: function (domainObject) {
                 return domainObject.type === 'omctserver.telemetry';
             },
             request: function (domainObject, options) {
                 let source = domainObject.identifier.key.split(".");
-                var url = source[0] + '/history/' + source[1] + '?startTime=' + options.start + '&endTime=' + options.end;
+                let url = source[0] + '/history/' + source[1] + '?startTime=' + options.start + '&endTime=' + options.end;
     
                 return fetch(url).then(function (response) {
                     return response.json();
