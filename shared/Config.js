@@ -9,7 +9,7 @@ class Config
         this.loadDefaults();
 
         if (typeof configFilePath !== "undefined") {
-            this.configFilePath = configFilePath;
+            this.configPath = configFilePath;
             this.load(configFilePath);
         }
     }
