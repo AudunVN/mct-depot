@@ -17,7 +17,7 @@ System data flow diagram (level 0)
 ---
 
 <p align="center">
-<img src="./docs/Class Diagram.svg"><br>
+<img src="./docs/new/Class Diagram Large.svg"><br>
 Class diagram
 </p>
 
