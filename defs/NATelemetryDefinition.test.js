@@ -137,8 +137,6 @@ test('all EPS metadata telemetry.values have key and hint fields', () => {
     let definition = new NATelemetryDefinition(eps_def);
     let metadata = definition.getMctMetadata();
 
-    console.log(metadata);
-
     let allValuesHaveKeyField = true;
     let allValuesHaveHintsField = true;
 
