@@ -26,13 +26,14 @@
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
-            openmct.mctDepotPlugin = new MctDepotPlugin(config, config.metadata);
-            openmct.historyClient = new HistoryClient();
-            openmct.realtimeClient = new RealtimeClient();
+            openmct.plugins.mctDepot = new MctDepotPlugin(
+                config,
+                config.metadata,
+                new HistoryClient(),
+                new RealtimeClient()
+            );
 
-            openmct.install(openmct.mctDepotPlugin.installer);
-            openmct.install(openmct.historyClient.installer);
-            openmct.install(openmct.realtimeClient.installer);
+            openmct.install(openmct.plugins.mctDepot.installer);
            
             const ONE_MINUTE = 60 * 1000;
             const ONE_HOUR = 60 * ONE_MINUTE;

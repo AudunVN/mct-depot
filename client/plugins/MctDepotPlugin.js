@@ -1,7 +1,7 @@
 "use strict";
 
 function getConfig() {
-    return Promise.resolve(openmct.mctDepotPlugin.config);
+    return Promise.resolve(openmct.plugins.mctDepot.config);
 }
 
 let objectProvider = {
@@ -70,13 +70,16 @@ let compositionProvider = {
 };
 
 class MctDepotPlugin {
-    constructor(config, metadata) {
+    constructor(config, metadata, historyClient, realtimeClient) {
         this.config = config;
         this.metadata = metadata;
+        this.historyClient = historyClient;
+        this.realtimeClient = realtimeClient;
     }
 
     installer(openmct) {
-        let config = openmct.mctDepotPlugin.config;
+        let mctDepot = openmct.plugins.mctDepot;
+        let config = mctDepot.config;
 
         for (let i = 0; i < config.defs.length; i++) {
             let def = config.defs[i];
@@ -96,6 +99,9 @@ class MctDepotPlugin {
             description: 'MCT Depot telemetry point',
             cssClass: 'icon-telemetry'
         });
+
+        openmct.install(mctDepot.historyClient.installer);
+        openmct.install(mctDepot.realtimeClient.installer);
 
         console.log("MCT Depot plugin installed");
     }
