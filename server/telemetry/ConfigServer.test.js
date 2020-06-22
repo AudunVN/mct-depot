@@ -2,13 +2,13 @@
 
 const ConfigServer = require('./ConfigServer');
 const Config = require('../../shared/Config');
-const Server = require('../Server');
+const MctDepot = require('../MctDepot');
 const supertest = require('supertest');
 
 let config = new Config();
 config.debug = true;
 
-const serverInstance = new Server(config);
+const depotInstance = new MctDepot(config);
 
 config = new Config("state/config.json");
 config.debug = true;
@@ -17,9 +17,9 @@ const configServer = new ConfigServer(config);
 
 const testUrl = '/testconfig';
 
-serverInstance.server.use(testUrl, configServer.router);
+depotInstance.server.use(testUrl, configServer.router);
 
-const request = supertest(serverInstance.server);
+const request = supertest(depotInstance.server);
 
 test('config server responds to HTTP GET for config', async () => {
     const response = await request.get(testUrl);

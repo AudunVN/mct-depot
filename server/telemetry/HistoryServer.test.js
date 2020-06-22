@@ -1,7 +1,7 @@
 "use strict";
 
 const HistoryServer = require('./HistoryServer');
-const Server = require('../Server');
+const MctDepot = require('../MctDepot');
 const Config = require('../../shared/Config');
 const supertest = require('supertest');
 const DbManager = require('../db/DbManager');
@@ -30,14 +30,14 @@ let telemetryPoint = {
 
 let db = new DbManager(config);
 
-const serverInstance = new Server(config);
+const depotInstance = new MctDepot(config);
 const historyServer = new HistoryServer(def, db, config);
 
 const testUrl = '/' + def.type + '/history';
 
-serverInstance.server.use(testUrl, historyServer.router);
+depotInstance.server.use(testUrl, historyServer.router);
 
-const request = supertest(serverInstance.server);
+const request = supertest(depotInstance.server);
 
 test('history server responds to HTTP GET for fc data', async () => {
     const response = await request.get(testUrl + '?startTime=' + parameters.startTime + "&endTime=" + parameters.endTime);

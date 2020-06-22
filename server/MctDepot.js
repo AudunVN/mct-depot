@@ -1,7 +1,7 @@
 "use strict";
 
 const StaticServer = require('./StaticServer');
-const ConfigServer = require('../server/telemetry/ConfigServer');
+const ConfigServer = require('./telemetry/ConfigServer');
 const DbManager = require('./db/DbManager');
 const TelemetryParser = require('../defs/TelemetryParser');
 const TelemetryFetcher = require('./telemetry/TelemetryFetcher');
@@ -11,7 +11,7 @@ const JsonFileTelemetryFetcher = require('./telemetry/JsonFileTelemetryFetcher')
 var bodyParser = require('body-parser')
 const expressWs = require('express-ws');
 
-class Server
+class MctDepot
 {
     constructor(config)
     {
@@ -91,4 +91,4 @@ class Server
     }
 }
 
-module.exports = Server;
+module.exports = MctDepot;

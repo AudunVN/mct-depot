@@ -4,7 +4,7 @@ class HistoryClient {
     installer(openmct) {
         let provider = {
             supportsRequest: function (domainObject) {
-                return domainObject.type === 'omctserver.telemetry';
+                return domainObject.type === 'mctdepot.telemetry';
             },
             request: function (domainObject, options) {
                 let source = domainObject.identifier.key.split(".");

@@ -1,5 +1,5 @@
-# hypso-openmct
-OpenMCT for the HYPSO student satellite project
+# MCT Depot
+Telemetry depot and web server for Open MCT, developed for the HYPSO student satellite project
 
 ## System structure
 <p align="center">

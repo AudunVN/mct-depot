@@ -1,11 +1,11 @@
 "use strict";
 
 const Config = require('../../shared/Config');
-const ServerPlugin = require('./ServerPlugin');
+const MctDepotPlugin = require('./MctDepotPlugin');
 
 const config = new Config("shared/config.json");
-const serverPlugin = new ServerPlugin(config);
+const mctDepotPlugin = new MctDepotPlugin(config);
 
 test('plugin has installer function', async () => {
-    expect(typeof serverPlugin.installer).toBe("function");
+    expect(typeof mctDepotPlugin.installer).toBe("function");
 });

@@ -1,13 +1,13 @@
 "use strict";
 
-const Server = require('./Server');
+const MctDepot = require('./MctDepot');
 const Config = require('../shared/Config');
 const supertest = require('supertest');
 
 let config = new Config();
 config.debug = true;
 
-const serverInstance = new Server(config);
+const serverInstance = new MctDepot(config);
 const request = supertest(serverInstance.server);
 
 test('static server responds to HTTP GET', async () => {

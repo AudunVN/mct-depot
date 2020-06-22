@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Open MCT</title>
+    <title>MCT Depot</title>
     <link rel="icon" href="favicon.png">
     <script src="openmct/openmct.js"></script>
-    <script src="plugins/ServerPlugin.js"></script>
+    <script src="plugins/MctDepotPlugin.js"></script>
     <script src="plugins/HistoryClient.js"></script>
     <script src="plugins/RealtimeClient.js"></script>
 </head>
@@ -26,11 +26,11 @@
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
-            openmct.serverPlugin = new ServerPlugin(config, config.metadata);
+            openmct.mctDepotPlugin = new MctDepotPlugin(config, config.metadata);
             openmct.historyClient = new HistoryClient();
             openmct.realtimeClient = new RealtimeClient();
 
-            openmct.install(openmct.serverPlugin.installer);
+            openmct.install(openmct.mctDepotPlugin.installer);
             openmct.install(openmct.historyClient.installer);
             openmct.install(openmct.realtimeClient.installer);
            

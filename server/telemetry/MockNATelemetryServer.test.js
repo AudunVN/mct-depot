@@ -2,13 +2,13 @@
 
 const MockServer = require('./MockNATelemetryServer');
 const Config = require('../../shared/Config');
-const Server = require('../Server');
+const MctDepot = require('../MctDepot');
 const supertest = require('supertest');
 
 let config = new Config();
 config.debug = true;
 
-const serverInstance = new Server(config);
+const depotInstance = new MctDepot(config);
 
 config = new Config("state/config.json");
 config.debug = true;
@@ -24,9 +24,9 @@ const mockServer = new MockServer(def);
 
 const testUrl = '/naTest';
 
-serverInstance.server.use(testUrl, mockServer.router);
+depotInstance.server.use(testUrl, mockServer.router);
 
-const request = supertest(serverInstance.server);
+const request = supertest(depotInstance.server);
 
 test('request without authorization header fails', async () => {
     const response = await request.get(testUrl);

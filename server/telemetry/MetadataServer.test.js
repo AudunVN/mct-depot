@@ -2,7 +2,7 @@
 
 const MetadataServer = require('./MetadataServer');
 const Config = require('../../shared/Config');
-const Server = require('../Server');
+const MctDepot = require('../MctDepot');
 const supertest = require('supertest');
 const NATelemetryDefinition = require('../../defs/NATelemetryDefinition');
 
@@ -16,15 +16,15 @@ const def = {
 const config = new Config();
 config.debug = true;
 
-const serverInstance = new Server(config);
+const depotInstance = new MctDepot(config);
 const definition = new NATelemetryDefinition(def);
 const metadataServer = new MetadataServer(def, definition.getMctMetadata());
 
 const testUrl = '/' + def.type + '/metadata';
 
-serverInstance.server.use(testUrl, metadataServer.router);
+depotInstance.server.use(testUrl, metadataServer.router);
 
-const request = supertest(serverInstance.server);
+const request = supertest(depotInstance.server);
 
 test('metadata server responds to HTTP GET for fc metadata', async () => {
     const response = await request.get(testUrl);

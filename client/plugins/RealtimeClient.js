@@ -4,7 +4,7 @@ class RealtimeClient {
     installer(openmct) {
         let provider = {
             supportsSubscribe: function (domainObject) {
-                return domainObject.type === 'omctserver.telemetry';
+                return domainObject.type === 'mctdepot.telemetry';
             },
             subscribe: function (domainObject, callback) {
                 let source = domainObject.identifier.key.split(".");

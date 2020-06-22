@@ -1,7 +1,7 @@
 "use strict";
 
 function getConfig() {
-    return Promise.resolve(openmct.serverPlugin.config);
+    return Promise.resolve(openmct.mctDepotPlugin.config);
 }
 
 let objectProvider = {
@@ -36,11 +36,11 @@ let objectProvider = {
                 let telemetryObject = {
                     identifier: identifier,
                     name: measurement.name,
-                    type: 'omctserver.telemetry',
+                    type: 'mctdepot.telemetry',
                     telemetry: {
                         values: measurement.telemetry.values
                     },
-                    location: 'omctserver.taxonomy:' + type + ".rootfolder"
+                    location: 'mctdepot.taxonomy:' + type + ".rootfolder"
                 };
 
                 return telemetryObject;
@@ -51,7 +51,7 @@ let objectProvider = {
 
 let compositionProvider = {
     appliesTo: function (domainObject) {
-        return domainObject.identifier.namespace === 'omctserver.taxonomy' &&
+        return domainObject.identifier.namespace === 'mctdepot.taxonomy' &&
                domainObject.type === 'folder';
     },
     load: function (domainObject) {
@@ -61,7 +61,7 @@ let compositionProvider = {
                 return m.key.split(".")[0] === domainObject.identifier.key.split(".")[0];
             }).map(function (m) {
                 return {
-                    namespace: 'omctserver.taxonomy',
+                    namespace: 'mctdepot.taxonomy',
                     key: m.key
                 };
             });
@@ -69,40 +69,40 @@ let compositionProvider = {
     }
 };
 
-class ServerPlugin {
+class MctDepotPlugin {
     constructor(config, metadata) {
         this.config = config;
         this.metadata = metadata;
     }
 
     installer(openmct) {
-        let config = openmct.serverPlugin.config;
+        let config = openmct.mctDepotPlugin.config;
 
         for (let i = 0; i < config.defs.length; i++) {
             let def = config.defs[i];
 
             openmct.objects.addRoot({
-                namespace: 'omctserver.taxonomy',
+                namespace: 'mctdepot.taxonomy',
                 key: def.type + '.rootfolder'
             });
         }
 
-        openmct.objects.addProvider('omctserver.taxonomy', objectProvider);
+        openmct.objects.addProvider('mctdepot.taxonomy', objectProvider);
 
         openmct.composition.addProvider(compositionProvider);
 
-        openmct.types.addType('omctserver.telemetry', {
+        openmct.types.addType('mctdepot.telemetry', {
             name: 'Telemetry Point',
-            description: 'Open MCT server telemetry point',
+            description: 'MCT Depot telemetry point',
             cssClass: 'icon-telemetry'
         });
 
-        console.log("Open MCT server plugin installed");
+        console.log("MCT Depot plugin installed");
     }
 }
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = ServerPlugin;
+    module.exports = MctDepotPlugin;
 } else {
-    window.ServerPlugin = ServerPlugin;
+    window.MctDepotPlugin = MctDepotPlugin;
 }
