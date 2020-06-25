@@ -1,0 +1,85 @@
+\begin{comment}
+Assignment has no clear scope or specification, exploratory to some degree since much of it is unknown - set own requirements
+
+Design Open MCT implementation; get telemetry from different sources, parse and adapt for display
+
+Minimize overhead with adding new data sources - should require work in a small amount of new code; backend and frontend needs to be flexible
+
+Prioritize loading and working with current known data sources (NA telemetry)
+Requirements
+ - Should be able to load current NA telemetry from their DB
+ - Needs to be modular and maintainable
+ - Should be able to provide x amount of data to x users in x time
+ 
+What do we have to work with - how do we get telemetry, what form does it come in?
+ - C struct stored in hex string
+
+What restrictions do we have on how/when/where we can get the telemetry?
+ - Restricted by IP, cannot get telemetry from anywhere easily - need to go through NA contact person to get new machines added
+
+What does Open MCT need?
+ - Object provider
+ - Telemetry provider
+ - Telemetry metadata provider
+\end{comment}
+
+\section{Problem and Scope}
+As the assignment is fairly open and exploratory to some degree, it has been necessary to collect some information about what was wanted from a telemetry processing and display system for HYPSO, such as which types of telemetry it should handle. This information has been collected and summarised in the sections below, and will be referenced later to guide the design and implementation process.
+
+\subsection{Inputs}
+The initial main source of data for the system and Open MCT will be stored historical telemetry data from a \Gls{postgrest} web server hosted by \Gls{nanoavionics}. Received telemetry values are returned from this service as C-style packed \glspl{struct} stored in hexadecimal strings, along with some metadata, inside a JSON object, as seen in Source Code \ref{code:eps_sample}. \cite{na_postgrest}
+
+This server places fairly severe limitations on where it can be accessed from, with manually distributed API keys and IP whitelisting being required before it can be used.
+
+\begin{code}
+\inputminted[linenos=true,breaklines=true,bgcolor=codebg]{javascript}{./Code/eps_telemetry_sample_trimmed.json}
+\captionof{listing}{Sample EPS telemetry datum from NanoAvionics' PostgREST server (JSON)}
+\label{code:eps_sample}
+\end{code}
+
+The data string (as seen in \inlinecode{epsa\_entry\_data} in source code \ref{code:eps_sample}) needs to be \glslink{unpacking}{unpacked} using a provided C \gls{struct} definition (see Source Code \ref{code:eps_struct}) before the data can be sorted or indexed by time, due to info about the time the telemetry applies to not being stored in the metadata sent with the string: It only contains the times for when the transmission associated with the telemetry datum was initiated and completed, not the time the telemetry data itself applies to.
+
+\begin{code}
+\inputminted[linenos=true,breaklines=true,bgcolor=codebg]{c}{./Code/eps_telemetry_struct_NAEPS001.txt}
+\captionof{listing}{EPS telemetry \gls{struct} definition (C) from \cite{na_eps}}
+\label{code:eps_struct}
+\end{code}
+
+Other inputs, such as image data and processed payload telemetry data, will likely also need to be integrated at a later time to allow accessing them through Open MCT.
+
+\subsection{Outputs}
+Open MCT needs a certain minimum of data to work. The implementation needs to provide past telemetry values plus present telemetry values with a reasonably short delay after they are received, and needs to provide metadata for these values so Open MCT knows how to request and display them.
+
+Other groups within HYPSO have also expressed a desire for access to telemetry data, which means that the implementation should provide a well-documented way to request or export its output data outside Open MCT.
+
+\subsection{Requirements}
+A concise overview of the interpreted requirements the implementation should fulfil is shown below.
+
+\subsubsection{Functional Requirements}
+\begin{enumerate}
+  \item[1.0] Should be able to display telemetry from NanoAvionics (NA) telemetry web server
+  \item[1.1] Should be able to display historical telemetry data from NA
+  \item[1.2] Should be able to display near-realtime telemetry data from NA
+  \item[2.0] Should be able to display telemetry from other sources
+  \item[3.0] Should be able to deliver or export processed telemetry outside Open MCT
+\end{enumerate}
+
+\subsubsection{Non-Functional Requirements}
+\begin{enumerate}
+  \item[1.0] Integrating new telemetry sources should require minimal extra work
+  \begin{itemize}
+    \item[Note:] \say{Minimal extra work} here implies that it should be well-documented how to add new telemetry sources, and that contact with new code and the need to understand implementation details of Open MCT should be minimised. The implementation should abstract away the connection to Open MCT from the user that is implementing the new telemetry source.
+  \end{itemize}
+  \item[2.0] Accessing telemetry data from outside Open MCT should require minimal extra work
+  \begin{itemize}
+    \item[Note:] This implies exports should be easy to acquire, and in a format that's easy to read/parse.
+  \end{itemize}
+  \item[3.0] Response times should be below one second for all \gls{frontend} actions
+  \item[4.0] End-to-end delay should be less than one minute
+  \begin{itemize}
+    \item[Note:] This means that the time between new telemetry being available from NanoAvionics to it showing up in Open MCT should be less than one minute.
+  \end{itemize}
+  \item[5.0] Implementation should be modular and expandable
+  \item[6.0] Implementation should introduce a minimum of new programming languages, concepts and frameworks to the HYPSO project, to assist with code adoption and maintenance by existing developers
+  \item[7.0] Implementation tests should have 75\% or better code coverage
+\end{enumerate}
