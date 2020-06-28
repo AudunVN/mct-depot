@@ -135,6 +135,8 @@ These were underspecified in the initial system design proposal due to much of t
 
 The final configuration has three plugins, with \inlinecode{ServerPlugin} being responsible for loading telemetry metadata from a \inlinecode{ConfigServer} and populating the Open MCT object tree (shown on the left-hand side in Figure \ref{fig:demoview}). After this \inlinecode{RealtimeClient} and \inlinecode{HistoryClient} are loaded, which as the names imply connect to a \inlinecode{RealtimeServer} and \inlinecode{HistoryServer} respectively to provide telemetry data to Open MCT.
 
+Implementing these plugins and the servers providing data to them were the largest challenge in the system, with more than a few revisions being required to get everything working in a way that made sense and didn't result in very messy code. It was also a challenge since the desired configuration for \Gls{depot} was fairly different from the reference implementation of Open MCT featured in their tutorial, which is the easiest way to get started with setting up an Open MCT data source and the required plugins for it. Doing it via the Open MCT API documentation isn't nearly as clear and straightforward to work with, but required if copying the implementation in the tutorial isn't a good option, like in this case.
+
 The updated class diagram for this subsystem can be found in Figure \ref{fig:new_cdserving}.
 
 \subsection{Test coverage}

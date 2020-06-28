@@ -24,12 +24,19 @@ The goal of this project assignment is to use this new framework to build a tele
 
 This report will start with quick introductions to what telemetry, Open MCT and HYPSO are, followed by an overview of the requirements and inputs plus outputs for the system we need to implement to get data from the HYPSO satellite into Open MCT. After this a design specification draft for a possible initial version of the system will be documented and discussed, before covering to the process, design changes and final results of implementing a functional version of the planned system.
 
-%\todo[inline]{Write about report structure}
-
 \section{Background}
 
 \subsection{Telemetry basics}
 Satellites and other spacecraft produce a fairly significant amount of data that needs to be processed on a day-to-day basis. The part of this that is sent to a ground station via a wireless communication link is what's commonly referred to as \gls{telemetry} in the space industry. Some of this data may be unique to the mission of the spacecraft, such as image data from a camera or a measurement from a scientific instrument. However, in many cases the most important data for the ground-based operators is the telemetry data that lets them gauge the current status of the spacecraft and subsequently plan future missions and actions for it.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Images/Diagrams/Telemetry Data Flow}
+    \caption{Data flow in the proposed Open MCT-based telemetry visualisation system}
+    \label{fig:telemetryflow}
+\end{figure}
+
+This is the kind of telemetry that will be the main focus of this project assignment. It usually consists of basic measurements done by the spacecraft on its hardware components, and allows ground station operators to view vital physical parameters for mission planning such as on-board power usage and generation, temperatures, position and attitude. Another common component of spacecraft telemetry is the state of its software, with important flags, variables and counters often being transmitted to let the operators know what it is doing. An example of a display showing this type of telemetry from a \Gls{cubesat} is seen in Figure \ref{fig:funcube}.
 
 \begin{figure}[ht]
     \centering
@@ -38,32 +45,33 @@ Satellites and other spacecraft produce a fairly significant amount of data that
     \label{fig:funcube}
 \end{figure}
 
-This is the kind of telemetry that will be the main focus of this project assignment. It usually consists of basic measurements done by the spacecraft on its hardware components, and allows ground station operators to view vital physical parameters for mission planning such as on-board power usage and generation, temperatures, position and attitude. Another common component of spacecraft telemetry is the state of its software, with important flags, variables and counters often being transmitted to let the operators know what it is doing. An example of a display showing this type of telemetry from a \Gls{cubesat} is seen in Figure \ref{fig:funcube}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.7\linewidth]{Images/Diagrams/Telemetry Data Flow}
-    \caption{Data flow in the proposed Open MCT-based telemetry visualisation system}
-    \label{fig:telemetryflow}
-\end{figure}
-
 Satellite telemetry visualisation systems commonly start at the satellite and end at a ground station, as seen in the first step in Figure \ref{fig:telemetryflow}, where one or more operators can view telemetry from the satellite and potentially send commands back. The HYPSO mission at NTNU wants to extend this to make telemetry data more readily accessible to team members and potentially external users outside the ground station using Open MCT, as seen towards the right in Figure \ref{fig:telemetryflow}.
 
 \subsection{NTNU HYPSO}
 The \acrshort{hypso} mission is primarily a science-oriented technology demonstrator. It will enable low-cost and high-performance hyperspectral imaging and autonomous on-board processing that fulfil science requirements in ocean colour remote sensing and oceanography.
 
-\begin{center}
-\includegraphics[width=0.7\linewidth]{Images/Picture1.png}
-\end{center}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Images/ImagingSession.jpg}
+    \caption{Illustration of a typical HYPSO ocean imaging session}
+    \label{fig:imaging}
+\end{figure}
 
-\acrshort{hypso} will be the first SmallSat launched by NTNU, with launch planned for Q4 2020 followed by a second mission later. These are part of a vision to provide a constellation of remote-sensing SmallSats, adding a space-based asset platform to the multi-agent architecture of \acrshort{uav}s, \acrshort{usv}s, \acrshort{auv}s and buoys that have similar ocean characterisation and monitoring objectives.
+\acrshort{hypso} will be the first SmallSat launched by NTNU, with launch planned for Q4 2020 followed by a second mission later. These are part of a vision to provide a constellation of remote-sensing SmallSats, adding a space-based asset platform to the multi-agent architecture of \acrshort{uav}s, \acrshort{usv}s, \acrshort{auv}s and buoys that have similar ocean characterisation and monitoring objectives as illustrated in Figure \ref{fig:ocean}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Images/Coord-1.png}
+    \caption{Coordinated multi-agent ocean-sensing architecture}
+    \label{fig:ocean}
+\end{figure}
 
 The \gls{satbus} and launch provider for the mission is \Gls{nanoavionics}, which also provides various other services such as telemetry storage and telecommand tools through their Mission Control Software package.
 
 \subsection{Open Mission Control Technologies}
 Open Mission Control Technologies (hereafter referred to as \say{Open MCT}) is a new mission control framework for visualisation of various types of data inside a web browser, both on mobile and desktop devices. It is actively developed as open source software at \acrshort{nasa}'s Ames Research Center, in collaboration with the Jet Propulsion Laboratory. 
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Images/mct_demo.png}
     \caption{Sample Open MCT-based telemetry view}
@@ -76,7 +84,7 @@ Another large advantage of Open MCT as a telemetry visualisation system is that 
 
 Plugins are also the main way for developers to add new functionality to Open MCT, such as adding a new telemetry source to display. Where this telemetry is provided from and over which protocols is not an explicit part of the Open MCT specification, but plugins are instead expected to register providers - special JavaScript functions, with specified inputs and outputs - for certain data types. These specify how Open MCT may request and receive that data, and how it can display it.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\linewidth]{Images/value_view.png}
     \caption{Sample Open MCT-based telemetry view, single value}
