@@ -16,7 +16,7 @@ The latest version of the source code for the implemented system is available at
   \label{fig:demoview}
 \end{figure}
 
-The v1.0 release allows viewing of historical and realtime telemetry data for the HYPSO satellite Electrical Power Supply and Flight Computer, with a custom sample view of this data shown in Figure \ref{fig:demoview}. This data may currently be loaded from a JSON file exported from the \acrshort{na} \Gls{postgrest} API, and in theory by connecting the server directly to the \Gls{postgrest} API, although this has only been tested against a mock server due to time and computer lab access constraints under the COVID-19 pandemic.
+The v1.0 release allows viewing of historical and realtime telemetry data for the HYPSO satellite Electrical Power Supply and Flight Computer, with a custom sample view of this data shown in Figure \ref{fig:demoview}. This data may currently be loaded from a JSON file exported from the \acrshort{na} \Gls{postgrest} API, and in theory by connecting the server directly to the NA \Gls{postgrest} API, although this has only been tested against a mock server due to time and computer lab access constraints under the COVID-19 pandemic.
 
 \subsection{Design change summary}
 All of the modules in the system required some level of change or adaptation during the development process from the initial design proposal from the previous section. Certain classes (such those for the logger and payload controller telemetry) were removed from version 1.0 due to insufficient time or test data, while others (such as the \inlinecode{DbPoller} and \inlinecode{DbHasher}) were added to account for unplanned changes in the implementation.
@@ -107,7 +107,7 @@ The performance improvements from this change were fairly substantial, with \inl
   \label{fig:perf_percentage}
 \end{figure}
 
-A comparison of the before/after performance of the data management and storage subsystem benchmarked using a \inlinecode{JsonFileTelemetryFetcher} at system startup can be found in figures \ref{fig:perf_time} to \ref{fig:perf_percentage}, with \say{\acrshort{db} init} referring to the case where the target database is empty.
+A comparison of the before/after performance of the data management and storage subsystem benchmarked using a \inlinecode{JsonFileTelemetryFetcher} at system startup can be found in figures \ref{fig:perf_time} to \ref{fig:perf_percentage}, with \say{\acrshort{db} init} referring to the case where the target database is empty. Note that bars not showing up for startup times after the performance improvements is not due to lacking data, but due to the values being close to zero.
 
 The raw data used to create the performance graphs may be found in appendix A.
 
@@ -140,7 +140,7 @@ Implementing these plugins and the servers providing data to them were the large
 The updated class diagram for this subsystem can be found in Figure \ref{fig:new_cdserving}.
 
 \subsection{Test coverage}
-The test coverage requirements specified in \acrshort{fr}5.0 were not quite met, but version 1.0 still has above $50\%$ unit test coverage for most files and metrics. The main hole in test coverage is for the Open MCT client plugins, due to them being finished last and functioning significantly different to all other parts of the system. Making good tests for them requires a significant level of insight into how Open MCT works.
+The test coverage requirements specified in \acrshort{fr}5.0 were not quite met, but version 1.0 still has above $60\%$ unit test coverage for most files and metrics. The main hole in test coverage is for the Open MCT client plugins, due to them being finished last and functioning significantly different to all other parts of the system. Making good tests for them requires a significant level of insight into how Open MCT works.
 
 A short summary of the system's test coverage may be found in table \ref{tab:tests}, with a full \Gls{jest} test coverage report available in appendix B.
 

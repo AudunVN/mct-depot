@@ -32,7 +32,7 @@ A simple high-level system block diagram for such a system is shown in Figure \r
   \label{fig:mctdepot}
 \end{figure}
 
-To make it easier to distinguish between new and existing code, the system that is to be implemented inside the dashed lines in Figure \ref{fig:block} has been given the name \emph{MCT Depot}, or just \emph{Depot} for short. The name comes from structure and function of the system resembling that of a train or bus depot, in that it processes and temporarily stores incoming telemetry data from various origins before routing it on to Open MCT or another destination, as seen in Figure \ref{fig:mctdepot}.
+To make it easier to distinguish between new and existing code, the system that is to be implemented inside the dashed lines in Figure \ref{fig:block} has been given the name \emph{MCT Depot}. The name comes from structure and function of the system resembling that of a train or bus depot, in that it processes and temporarily stores incoming telemetry data from various origins before routing it on to Open MCT or another destination, as seen in Figure \ref{fig:mctdepot}.
 
 \subsection{Language and framework selection}
 To implement \Gls{depot} as outlined above, it was as consequence of \acrshort{nfr}10.0 decided to use JavaScript (in the form of \Gls{ecma}) for the \gls{backend} since it’s already used in the Open MCT \gls{frontend}. This avoids introducing more than one new programming language for the HYPSO project to support in relation to this system, and encourages code reuse between the \gls{frontend} and \gls{backend}.

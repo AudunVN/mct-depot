@@ -388,8 +388,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="247.88482"
-     inkscape:cy="257.42561"
+     inkscape:cx="157.38482"
+     inkscape:cy="203.42561"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -411,7 +411,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -847,20 +847,20 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="285.99521"
+       x="289.99521"
        y="848.95355"
        id="text7003"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan7005"
-         x="285.99521"
+         x="289.99521"
          y="848.95355"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:Quicksand;-inkscape-font-specification:Quicksand;text-align:center;text-anchor:middle">Open MCT</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:Quicksand;-inkscape-font-specification:Quicksand;text-align:center;text-anchor:middle"
+         id="tspan7007">MCT</tspan><tspan
          sodipodi:role="line"
-         x="285.99521"
+         x="289.99521"
          y="877.07855"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;font-family:Quicksand;-inkscape-font-specification:Quicksand;text-align:center;text-anchor:middle"
-         id="tspan7007">Server</tspan></text>
+         id="tspan4443">Depot</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

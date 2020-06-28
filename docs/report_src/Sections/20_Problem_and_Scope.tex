@@ -27,7 +27,7 @@ What does Open MCT need?
 The assignment for this project was fairly open and to some degree exploratory. It has therefore been necessary to collect some information about what was wanted from a telemetry processing and display system for HYPSO, such as which types of telemetry it should handle. This information has been collected and summarised in the sections below, and will be referenced later to guide the design and implementation process.
 
 \subsection{Inputs}
-The initial main source of data for the system and Open MCT will be stored historical telemetry data from a \Gls{postgrest} web server hosted by \Gls{nanoavionics}. Received telemetry values can be retrieved from this service as C-style packed \glspl{struct} stored in hexadecimal strings, along with some metadata, inside a JSON object, as seen in Source Code \ref{code:eps_sample}. The telemetry returned from this server before HYPSO is launched comes from a ground-based test satellite. \cite{na_postgrest}
+The initial main source of data for the system and Open MCT will be stored historical telemetry data from a \Gls{postgrest} web server hosted by \Gls{nanoavionics}. Received telemetry values can be retrieved from this service as C-style packed \glspl{struct} stored in hexadecimal strings, along with some metadata, inside a JSON object, as seen in Source Code \ref{code:eps_sample}. The telemetry returned from this server before HYPSO is launched comes from a ground-based test satellite \cite{na_postgrest}.
 
 This server places fairly severe limitations on where it can be accessed from, with manually distributed API keys and IP address whitelisting being required before it can be used.
 

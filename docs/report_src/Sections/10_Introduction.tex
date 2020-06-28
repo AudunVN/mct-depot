@@ -18,11 +18,13 @@ Motivation
 
 The HYPSO project at NTNU SmallSats is in need of a system for displaying and working with telemetry data from the satellite.
 
-Current space telemetry visualisation systems are often large monoliths of closed-source software written exclusively for one system with limited potential for modification or reuse without extensive rewrites. One major exception to this is the recently emerging Open Mission Control Technologies framework from NASA and JPL, which provides an interesting opportunity for trying out a new and more flexible approach to telemetry visualisation.
+Current space telemetry visualisation systems are often large monoliths of closed-source software written exclusively for one system with limited potential for modification or reuse without extensive rewrites. One major exception to this is the recently emerging Open Mission Control Technologies data presentation framework from NASA and JPL, which provides an interesting opportunity for trying out a new and more flexible approach to telemetry visualisation.
 
-The goal of this project assignment is to use this new framework to build a telemetry data visualisation system for the HYPSO satellite, and investigate if it is a good fit for the HYPSO team as a telemetry visualisation system.
+The goal of this project assignment is to use this new framework to build a telemetry data visualisation solution for the HYPSO satellite, and investigate if it is a good fit for the HYPSO team as a telemetry visualisation system.
 
-This report will start with quick introductions to what telemetry, Open MCT and HYPSO are, followed by an overview of the requirements and inputs plus outputs for the system we need to implement to get data from the HYPSO satellite into Open MCT. After this a design specification draft for a possible initial version of the system will be documented and discussed, before covering to the process, design changes and final results of implementing a functional version of the planned system.
+It became clear early in the project that it would be required to implement a new intermediate system to process and store the telemetry data before Open MCT could use it. This intermediate system is named \Gls{depot}, and is the main subject and end result of this project.
+
+This report will start with quick introductions to what telemetry, Open MCT and HYPSO are, followed by an overview of the requirements and inputs plus outputs \Gls{depot} needs to have to get data from the HYPSO satellite into Open MCT. After this a design specification draft for a possible initial version of \Gls{depot} will be documented and discussed, before covering the process, design changes and final results of implementing a functional version of it.
 
 \section{Background}
 
@@ -57,7 +59,7 @@ The \acrshort{hypso} mission is primarily a science-oriented technology demonstr
     \label{fig:imaging}
 \end{figure}
 
-\acrshort{hypso} will be the first SmallSat launched by NTNU, with launch planned for Q4 2020 followed by a second mission later. These are part of a vision to provide a constellation of remote-sensing SmallSats, adding a space-based asset platform to the multi-agent architecture of \acrshort{uav}s, \acrshort{usv}s, \acrshort{auv}s and buoys that have similar ocean characterisation and monitoring objectives as illustrated in Figure \ref{fig:ocean}.
+\acrshort{hypso} will be the first \Gls{smallsat} launched by NTNU, with launch planned for Q4 2020 followed by a second mission later. These are part of a vision to provide a constellation of remote-sensing SmallSats, adding a space-based asset platform to the multi-agent architecture of \acrshort{uav}s, \acrshort{usv}s, \acrshort{auv}s and buoys that have similar ocean characterisation and monitoring objectives as illustrated in Figure \ref{fig:ocean}.
 
 \begin{figure}[ht]
     \centering
@@ -80,9 +82,9 @@ Open Mission Control Technologies (hereafter referred to as \say{Open MCT}) is a
 
 It is very flexible and extensible, allowing for many different types of data to be integrated and easily accessible on one single website for mission planning and \gls{telemetry} data analysis. It reduces the need for mission operators to switch between many different applications to view all necessary data. \cite{dev_interview, mctos}
 
-Another large advantage of Open MCT as a telemetry visualisation system is that it allows end users to customise and share their own telemetry views without complex programming. This opens up for quick adaptation to unpredicted use cases that would commonly require significant time investment by programmers in more traditional telemetry visualisation systems; instead, Open MCT allows end users to access all its data how and when they want. This is enabled by the many plugins available by default in Open MCT \cite{mctplugins}, providing multiple ways to display data using graphs, lists and tables, in addition to providing data export functionality right out of the box. \cite{omct_intro}
+Another large advantage of Open MCT as a telemetry visualisation system is that it allows end users to customise and share their own telemetry views without complex programming. This opens up for quick adaptation to unpredicted use cases that would commonly require significant time investment by programmers in more traditional telemetry visualisation systems; instead, Open MCT allows end users to access all its data how and when they want. This is enabled by the many plugins available by default in Open MCT \cite{mctplugins}, providing multiple ways to display data using graphs, lists and tables, in addition to providing data export functionality right out of the box \cite{omct_intro}. 
 
-Plugins are also the main way for developers to add new functionality to Open MCT, such as adding a new telemetry source to display. Where this telemetry is provided from and over which protocols is not an explicit part of the Open MCT specification, but plugins are instead expected to register providers - special JavaScript functions, with specified inputs and outputs - for certain data types. These specify how Open MCT may request and receive that data, and how it can display it.
+Plugins are also the main way for developers to add new functionality to Open MCT, such as adding a new telemetry source to display. The Open MCT framework does not explicitly specify telemetry sources or protocols, but plugins are instead expected to register providers - special JavaScript functions, with specified inputs and outputs - for certain data types. These specify how Open MCT may request and receive that data, and how it can display it.
 
 \begin{figure}[H]
     \centering
@@ -96,12 +98,12 @@ A high-level overview of the providers implemented as part of a typical Open MCT
 %The framework went through a major version update during 2018-2019, resulting in numerous changes that made much of the available tutorials, documentation and earlier project reports outdated as of the writing of this report.
 
 \subsection{Existing implementations}
-There are few current users of Open MCT which make their implementations available to the public, but it is used widely within \acrshort{nasa} and \acrshort{jpl} for both space-based and terrestrial applications, with some of the more recognisable names being the Mars 2020 rover Perseverance, Mars Cube One, ICESat 2 and the Cold Atom Laboratory. LightSail 2 is an example of a high-profile non-\acrshort{nasa}/\acrshort{jpl} external user of Open MCT. \cite{omct_users}
+There are few current users of Open MCT which make their implementations available to the public, but it is used widely within \acrshort{nasa} and \acrshort{jpl} for both space-based and terrestrial applications, with some of the more recognisable names being the Mars 2020 rover Perseverance, Mars Cube One, ICESat 2 and the Cold Atom Laboratory. LightSail 2 is an example of a high-profile non-\acrshort{nasa}/\acrshort{jpl} external user of Open MCT \cite{omct_users}. 
 
 Some of the more well-documented recent Open MCT implementations will be briefly introduced below, with most detail being given to the Open MCT project's official tutorial which is the common starting point for all of them.
 
 \subsubsection{Open MCT tutorial}
-This is the current reference Open MCT implementation, and the easiest way to get started with the framework as the current documentation can be somewhat lacking or confusing to start with from scratch.
+This is the current reference Open MCT implementation, and the easiest way to get started with the framework as the current documentation can be somewhat lacking or confusing to start with.
 
 \Gls{node} and \Gls{express} is used to implement a telemetry web server that simulates a simple spacecraft. It provides telemetry for it as \acrshort{json} over \acrshort{http} for historical data, and over \Gls{ws} for realtime data.
 
@@ -112,12 +114,12 @@ In Open MCT a plugin (called the \say{dictionary plugin}) is used to load the me
 \subsubsection{CloudTurbine}
 CloudTurbine - a NASA-supported data streaming service - has made a prototype interface for Open MCT to test various aspects of how their service can be used with it.
 
-Their prototype is a direct fork of the Open MCT tutorial repository. They have developed what they call a \say{telemetry generator layer} in Express between the CloudTurbine service and Open MCT, with the generator layer querying their backend for new data and supplying it to Open MCT as JSON over a \acrshort{http} or \Gls{ws} connection. \cite{cloudturbine}
+Their prototype is a direct fork of the Open MCT tutorial repository. They have developed what they call a \say{telemetry generator layer} in Express between the CloudTurbine service and Open MCT, with the generator layer querying their backend for new data and supplying it to Open MCT as JSON over a \acrshort{http} or \Gls{ws} connection \cite{cloudturbine}. 
 
 \subsubsection{ROSMCT}
 ROSMCT uses Open MCT to provide data and telemetry visualisation for Robot Operating System (ROS) robots. It consists of three distinct components, with a Rosbridge node (which provides a \acrshort{json} \acrshort{api} for ROS) running on the ROS instance to collect data from, a web server that collects data from Rosbridge, and finally an Open MCT plugin that allows the data to be displayed in Open MCT.
 
-The web server in between Open MCT and the Rosbridge node does not have any local telemetry storage, and only provides access to realtime data from the ROS instance. \cite{rosmct}
+The web server in between Open MCT and the Rosbridge node does not have any local telemetry storage, and only provides access to realtime data from the ROS instance \cite{rosmct}. 
 
 \subsubsection{Other implementations}
 A select few other interesting public uses of Open MCT that unfortunately couldn't get a full description in this report can be found in the list below.
