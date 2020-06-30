@@ -9,7 +9,8 @@ Add image/data output from imager
 \section{Future Work}
 %\todo[inline]{Describe future project/master/similar work, expand to-do list - what suggestions and known issues are there?}
 
-The system can and should be expanded upon before it can be used as a practical telemetry visualisation system. A list of proposed potential changes and improvements to the v1.0 release of the system may be found in the list below.
+\subsection{Further necessary development}
+\Gls{depot} can and should be expanded upon before it can be used as a practical telemetry visualisation system. A list of proposed potential changes and improvements to the v1.0 release of the system may be found in the list below.
 
 \begin{itemize}
   \item Create custom views with relevant telemetry data for different real-world situations and users
@@ -26,3 +27,28 @@ The system can and should be expanded upon before it can be used as a practical 
 \end{itemize}
 
 A more detailed list may also be found in the issue tracker on the project's GitHub repository.
+
+\subsection{Extensions in scale and application}
+In addition to the above continuing necessary work on version 1.0 of \Gls{depot}, there is a lot of potential for new research with the current system as a starting point. \Gls{smallsat} vehicle development and production seems to have progressed faster than their corresponding ground stations, especially when it comes to operating multi-agent constellations. Some interesting avenues to explore for further research could be:
+
+\begin{itemize}
+    \item Satellite simulation as an input
+    \begin{itemize}
+      \item Enables prediction and analysis of satellite behaviour for mission planning
+      \item Allows operator to quickly identify and analyse deviations from expected satellite behaviour
+      \item Would let system autonomously issue alerts and warnings based on deviations from expected satellite state
+      \item Could do online/autonomous model improvements based on inputs and outputs from real spacecraft
+    \end{itemize}
+    \item Extending architecture to allow for server-side data processing
+    \begin{itemize}
+      \item Explore options to allow for scalable and distributed data processing
+      \item Explore options to allow for new well-integrated visualisations to display processed/aggregate data, such as for multi-agent systems
+    \end{itemize}
+    \item Add data from multiple different agents, such as more \Gls{smallsat}s, \Gls{uav}s, and \Gls{usv}s
+    \begin{itemize}
+      \item Allows exploration and monitoring of flexible multiagent systems
+      \item Enables better mission coordination, can use data/sensor fusion and other techniques to monitor full system status and mission progress in one place
+    \end{itemize}
+\end{itemize}
+
+It is also worth noting that while there is not a lot of prior published research on this within the SmallSat field, multiple of the above topics have interesting commonalities with other fields within computer science and engineering. There are many ground-based industries that require large-scale telemetry monitoring and processing, such as large-scale web services, power grids, water management, chemical processing and agriculture.
