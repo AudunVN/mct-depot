@@ -27,7 +27,7 @@ What does Open MCT need?
 The assignment for this project was fairly open and to some degree exploratory. It has therefore been necessary to collect some information about what was wanted from a telemetry processing and display system for HYPSO, such as which types of telemetry it should handle. This information has been collected and summarised in the sections below, and will be referenced later to guide the design and implementation process.
 
 \subsection{Inputs}
-The initial main source of data for the system and Open MCT will be stored historical telemetry data from a \Gls{postgrest} web server hosted by \Gls{nanoavionics}. Received telemetry values can be retrieved from this service as C-style packed \glspl{struct} stored in hexadecimal strings, along with some metadata, inside a JSON object, as seen in Source Code \ref{code:eps_sample}. The telemetry returned from this server before HYPSO is launched comes from a ground-based test satellite \cite{na_postgrest}.
+The initial main source of data for the system and Open MCT will be stored historical telemetry data from a \Gls{postgrest} web server hosted by \Gls{nanoavionics}. Received telemetry values can be retrieved from this service as C-style packed \glspl{struct} stored in hexadecimal strings, along with some \gls{metadata}, inside a JSON object, as seen in Source Code \ref{code:eps_sample}. The telemetry returned from this server before HYPSO is launched comes from a ground-based test satellite \cite{na_postgrest}.
 
 This server places fairly severe limitations on where it can be accessed from, with manually distributed API keys and IP address whitelisting being required before it can be used.
 
@@ -37,7 +37,7 @@ This server places fairly severe limitations on where it can be accessed from, w
 \label{code:eps_sample}
 \end{code}
 
-The data string (as seen in \inlinecode{epsa\_entry\_data} in Source Code \ref{code:eps_sample}) needs to be \glslink{unpacking}{unpacked} using a provided C \gls{struct} definition (see Source Code \ref{code:eps_struct}) before the data can be sorted or indexed by time, due to info about the time the telemetry applies to not being stored in the metadata sent with the string: It only contains the times for when the transmission associated with the telemetry datum was initiated and completed, not the time the telemetry data itself applies to. These times may be significantly different, since the HYPSO satellite does not have continuous contact with a ground station.
+The data string (as seen in \inlinecode{epsa\_entry\_data} in Source Code \ref{code:eps_sample}) needs to be \glslink{unpacking}{unpacked} using a provided C \gls{struct} definition (see Source Code \ref{code:eps_struct}) before the data can be sorted or indexed by time, due to info about the time the telemetry applies to not being stored in the \gls{metadata} sent with the string: It only contains the times for when the transmission associated with the telemetry datum was initiated and completed, not the time the telemetry data itself applies to. These times may be significantly different, since the HYPSO satellite does not have continuous contact with a ground station.
 
 \begin{code}
 \inputminted[linenos=true,breaklines=true,bgcolor=codebg]{c}{./Code/eps_telemetry_struct_NAEPS001.txt}
@@ -48,7 +48,7 @@ The data string (as seen in \inlinecode{epsa\_entry\_data} in Source Code \ref{c
 Other inputs, such as image data and processed payload telemetry data, will likely also need to be integrated at a later time to allow accessing them through Open MCT. This is due to the flexibility it offers with regards to navigating and displaying data, and the convenience of eventually having all the data output from the satellite accessible in one place. This means that the implementation will need to be fairly flexible with regards to what inputs it accepts; raw telemetry from NanoAvionics will not be the only data input to the system in the long-term, which needs to be accounted and planned for from the beginning.
 
 \subsection{Outputs}
-Open MCT needs a certain minimum of output data from the implemented system to work, in addition to custom JavaScript plugins to map these outputs to inputs Open MCT can understand. The implemented system must provide past telemetry values plus present telemetry values to these plugins with a reasonably short delay after they are received, and also provide value metadata so Open MCT can know how to display them.
+Open MCT needs a certain minimum of output data from the implemented system to work, in addition to custom JavaScript plugins to map these outputs to inputs Open MCT can understand. The implemented system must provide past telemetry values plus present telemetry values to these plugins with a reasonably short delay after they are received, and also provide value \gls{metadata} so Open MCT can know how to display them.
 
 \begin{code}
 \inputminted[linenos=true,breaklines=true,bgcolor=codebg]{javascript}{./Code/telemetry_metadata_sample.json}
@@ -56,7 +56,7 @@ Open MCT needs a certain minimum of output data from the implemented system to w
 \label{code:mct_metadata}
 \end{code}
 
-A sample of the practical minimum amount of metadata Open MCT needs to display a visualisation for one telemetry value (here \inlinecode{vBatt}, the battery voltage, as stored in Source Code \ref{code:eps_struct}) is shown in Source Code \ref{code:mct_metadata}. This illustrates that there is a fair bit of work that needs to be done to go from input to output in the required implementation, at least for telemetry from the NanoAvionics server.
+A sample of the practical minimum amount of \gls{metadata} Open MCT needs to display a visualisation for one telemetry value (here \inlinecode{vBatt}, the battery voltage, as stored in Source Code \ref{code:eps_struct}) is shown in Source Code \ref{code:mct_metadata}. This illustrates that there is a fair bit of work that needs to be done to go from input to output in the required implementation, at least for telemetry from the NanoAvionics server.
 
 Another important note regarding the implementation's output is that other groups within HYPSO have also expressed a desire for access to unpacked telemetry data, which means that there should be a well-documented way to request or export its output data outside Open MCT.
 

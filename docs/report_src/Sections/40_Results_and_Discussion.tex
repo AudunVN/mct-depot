@@ -21,7 +21,7 @@ The v1.0 release allows viewing of historical and realtime telemetry data for th
 \subsection{Design change summary}
 All of the modules in the system required some level of change or adaptation during the development process from the initial design proposal from the previous section. Certain classes (such those for the logger and payload controller telemetry) were removed from version 1.0 due to insufficient time or test data, while others (such as the \inlinecode{DbPoller} and \inlinecode{DbHasher}) were added to account for unplanned changes in the implementation.
 
-The telemetry serving and client subsystems in particular were not described in much detail in the design draft, and have had multiple new classes added, such as a new \acrshort{http} server-client pair for providing system configuration and telemetry metadata to Open MCT.
+The telemetry serving and client subsystems in particular were not described in much detail in the design draft, and have had multiple new classes added, such as a new \acrshort{http} server-client pair for providing system configuration and telemetry \gls{metadata} to Open MCT.
 
 The database-related classes also saw multiple changes due to the initial specification for them being too simple or slow in practice.
 
@@ -66,7 +66,7 @@ The updated class diagram for these modules can be found in Figure \ref{fig:new_
 \subsubsection{Telemetry processing subsystem}
 The main change is the addition of a new \inlinecode{parse(telemetryString)} method, which takes telemetry data directly from a fetcher and parses it to a valid telemetry object; this operation has no inverse, as the original telemetry string is included in this object and directly stored in the database in case it is required later, either due to changes in the definition requiring it to be parsed again or if another service than Open MCT needs access to a full copy of it. The field is also hashed and used to quickly check if an incoming telemetry sample already exists in the database.
 
-Another new method is the \inlinecode{GetMctMetadata()} method, which returns a list of telemetry value metadata ready for use in Open MCT.
+Another new method is the \inlinecode{GetMctMetadata()} method, which returns a list of telemetry value \gls{metadata} ready for use in Open MCT.
 
 The updated class diagram for this subsystem can be found in Figure \ref{fig:new_cdparsing}.
 
@@ -121,7 +121,7 @@ The updated class diagram for this subsystem can be found in Figure \ref{fig:new
 \end{figure}
 
 \subsubsection{Telemetry serving subsystem}
-The updated class diagram for this subsystem can be found in Figure \ref{fig:new_cdserving}. The main change here is the addition of the \inlinecode{ConfigServer} class, which provides system configuration from a \inlinecode{Config} instance and telemetry value metadata from \inlinecode{GetAllMctMetadata()} on a \inlinecode{TelemetryParser}.
+The updated class diagram for this subsystem can be found in Figure \ref{fig:new_cdserving}. The main change here is the addition of the \inlinecode{ConfigServer} class, which provides system configuration from a \inlinecode{Config} instance and telemetry value \gls{metadata} from \inlinecode{GetAllMctMetadata()} on a \inlinecode{TelemetryParser}.
 
 \begin{figure}[H]
   \centering
@@ -133,7 +133,7 @@ The updated class diagram for this subsystem can be found in Figure \ref{fig:new
 \subsubsection{Open MCT client plugins}
 These were underspecified in the initial system design proposal due to much of the implementation details being unknown, as with the telemetry serving subsystem that they connect to.
 
-The final configuration has three plugins, with \inlinecode{ServerPlugin} being responsible for loading telemetry metadata from a \inlinecode{ConfigServer} and populating the Open MCT object tree (shown on the left-hand side in Figure \ref{fig:demoview}). After this \inlinecode{RealtimeClient} and \inlinecode{HistoryClient} are loaded, which as the names imply connect to a \inlinecode{RealtimeServer} and \inlinecode{HistoryServer} respectively to provide telemetry data to Open MCT.
+The final configuration has three plugins, with \inlinecode{ServerPlugin} being responsible for loading telemetry \gls{metadata} from a \inlinecode{ConfigServer} and populating the Open MCT object tree (shown on the left-hand side in Figure \ref{fig:demoview}). After this \inlinecode{RealtimeClient} and \inlinecode{HistoryClient} are loaded, which as the names imply connect to a \inlinecode{RealtimeServer} and \inlinecode{HistoryServer} respectively to provide telemetry data to Open MCT.
 
 Implementing these plugins and the servers providing data to them were the largest challenge in the system, with more than a few revisions being required to get everything working in a way that made sense and didn't result in very messy code. It was also a challenge since the desired configuration for \Gls{depot} was fairly different from the reference implementation of Open MCT featured in their tutorial, which is the easiest way to get started with setting up an Open MCT data source and the required plugins for it. Doing it via the Open MCT API documentation isn't nearly as clear and straightforward to work with, but required if copying the implementation in the tutorial isn't a good option, like in this case.
 

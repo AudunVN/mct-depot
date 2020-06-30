@@ -93,7 +93,7 @@ Plugins are also the main way for developers to add new functionality to Open MC
     \label{fig:omctvalue}
 \end{figure}
 
-A high-level overview of the providers implemented as part of a typical Open MCT plugin for a custom telemetry source is the composition provider, object provider and telemetry provider. The composition provider defines where each value is located in the object tree on the left-hand side in Figure \ref{fig:omctvalue}. The object provider essentially maps metadata for each value to a JavaScript object Open MCT can understand (see Source Code \ref{code:mct_metadata}), which allows it to use values received from a telemetry provider - either in real-time or on request - to display a graph or other visualisation.
+A high-level overview of the providers implemented as part of a typical Open MCT plugin for a custom telemetry source is the composition provider, object provider and telemetry provider. The composition provider defines where each value is located in the object tree on the left-hand side in Figure \ref{fig:omctvalue}. The object provider essentially maps \gls{metadata} for each value to a JavaScript object Open MCT can understand (see Source Code \ref{code:mct_metadata}), which allows it to use values received from a telemetry provider - either in real-time or on request - to display a graph or other visualisation.
 
 %The framework went through a major version update during 2018-2019, resulting in numerous changes that made much of the available tutorials, documentation and earlier project reports outdated as of the writing of this report.
 
@@ -107,7 +107,7 @@ This is the current reference Open MCT implementation, and the easiest way to ge
 
 \Gls{node} and \Gls{express} is used to implement a telemetry web server that simulates a simple spacecraft. It provides telemetry for it as \acrshort{json} over \acrshort{http} for historical data, and over \Gls{ws} for realtime data.
 
-In Open MCT a plugin (called the \say{dictionary plugin}) is used to load the metadata specifying how the each data point in the telemetry should be displayed and acquired from the server. Two separate plugins provide the actual implementation of the \acrshort{http} and \Gls{ws} clients that interface with the aforementioned web server.
+In Open MCT a plugin (called the \say{dictionary plugin}) is used to load the \gls{metadata} specifying how the each data point in the telemetry should be displayed and acquired from the server. Two separate plugins provide the actual implementation of the \acrshort{http} and \Gls{ws} clients that interface with the aforementioned web server.
 
 %A quick overview of the data flow in the example setup is shown in Figure \ref{ for reference.
 
