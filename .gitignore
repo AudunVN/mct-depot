@@ -5,3 +5,5 @@ openmct
 .VSCodeCounter
 coverage
 .clinic/
+
+*.sqlite3-journal
