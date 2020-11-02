@@ -7,3 +7,5 @@ coverage
 .clinic/
 
 *.sqlite3-journal
+
+*.log

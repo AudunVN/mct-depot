@@ -5,8 +5,8 @@
 	"main": "server/run.js",
 	"scripts": {
 		"start": "node server/run.js",
-		"perftest": "clinic doctor --on-port=\"timeout 5 & autocannon localhost:8471 & timeout 5 & autocannon localhost:8471/config & timeout 5 & autocannon localhost:8471/fc/history/uptimeInS?endTime=1604329685571 & timeout 5 & autocannon localhost:8471/fc/history/?endTime=1604329685571\" -- node server/run.js",
-		"dbperftest": "move state\\db.sqlite3 state\\perftest-db-backup.sqlite3 & clinic doctor --on-port=\"timeout 5 & autocannon localhost:8471 & timeout 5 & autocannon localhost:8471/config & timeout 5 & autocannon localhost:8471/fc/history/uptimeInS?endTime=1604329685571 & timeout 5 & autocannon localhost:8471/fc/history/?endTime=1604329685571 & timeout 5 & move /Y state\\perftest-db-backup.sqlite3 state\\db.sqlite3\" -- node server/run.js",
+		"perftest": "clinic doctor --on-port=\"timeout 5 & autocannon localhost:8471 & timeout 5 & autocannon localhost:8471/config & timeout 5 & autocannon localhost:8471/fc/history/uptimeInS?endTime=1604329685571 & timeout 5 & autocannon localhost:8471/fc/history/?endTime=1604329685571 & timeout 5\" -- node server/run.js",
+		"dbperftest": "echo off & echo Please hit Ctrl + C once MCT Depot has started up. & pause & echo on & move /Y state\\db.sqlite3 state\\perftest-db-backup.sqlite3 & clinic doctor -- node server/run.js & move /Y state\\perftest-db-backup.sqlite3 state\\db.sqlite3",
 		"test": "jest --coverage",
 		"closeTest": "jest --runInBand --detectOpenHandles"
 	},
