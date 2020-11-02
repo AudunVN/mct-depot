@@ -22,11 +22,20 @@ class HistoryServer
         let def = this.def;
 
         this.router.get('/', function (request, response) {
-            let data = db.reader.read(def.type, request.query.startTime, request.query.endTime);
+			if (!request.query.startTime) {
+				request.query.startTime = 0;
+			}
+
+			let data = db.reader.read(def.type, request.query.startTime, request.query.endTime);
+			
             response.status(200).send(data);
         });
 
         this.router.get('/:valueName', function (request, response) {
+			if (!request.query.startTime) {
+				request.query.startTime = 0;
+			}
+			
             let points = db.reader.read(def.type, request.query.startTime, request.query.endTime);
             
             let values = [];

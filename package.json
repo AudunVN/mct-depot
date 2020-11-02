@@ -1,37 +1,38 @@
 {
-  "name": "hypso-openmct",
-  "version": "0.0.1",
-  "description": "OpenMCT implementation for the HYPSO satellite",
-  "main": "server/run.js",
-  "scripts": {
-    "start": "node server/run.js",
-    "test": "jest --coverage",
-    "closeTest": "jest --runInBand --detectOpenHandles"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AudunVN/hypso-openmct.git"
-  },
-  "author": "AudunVN",
-  "bugs": {
-    "url": "https://github.com/AudunVN/hypso-openmct/issues"
-  },
-  "homepage": "https://github.com/AudunVN/hypso-openmct#readme",
-  "dependencies": {
-    "better-sqlite3": "^7.0.1",
-    "eslint": "^6.8.0",
-    "eslint-plugin-jest": "^23.13.2",
-    "express": "^4.16.4",
-    "express-ws": "^4.0.0",
-    "ezstruct": "^0.0.3",
-    "isomorphic-ws": "^4.0.1",
-    "jest": "^25.1.0",
-    "node-fetch": "^2.6.1",
-    "openmct": "git+https://github.com/KhaledSharif/openmct",
-    "simple-node-logger": "^18.12.24",
-    "sqlite3": "^4.1.1",
-    "supertest": "^4.0.2",
-    "uuid": "^8.1.0",
-    "ws": "^6.2.1"
-  }
+	"name": "hypso-openmct",
+	"version": "1.0.0",
+	"description": "OpenMCT implementation for the HYPSO satellite",
+	"main": "server/run.js",
+	"scripts": {
+		"start": "node server/run.js",
+		"perftest": "clinic doctor --on-port=\"autocannon localhost:8471 & timeout 5 & autocannon localhost:8471/config & timeout 5 & autocannon localhost:8471/fc/history/uptimeInS?endTime=1604329685571\" -- node server/run.js",
+		"test": "jest --coverage",
+		"closeTest": "jest --runInBand --detectOpenHandles"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AudunVN/hypso-openmct.git"
+	},
+	"author": "AudunVN",
+	"bugs": {
+		"url": "https://github.com/AudunVN/hypso-openmct/issues"
+	},
+	"homepage": "https://github.com/AudunVN/hypso-openmct#readme",
+	"dependencies": {
+		"better-sqlite3": "^7.0.1",
+		"eslint": "^6.8.0",
+		"eslint-plugin-jest": "^23.13.2",
+		"express": "^4.16.4",
+		"express-ws": "^4.0.0",
+		"ezstruct": "^0.0.3",
+		"isomorphic-ws": "^4.0.1",
+		"jest": "^25.1.0",
+		"node-fetch": "^2.6.1",
+		"openmct": "git+https://github.com/KhaledSharif/openmct",
+		"simple-node-logger": "^18.12.24",
+		"sqlite3": "^4.1.1",
+		"supertest": "^4.0.2",
+		"uuid": "^8.1.0",
+		"ws": "^6.2.1"
+	}
 }

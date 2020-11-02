@@ -4,3 +4,4 @@ openmct
 *.sqlite3
 .VSCodeCounter
 coverage
+.clinic/
