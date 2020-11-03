@@ -8,7 +8,7 @@ class MetadataServer
     {
         this.router = express.Router();
         this.router.use(express.json());
-        
+
         this.def = def;
         this.metadata = metadata;
 
@@ -18,7 +18,7 @@ class MetadataServer
     start()
     {
         let metadata = this.metadata;
-        
+
         this.router.get('/', function (request, response) {
             response.status(200).send(metadata);
         });

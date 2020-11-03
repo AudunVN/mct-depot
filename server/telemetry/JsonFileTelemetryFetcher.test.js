@@ -28,7 +28,7 @@ test('no file input yields empty output', () => {
 
 test('invalid (non-JSON) file input yields empty output', () => {
     def.filePath = "server/telemetry/JsonFileTelemetryFetcher.js";
-    
+
     let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
     let result = fetcher.fetch();
 
@@ -40,7 +40,7 @@ test('valid input file yields non-empty output', () => {
 
     let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
     let result = fetcher.fetch();
-    
+
     expect(result).not.toEqual([]);
     expect(result.length).toBeGreaterThan(0);
 });
@@ -79,7 +79,7 @@ test('can write fetched points to database', () => {
 test('does not write duplicate points to database', () => {
     def.filePath = "samples/fc_test_archive_v.json";
     db.clearRows();
-    
+
     let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
 
     let points = fetcher.fetch();

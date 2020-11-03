@@ -18,7 +18,7 @@ module.exports = {
     ],
     "parserOptions": {
         "allowImportExportEverywhere": true,
-        "ecmaVersion": 2015,
+        "ecmaVersion": 2017,
         "ecmaFeatures": {
             "impliedStrict": true
         }
