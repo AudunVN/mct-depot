@@ -8,11 +8,11 @@ class HistoryServer
     {
         this.router = express.Router();
         this.router.use(express.json());
-        
+
         this.def = def;
         this.db = db;
         this.config = config;
-        
+
         this.start();
     }
 
@@ -22,24 +22,24 @@ class HistoryServer
         let def = this.def;
 
         this.router.get('/', function (request, response) {
-			if (!request.query.startTime) {
-				request.query.startTime = 0;
-			}
+            if (!request.query.startTime) {
+                request.query.startTime = 0;
+            }
 
-			let data = db.reader.read(def.type, request.query.startTime, request.query.endTime);
-			
+            let data = db.reader.read(def.type, request.query.startTime, request.query.endTime);
+
             response.status(200).send(data);
         });
 
         this.router.get('/:valueName', function (request, response) {
-			if (!request.query.startTime) {
-				request.query.startTime = 0;
-			}
-			
+            if (!request.query.startTime) {
+                request.query.startTime = 0;
+            }
+
             let points = db.reader.read(def.type, request.query.startTime, request.query.endTime);
-            
+
             let values = [];
-            
+
             for (let i = 0; i < points.length; i++) {
                 let point = points[i];
 
