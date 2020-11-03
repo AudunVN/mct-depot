@@ -49,7 +49,7 @@ class DbManager
 
     clearRows() {
         this.db.exec("DELETE FROM telemetry;");
-        
+
         return true;
     }
 

@@ -9,7 +9,7 @@ class RealtimeClient {
             subscribe: function (domainObject, callback) {
                 let source = domainObject.identifier.key.split(".");
                 let url = location.origin.replace(/^http/, 'ws') + "/" + source[0] + '/realtime/' + source[1];
-                
+
                 let socket = new WebSocket(url);
 
                 console.log("Subscribed to " + url);
@@ -19,14 +19,14 @@ class RealtimeClient {
 
                     return point;
                 };
-    
+
                 return function unsubscribe() {
                     console.log("Unsubscribed from " + url);
                     socket.close();
                 };
             }
         };
-    
+
         openmct.telemetry.addProvider(provider);
     }
 }

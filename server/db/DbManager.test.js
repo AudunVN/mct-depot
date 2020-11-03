@@ -31,7 +31,7 @@ test('can check if telemetry point does not exist in db', () => {
 
 test('can write to in-memory database', () => {
     let couldWrite = manager.writer.write(telemetryPoint);
-    
+
     expect(couldWrite).toEqual(true);
 });
 
@@ -63,6 +63,6 @@ test('database read timestamp boundaries are inclusive', () => {
 
 test('can check if one or more of the telemetry point is in db', () => {
     manager.writer.write(telemetryPoint);
-    
+
     expect(manager.reader.isPointNew(telemetryPoint.type, telemetryPoint.original)).toEqual(false);
 });

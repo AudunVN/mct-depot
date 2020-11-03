@@ -13,7 +13,7 @@ class TelemetryFetcher
         this.running = false;
         this.callback = this.store;
 
-        if (typeof callback == "function") {
+        if (typeof callback === "function") {
             this.callback = callback;
         }
 
@@ -31,7 +31,7 @@ class TelemetryFetcher
 
     store(points) {
         let writeCount = 0;
-        
+
         let isNewTimeSum = 0;
 
         let startTime = performance.now();

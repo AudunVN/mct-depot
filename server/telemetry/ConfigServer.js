@@ -12,14 +12,14 @@ class ConfigServer
         this.config = config;
         this.config.metadata = metadata;
         this.config.measurements = measurements;
-        
+
         this.start();
     }
 
     start()
     {
         let config = this.config;
-        
+
         this.router.get('/', function (request, response) {
             response.status(200).send(config);
         });

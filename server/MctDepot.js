@@ -31,17 +31,17 @@ class MctDepot
         let telemetryServers = [];
 
         let port = config.port || 8471;
-        
+
         let configUrl = '/config';
-        
+
         let configServer = new ConfigServer(
             config,
             parser.getAllMctMetadata(),
             parser.getAllMctMeasurements()
         );
-        
+
         this.server.use(configUrl, configServer.router);
-        
+
         if (!config.debug) {
             console.log('server config available at http://localhost:' + port + configUrl);
         }
@@ -51,7 +51,7 @@ class MctDepot
 
             let telemetryFetcher = new TelemetryFetcher(def, config, db, parser);
 
-            if (def.fetcher == "JSON") {
+            if (def.fetcher === "JSON") {
                 telemetryFetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
             }
 

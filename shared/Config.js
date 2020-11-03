@@ -27,14 +27,14 @@ class Config
 
         this.defs = [];
     }
-    
+
     reset() {
         Object.keys(this).forEach((key) => {
             delete this[key];
         });
-        
+
         let newConfig = new Config();
-        
+
         Object.keys(newConfig).forEach((key) => {
             this[key] = newConfig[key];
         });
@@ -46,12 +46,12 @@ class Config
 
         try {
             let fileString = fs.readFileSync(configFilePath, "utf8");
-            data = JSON.parse(fileString); 
+            data = JSON.parse(fileString);
         } catch(exception) {
             console.log("Error while reading config file: ", exception.stack);
         }
 
-        if (data != "") {
+        if (data !== "") {
             /* overwrite keys from loaded config file */
 
             Object.keys(data).forEach((key) => {

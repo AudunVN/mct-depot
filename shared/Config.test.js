@@ -11,7 +11,7 @@ test('default config has port and dbPath', () => {
 
 test('can load custom config from file', () => {
     let config = new Config("samples/config_test.json");
-    let result = config["can_load_config"];
+    let result = config.can_load_config;
 
     expect(result).toEqual(true);
 });
@@ -19,7 +19,7 @@ test('can load custom config from file', () => {
 test('can reset to default config', () => {
     let config = new Config();
     let defaultConfigPort = config.port;
-    
+
     config.port = "invalid";
     config.customTestValue = "testing";
 

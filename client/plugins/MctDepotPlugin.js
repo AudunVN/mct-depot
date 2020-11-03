@@ -1,5 +1,7 @@
 "use strict";
 
+/* global openmct:false */
+
 function getConfig() {
     return Promise.resolve(openmct.plugins.mctDepot.config);
 }
@@ -7,7 +9,7 @@ function getConfig() {
 let objectProvider = {
     get: function (identifier) {
         return getConfig().then(function (config) {
-            if (identifier.key.indexOf(".rootfolder") != -1) {
+            if (identifier.key.indexOf(".rootfolder") !== -1) {
                 let def = config.defs.find(function (d) {
                     return d.type === identifier.key.split(".")[0];
                 });
@@ -29,7 +31,7 @@ let objectProvider = {
                     console.log("Could not find measurement for " + identifier.key);
                 }
 
-                if (identifier.key.indexOf(".") != -1) {
+                if (identifier.key.indexOf(".") !== -1) {
                     type = identifier.key.split(".")[0];
                 }
 

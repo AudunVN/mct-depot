@@ -11,7 +11,7 @@ class MockNATelemetryServer
         this.router.use(express.json());
 
         this.def = def;
-        
+
         this.start();
     }
 
@@ -21,10 +21,10 @@ class MockNATelemetryServer
 
         try {
             fileString = fs.readFileSync(this.def.filePath, "utf8");
-            data = JSON.parse(fileString); 
+            data = JSON.parse(fileString);
         } catch(exception) {
             console.log("[!] Error while reading file: " + exception.stack.split("\n")[0]);
-        } 
+        }
 
         return data;
     }

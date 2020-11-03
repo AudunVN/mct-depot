@@ -78,7 +78,7 @@ class DbReader
         let pointHash = this.hasher.hash(dataString);
         let existingPoint = statement.get(type, pointHash);
 
-        return (typeof existingPoint == "undefined");
+        return (typeof existingPoint === "undefined");
     }
 
     isPointUnique(point) {
@@ -88,7 +88,7 @@ class DbReader
             this alias for it is easier to read than !doesPointExist().
         */
 
-       return !this.doesPointExist(point);
+        return !this.doesPointExist(point);
     }
 
     doesPointExist(point) {
@@ -111,9 +111,9 @@ class DbReader
         for (let i = 0; i < existingPoints.length; i++) {
             let storedPoint = existingPoints[i];
 
-            if (JSON.stringify(point.metadata) == storedPoint.metadata) {
-                if (JSON.stringify(point.data) == storedPoint.data) {
-                    if (point.original == storedPoint.original) {
+            if (JSON.stringify(point.metadata) === storedPoint.metadata) {
+                if (JSON.stringify(point.data) === storedPoint.data) {
+                    if (point.original === storedPoint.original) {
                         return true;
                     }
                 }

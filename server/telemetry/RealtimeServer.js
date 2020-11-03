@@ -26,7 +26,7 @@ class RealtimeServer
     {
         this.router.ws('/:valueName', (ws, req) => {
             let key = req.params.valueName;
-            if (typeof this.clients[key] == "undefined") {
+            if (typeof this.clients[key] === "undefined") {
                 this.clients[key] = [];
             }
 
@@ -42,12 +42,12 @@ class RealtimeServer
 
             ws.on('close', () => {
                 this.clients[key] = this.clients[key].filter((client) => {
-                    return client.uid != ws.uid;
+                    return client.uid !== ws.uid;
                 });
             });
         });
     }
-    
+
     sendUpdate(telemetry) {
         let keys = Object.keys(telemetry.data);
 
@@ -59,7 +59,7 @@ class RealtimeServer
                         value: telemetry.data[key],
                         timestamp: telemetry.timestamp
                     };
-    
+
                     client.send(JSON.stringify(point));
                 });
             }
@@ -74,8 +74,8 @@ class RealtimeServer
             });
         });
 
-        dbPoller.destroy();
-        dbPoller = null;
+        this.poller.destroy();
+        this.poller = null;
     }
 }
 
