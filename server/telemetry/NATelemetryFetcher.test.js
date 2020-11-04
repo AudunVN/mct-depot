@@ -45,7 +45,7 @@ test('valid input file yields non-empty output', () => {
     expect(result.length).toBeGreaterThan(0);
 });
 
-test('starting fetcher returns data to callback', done => {
+test('starting fetcher returns data to callback', () => {return new Promise(done => {
     def.filePath = "samples/fc_test_archive_v.json";
     let fetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
 
@@ -61,7 +61,7 @@ test('starting fetcher returns data to callback', done => {
 
     fetcher.callback = callback;
     fetcher.start();
-});
+})});
 
 test('can write fetched points to database', () => {
     def.filePath = "samples/fc_test_archive_v.json";

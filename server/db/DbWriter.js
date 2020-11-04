@@ -33,7 +33,7 @@ class DbWriter
 
         let originalHash = this.hasher.hash(telemetryPoint.original);
 
-        const result = statement.run(
+        statement.run(
             telemetryPoint.type,
             telemetryPoint.timestamp,
             JSON.stringify(telemetryPoint.data),

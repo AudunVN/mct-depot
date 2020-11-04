@@ -3,7 +3,7 @@
 const RealtimeServer = require('./RealtimeServer');
 const Config = require('../../shared/Config');
 const DbManager = require('../db/DbManager');
-const ws = require('isomorphic-ws');
+const Ws = require('isomorphic-ws');
 
 const expressWs = require('express-ws');
 let server = require('express')();
@@ -43,21 +43,22 @@ let s = server.listen(config.port, function () {
     console.log('WS test server available at ' + fullTestUrl);
 });
 
-test('realtime server responds to websocket connection request', done => {
-    let socket = new ws(fullTestUrl + '/yes');
+test('realtime server responds to websocket connection request', () => {return new Promise(done => {
+    let socket = new Ws(fullTestUrl + '/yes');
 
     socket.onopen = function open() {
         socket.send("test");
     };
 
     socket.onmessage = function incoming(data) {
+        expect(data.data).toEqual("test");
         socket.close();
         done();
     };
-});
+})});
 
-test('realtime server sendUpdate sends data', done => {
-    let socket = new ws(fullTestUrl + '/yes');
+test('realtime server sendUpdate sends data', () => {return new Promise(done => {
+    let socket = new Ws(fullTestUrl + '/yes');
 
     socket.onopen = function open() {
         realtimeServer.sendUpdate(telemetryPoint);
@@ -75,12 +76,12 @@ test('realtime server sendUpdate sends data', done => {
 
         done();
     };
-});
+})});
 
-test('realtime server sends new data', done => {
+test('realtime server sends new data', () => {return new Promise(done => {
     telemetryPoint.data.yes = false;
 
-    let socket = new ws(fullTestUrl + '/yes');
+    let socket = new Ws(fullTestUrl + '/yes');
 
     socket.onopen = function open() {
         db.writer.write(telemetryPoint);
@@ -98,7 +99,7 @@ test('realtime server sends new data', done => {
 
         done();
     };
-});
+})});
 
 afterAll(() => {
     s.close();

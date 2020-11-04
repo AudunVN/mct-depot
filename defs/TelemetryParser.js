@@ -26,7 +26,7 @@ class TelemetryParser
     }
 
     canParse(type) {
-        return (this.getDefinition(type) != null);
+        return (this.getDefinition(type) !== null);
     }
 
     parse(type, dataString) {
@@ -37,7 +37,7 @@ class TelemetryParser
 
     getType(string) {
         let result = null;
-        
+
         this.definitions.forEach(function (def) {
             if (def.canUnpack(string)) {
                 result = def.type;
@@ -61,7 +61,7 @@ class TelemetryParser
 
     getAllMctMetadata() {
         let results = [];
-        
+
         this.definitions.forEach(function (def) {
             let metadata = {
                 name: def.name,
@@ -77,7 +77,7 @@ class TelemetryParser
 
     getAllMctMeasurements() {
         let results = [];
-        
+
         this.definitions.forEach(function (def) {
             results = results.concat(def.getMctMetadata());
         });

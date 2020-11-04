@@ -24,7 +24,7 @@ let telemetryPoint = {
 
 let db = new DbManager(config);
 
-test('adding data to db calls callback with data', done => {
+test('adding data to db calls callback with data', () => {return new Promise(done => {
     function callback(data) {
         expect(data).toEqual(telemetryPoint);
         done();
@@ -35,4 +35,4 @@ test('adding data to db calls callback with data', done => {
     db.writer.write(telemetryPoint);
 
     poller.poll();
-});
+})});

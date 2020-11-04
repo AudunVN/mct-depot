@@ -37,14 +37,14 @@ class NATelemetryDefinition extends TelemetryDefinition
         let uncompressedData = this.context.telemetry.fields;
 
         for (let [key, value] of Object.entries(this.context.telemetry.fields)) {
-            let lengthMatch = value.type.match(/([^\[]*)\[(\d+)\]/);
+            let lengthMatch = value.type.match(/([^[]*)\[(\d+)\]/);
             let arrayLength = 0;
-            
-            if (lengthMatch != null && typeof lengthMatch[2] != "undefined") {
+
+            if (lengthMatch !== null && typeof lengthMatch[2] !== "undefined") {
                 arrayLength = lengthMatch[2];
             }
 
-            if (arrayLength != 0) {
+            if (arrayLength !== 0) {
                 for (let i = 0; i < arrayLength; i++) {
                     let fieldName = key + "_" + i + "_AutoExpanded";
                     uncompressedData[fieldName] = {
@@ -58,7 +58,7 @@ class NATelemetryDefinition extends TelemetryDefinition
         }
 
         for (const field of Object.values(uncompressedData)) {
-            /* 
+            /*
                 uncomment to log all fields in the format used for config.json
 
                 console.log('{\n    "key": "' + field.name + '",\n    "name": "'+ field.name + '"\n},');
@@ -102,7 +102,7 @@ class NATelemetryDefinition extends TelemetryDefinition
 
             let isArrayValue = false;
 
-            if (defField == null && field.name.indexOf("_AutoExpanded") != -1) {
+            if (defField === null && field.name.indexOf("_AutoExpanded") !== -1) {
                 /* autoexpanded field, check if entry exists for parent array */
 
                 let parentName = field.name.replace(/_\d+_AutoExpanded/, "");
@@ -115,15 +115,15 @@ class NATelemetryDefinition extends TelemetryDefinition
                     /* no metadata stored for parent field */
                 }
 
-                if (defField != null) {
+                if (defField !== null) {
                     isArrayValue = true;
                 }
             }
 
-            if (defField != null) {
+            if (defField !== null) {
                 /* load value metadata from config */
 
-                /* 
+                /*
                     defField sample:
                     {
                         "key": "bootCount",
@@ -161,16 +161,15 @@ class NATelemetryDefinition extends TelemetryDefinition
                 if (typeof defField.max !== "undefined") {
                     value.max = defField.max;
                 }
-                
+
                 if (typeof defField.enumerations !== "undefined") {
                     value.enumerations = defField.enumerations;
                 }
-                
             }
 
             point.telemetry.values.push(value);
             point.telemetry.values.push(timeValue);
-            
+
             metadata.push(point);
         }
 
@@ -198,7 +197,7 @@ class NATelemetryDefinition extends TelemetryDefinition
 
         telemetryPoint.metadata = telemetry;
 
-        let timestampKey = Object.keys(telemetryPoint.data).find(k => k.indexOf("timestamp") != -1 && typeof telemetryPoint.data[k] === "number" && 0 < telemetryPoint.data[k] < Date.now()/1000);
+        let timestampKey = Object.keys(telemetryPoint.data).find(k => k.indexOf("timestamp") !== -1 && typeof telemetryPoint.data[k] === "number" && 0 < telemetryPoint.data[k] < Date.now()/1000);
 
         telemetryPoint.timestamp = telemetryPoint.data[timestampKey]*1000;
 
