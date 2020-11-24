@@ -120,7 +120,7 @@ class NATelemetryDefinition extends TelemetryDefinition
                 }
             }
 
-            if (defField !== null) {
+            if (defField) {
                 /* load value metadata from config */
 
                 /*
