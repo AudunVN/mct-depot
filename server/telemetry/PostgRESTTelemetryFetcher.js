@@ -3,7 +3,7 @@
 const fs = require('fs');
 const TelemetryFetcher = require('./TelemetryFetcher.js');
 
-class JsonFileTelemetryFetcher extends TelemetryFetcher
+class PostgRESTTelemetryFetcher extends TelemetryFetcher
 {
     constructor(def, db, config, parser, callback)
     {
@@ -25,4 +25,4 @@ class JsonFileTelemetryFetcher extends TelemetryFetcher
     }
 }
 
-module.exports = JsonFileTelemetryFetcher;
+module.exports = PostgRESTTelemetryFetcher;

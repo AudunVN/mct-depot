@@ -1,4 +1,6 @@
 {
 	"eslint.enable": true,
-	"VSCodeCounter.showInStatusBar": true
+	"VSCodeCounter.showInStatusBar": true,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": true
 }

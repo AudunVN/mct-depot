@@ -3,7 +3,7 @@
 const express = require('express');
 const fs = require('fs');
 
-class MockNATelemetryServer
+class MockPostgRESTTelemetryServer
 {
     constructor(def)
     {
@@ -32,7 +32,7 @@ class MockNATelemetryServer
     start()
     {
         this.router.get('/', (request, response) => {
-            if (typeof request.headers.authorization !== "undefined") {
+            if (typeof request.headers.authorization !== "undefined" && request.headers.authorization.indexOf("Bearer") !== -1) {
                 let data = this.getData();
                 response.status(200).send(data);
             } else {
@@ -49,4 +49,4 @@ class MockNATelemetryServer
     }
 }
 
-module.exports = MockNATelemetryServer;
+module.exports = MockPostgRESTTelemetryServer;

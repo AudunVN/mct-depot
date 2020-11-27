@@ -12,14 +12,14 @@ class JsonTelemetryDefinition extends TelemetryDefinition
     parse(telemetryString) {
         let telemetryPoint = {
             type: this.type,
-            timestamp: thistimestam,
+            timestamp: this.timestamp,
             data: "",
             metadata: "",
             original: telemetryString
         }
 
         telemetryPoint.data = this.unpack(telemetryString);
-        
+
         telemetryPoint.timestamp = telemetryPoint.data.timestamp;
 
         delete telemetryPoint.data.timestamp;
