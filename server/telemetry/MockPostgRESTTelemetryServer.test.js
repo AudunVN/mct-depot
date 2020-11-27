@@ -40,3 +40,21 @@ test('request with authorization header succeeds', async () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBeGreaterThan(0);
 });
+
+test('request for specific table succeeds', async () => {
+    const response = await request.get(testUrl + "/fcTelemetryTable").set('Authorization', 'Bearer token_abc123');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.length).toBeGreaterThan(0);
+});
+
+test('request for specific table and timespan succeeds', async () => {
+    const fullResponse = await request.get(testUrl + "/fcTelemetryTable").set('Authorization', 'Bearer token_abc123');
+
+    const cutoff = fullResponse.body[2].fca_complete_ts;
+
+    const response = await request.get(testUrl + "/fcTelemetryTable" + "?fca_complete_ts=gte." + cutoff).set('Authorization', 'Bearer token_abc123');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.length).toBeLessThan(fullResponse.body.length);
+});
