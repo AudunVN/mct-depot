@@ -31,7 +31,7 @@ class PostgRESTTelemetryFetcher extends TelemetryFetcher
                 }
             }
 
-            console.log("Last " + this.def.type + " primary key: " + this.lastPrimaryKey);
+            console.log("(i) Processing " + telemetry.length + " " + this.def.type + " points from " + this.def.url + ", last id: " + this.lastPrimaryKey);
         } catch(exception) {
             console.log("[!] Error while getting data: " + exception.stack.split("\n")[0]);
         }
