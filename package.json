@@ -33,7 +33,6 @@
 		"simple-node-logger": "^18.12.24",
 		"sqlite3": "^4.1.1",
 		"supertest": "^4.0.2",
-		"sync-fetch": "^0.3.0",
 		"uuid": "^8.1.0",
 		"ws": "^6.2.1"
 	}

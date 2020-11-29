@@ -18,9 +18,11 @@ const def = {
     type: "fc",
     structPath: "defs/structs/fc_v0.0.3_GeneralT_file.txt",
     filePath: "samples/fc_test_archive_v.json",
-    timestampField: "",
+    primaryKeyField: "fca_id",
     url: "http://localhost:" + config.port + "/table",
-    bearerToken: "test"
+    secrets: {
+        bearerToken: "test"
+    }
 };
 
 const mockServer = new MockServer(def);
@@ -28,13 +30,18 @@ const mockServer = new MockServer(def);
 let db = new DbManager(config);
 let parser = new TelemetryParser([def]);
 
-jest.setTimeout(10 * 1000);
+let s;
 
 beforeAll(async (done) => {
-    await mockServer.server.listen(config.port, function () {
+    s = await mockServer.server.listen(config.port, function () {
         console.log('PostgREST test server available at http://localhost:' + config.port);
         done();
     });
+});
+
+afterAll(async (done) => {
+    s.close();
+    done();
 });
 
 test('plain fetch yields non-empty result', async () => {
@@ -43,7 +50,7 @@ test('plain fetch yields non-empty result', async () => {
     try {
         let response = await fetch(def.url, {
             method: 'get',
-            headers: { 'Authorization': 'Bearer' + def.bearerToken},
+            headers: { 'Authorization': 'Bearer ' + def.secrets.bearerToken},
             timeout: 4471 // ms
         });
 

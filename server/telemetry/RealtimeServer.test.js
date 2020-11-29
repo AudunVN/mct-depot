@@ -39,8 +39,18 @@ const realtimeServer = new RealtimeServer(def, db, config);
 
 server.use(testUrl, realtimeServer.router);
 
-let s = server.listen(config.port, function () {
-    console.log('WS test server available at ' + fullTestUrl);
+let s;
+
+beforeAll(async (done) => {
+    s = await server.listen(config.port, function () {
+        console.log('WS test server available at ' + fullTestUrl);
+        done();
+    });
+});
+
+afterAll(async (done) => {
+    s.close();
+    done();
 });
 
 test('realtime server responds to websocket connection request', () => {return new Promise(done => {
@@ -100,9 +110,3 @@ test('realtime server sends new data', () => {return new Promise(done => {
         done();
     };
 })});
-
-afterAll(() => {
-    s.close();
-    return;
-});
-

@@ -33,8 +33,10 @@ class MockPostgRESTTelemetryServer
 
     start()
     {
+        let authString = "Bearer " + this.def.secrets.bearerToken;
+
         this.server.get('/', (request, response) => {
-            if (typeof request.headers.authorization !== "undefined" && request.headers.authorization.indexOf("Bearer") !== -1) {
+            if (typeof request.headers.authorization !== "undefined" && request.headers.authorization === authString) {
                 let data = [{"id": 1, "message": "hi, this very real PostgREST server exists and you can access it!"}];
                 response.status(200).send(data);
             } else {
@@ -43,7 +45,7 @@ class MockPostgRESTTelemetryServer
         });
 
         this.server.get('/:table', (request, response) => {
-            if (typeof request.headers.authorization !== "undefined" && request.headers.authorization.indexOf("Bearer") !== -1) {
+            if (typeof request.headers.authorization !== "undefined" && request.headers.authorization === authString) {
                 let data = this.getData();
 
                 let isFilteredQuery = false;

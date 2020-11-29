@@ -16,9 +16,33 @@ class ConfigServer
         this.start();
     }
 
+    getCleanConfig(object) {
+        let clone = this.config;
+
+        if (typeof object !== "undefined") {
+            clone = object;
+        }
+
+        for (let key in clone) {
+            if (Object.prototype.hasOwnProperty.call(clone, key)) {
+                let lowerKey = key.toLowerCase();
+
+                if (lowerKey.indexOf("password") !== -1 || lowerKey.indexOf("secret") !== -1) {
+                    delete clone[key];
+                }
+                else if (typeof clone[key] === "object")
+                {
+                    clone[key] = this.getCleanConfig(clone[key]);
+                }
+            }
+        }
+
+        return clone;
+    }
+
     start()
     {
-        let config = this.config;
+        let config = this.getCleanConfig();
 
         this.router.get('/', function (request, response) {
             response.status(200).send(config);

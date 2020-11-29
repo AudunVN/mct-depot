@@ -9,3 +9,5 @@ coverage
 *.sqlite3-journal
 
 *.log
+
+state/config.json
