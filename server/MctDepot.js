@@ -90,6 +90,8 @@ class MctDepot
                 console.log(def.type + ' metadata available at http://localhost:' + port + metadataUrl);
             }
 
+            telemetryServer.start();
+
             telemetryServers.push(telemetryServer);
         });
 
