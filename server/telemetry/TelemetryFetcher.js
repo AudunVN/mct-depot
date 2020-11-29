@@ -13,13 +13,15 @@ class TelemetryFetcher
         this.running = false;
         this.callback = this.store;
 
+        if (typeof this.def.fetchInterval === "undefined") {
+            this.def.fetchInterval = 15000;
+        }
+
         if (typeof callback === "function") {
             this.callback = callback;
         }
 
         this.lastRunTime = 0;
-
-        this.start();
     }
 
     start() {
@@ -74,11 +76,14 @@ class TelemetryFetcher
 
             this.lastRunTime = currentTime;
 
-            if (results.length > 0) {
+            if (results.length > 0 || typeof results.errorMessage !== "undefined") {
                 this.callback(results);
             }
 
-            setTimeout(this.run, this.def.fetchInterval);
+            const sleep = (milliseconds=500) => new Promise(resolve => setTimeout(resolve, milliseconds));
+            await sleep(this.def.fetchInterval);
+
+            this.run();
         }
     }
 

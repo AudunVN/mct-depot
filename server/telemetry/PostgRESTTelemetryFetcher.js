@@ -25,8 +25,9 @@ class PostgRESTTelemetryFetcher extends TelemetryFetcher
             telemetry = await response.json();
 
             for (let i = 0; i < telemetry.length; i++) {
-                if (telemetry[i][this.def.primaryKeyField] > this.lastPrimaryKey) {
-                    this.lastPrimaryKey = telemetry[i][this.def.primaryKeyField];
+                let key = telemetry[i][this.def.primaryKeyField];
+                if (typeof key !== "undefined" && key > this.lastPrimaryKey) {
+                    this.lastPrimaryKey = key;
                 }
             }
 

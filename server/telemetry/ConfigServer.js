@@ -17,11 +17,9 @@ class ConfigServer
     }
 
     getCleanConfig(object) {
-        let clone = this.config;
+        let input = object ? object : this.config;
 
-        if (typeof object !== "undefined") {
-            clone = object;
-        }
+        let clone = JSON.parse(JSON.stringify(input));
 
         for (let key in clone) {
             if (Object.prototype.hasOwnProperty.call(clone, key)) {
