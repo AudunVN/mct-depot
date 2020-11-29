@@ -16,7 +16,7 @@ class PostgRESTTelemetryFetcher extends TelemetryFetcher
         let telemetry = [];
 
         try {
-            let response = await fetch(this.def.url + "/?" + this.def.primaryKeyField + "=gte." + this.lastPrimaryKey, {
+            let response = await fetch(this.def.url + "?" + this.def.primaryKeyField + "=gte." + this.lastPrimaryKey, {
                 method: 'get',
                 headers: { 'Authorization': 'Bearer ' + this.def.secrets.bearerToken},
                 timeout: 4471 // ms
