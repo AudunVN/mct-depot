@@ -22,7 +22,7 @@
             openmct.install(openmct.plugins.LocalStorage());
             openmct.install(openmct.plugins.MyItems());
             openmct.install(openmct.plugins.UTCTimeSystem());
-            openmct.time.clock('local', {start: -15 * 60 * 1000, end: 0});
+            openmct.time.clock('local', {start: - 7 * 24 * 60 * 1000, end: 0});
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
@@ -44,9 +44,9 @@
                 key: 'local',
                 name: 'Local Time',
                 cssClass: 'icon-clock',
-                timeFormat:  'utc',
-                durationFormat:  'duration',
-                isUTCBased:  true
+                timeFormat: 'utc',
+                durationFormat: 'duration',
+                isUTCBased: true
             });
 
             openmct.install(openmct.plugins.Conductor({
@@ -62,7 +62,7 @@
                     {
                         clock: 'local',
                         timeSystem: 'utc',
-                        clockOffsets: {start: - ONE_DAY, end: 0},
+                        clockOffsets: {start: - 7 * ONE_DAY, end: 0},
                         zoomOutLimit: ONE_YEAR,
                         zoomInLimit: ONE_MINUTE
                     },
@@ -70,7 +70,9 @@
                     {
                         clock: 'local',
                         timeSystem: 'local',
-                        clockOffsets: {start: - ONE_DAY, end: 0}
+                        clockOffsets: {start: - 7 * ONE_DAY, end: 0},
+                        zoomOutLimit: ONE_YEAR,
+                        zoomInLimit: ONE_MINUTE
                     }
                 ]
             }));

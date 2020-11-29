@@ -7,9 +7,11 @@ const TelemetryParser = require('../defs/TelemetryParser');
 const TelemetryFetcher = require('./telemetry/TelemetryFetcher');
 const TelemetryServer = require('./telemetry/TelemetryServer');
 const JsonFileTelemetryFetcher = require('./telemetry/JsonFileTelemetryFetcher');
+const PostgRESTTelemetryFetcher = require('./telemetry/PostgRESTTelemetryFetcher');
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const expressWs = require('express-ws');
+
 
 class MctDepot
 {
@@ -54,6 +56,12 @@ class MctDepot
             if (def.fetcher === "JSON") {
                 telemetryFetcher = new JsonFileTelemetryFetcher(def, db, config, parser);
             }
+            else if (def.fetcher === "PostgREST")
+            {
+                telemetryFetcher = new PostgRESTTelemetryFetcher(def, db, config, parser);
+            }
+
+            telemetryFetcher.start();
 
             telemetryFetchers.push(telemetryFetcher);
 
@@ -81,6 +89,8 @@ class MctDepot
                 this.server.use(metadataUrl, telemetryServer.metadataServer.router);
                 console.log(def.type + ' metadata available at http://localhost:' + port + metadataUrl);
             }
+
+            telemetryServer.start();
 
             telemetryServers.push(telemetryServer);
         });

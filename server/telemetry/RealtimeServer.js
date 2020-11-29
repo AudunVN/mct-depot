@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require('express');
+const expressWs = require('express-ws');
 const DbPoller = require('../db/DbPoller');
 const { v4: uuidv4 } = require('uuid');
 
@@ -9,6 +10,8 @@ class RealtimeServer
     constructor(def, db, config)
     {
         this.router = express.Router();
+
+        expressWs(this.router);
 
         this.db = db;
         this.config = config;

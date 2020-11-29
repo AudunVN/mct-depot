@@ -1,3 +1,8 @@
 {
-    "can_load_config": true
+    "can_load_config": true,
+    "secrets": {
+        "bearerToken": "very_secret",
+        "my_password": "also very secret!",
+        "test": "a very secret password"
+    }
 }

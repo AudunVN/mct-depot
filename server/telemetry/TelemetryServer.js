@@ -17,8 +17,6 @@ class TelemetryServer
         this.realtimeServer = new RealtimeServer(this.def, this.db, this.config);
         this.historyServer = new HistoryServer(this.def, this.db, this.config);
         this.metadataServer = new MetadataServer(this.def, this.db, this.config);
-
-        this.start();
     }
 
     start()

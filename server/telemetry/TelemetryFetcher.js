@@ -13,13 +13,15 @@ class TelemetryFetcher
         this.running = false;
         this.callback = this.store;
 
+        if (typeof this.def.fetchInterval === "undefined") {
+            this.def.fetchInterval = 15000;
+        }
+
         if (typeof callback === "function") {
             this.callback = callback;
         }
 
         this.lastRunTime = 0;
-
-        this.start();
     }
 
     start() {
@@ -66,19 +68,22 @@ class TelemetryFetcher
         return {errorMessage: "Fetching not implemented for type " + this.def.type};
     }
 
-    run() {
+    async run() {
         if (this.running) {
             let currentTime = Date.now();
 
-            let results = this.fetch();
+            let results = await this.fetch();
 
             this.lastRunTime = currentTime;
 
-            if (results.length > 0) {
+            if (results.length > 0 || typeof results.errorMessage !== "undefined") {
                 this.callback(results);
             }
 
-            setTimeout(this.run, this.def.fetchRate);
+            const sleep = (milliseconds=500) => new Promise(resolve => setTimeout(resolve, milliseconds));
+            await sleep(this.def.fetchInterval);
+
+            this.run();
         }
     }
 

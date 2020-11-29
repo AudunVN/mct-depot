@@ -1,0 +1,345 @@
+{
+    "debug": false,
+    "roots": [
+        {
+            "namespace": "omctserver",
+            "key": "hypso-test-spacecraft",
+            "name": "Hypso Test Spacecraft"
+        }
+    ],
+    "defs": [
+        {
+            "root": "hypso-test-spacecraft",
+            "type": "fc",
+            "name": "Flight Computer",
+            "parser": "NA",
+            "structPath": "defs/structs/fc_v0.0.3_GeneralT_file.txt",
+            "fetcher": "JSON",
+            "filePath": "samples/fc_archive_v.json",
+            "provides": {
+                "realtime": true, 
+                "history": true,
+                "metadata": true
+            },
+            "metadata": {
+                "documentation": [
+                    "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                    "https://docs.google.com/spreadsheets/d/1DCzhNcp5J5GWeUGTtZC0nzXIwu4XpLFEQB6uAN2jq2Y/edit?usp=sharing"
+                ],
+                "values": [
+                    {
+                        "key": "bootCount",
+                        "name": "Boot count",
+                        "units": "Count"
+                    },
+                    {
+                        "key": "timestamp",
+                        "name": "Telemetry timestamps"
+                    },
+                    {
+                        "key": "uptimeInS",
+                        "name": "Uptime in seconds"
+                    },
+                    {
+                        "key": "lastResetCause",
+                        "name": "Last reset cause"
+                    },
+                    {
+                        "key": "tempMcuInDeciC",
+                        "name": "MCU temperature",
+                        "units": "0.1 degrees C"
+                    },
+                    {
+                        "key": "sunSensorsIsPowerOn",
+                        "name": "Sun sensors power state",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": true, "string": "ON"},
+                            {"value": false, "string": "OFF"}
+                        ]
+                    },
+                    {
+                        "key": "sunSensorsNumOfOvercurrentChecks",
+                        "name": "Sun sensors overcurrent check count"
+                    },
+                    {
+                        "key": "sunSensorsNumOfOvercurrentsDetected",
+                        "name": "Sun sensors overcurrents detection count"
+                    },
+                    {
+                        "key": "gpsIsPowerOn",
+                        "name": "GPS power state",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": true, "string": "ON"},
+                            {"value": false, "string": "OFF"}
+                        ]
+                    },
+                    {
+                        "key": "gpsNumOfOvercurrentChecks",
+                        "name": "GPS overcurrent check count"
+                    },
+                    {
+                        "key": "gpsNumOfOvercurrentsDetected",
+                        "name": "GPS overcurrent detection count"
+                    },
+                    {
+                        "key": "extTempAndMagneticSensorsIsPowerOn",
+                        "name": "Magnetometer power state",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": true, "string": "ON"},
+                            {"value": false, "string": "OFF"}
+                        ]
+                    },
+                    {
+                        "key": "extTempAndMagneticSensorsNumOfOvercurrentChecks",
+                        "name": "Magnetometer overcurrent check count"
+                    },
+                    {
+                        "key": "extTempAndMagneticSensorsNumOfOvercurrentsDetected",
+                        "name": "Magnetometer overcurrent detection count"
+                    },
+                    {
+                        "key": "mtqVoltageMV",
+                        "name": "Magnetorquer voltage",
+                        "units": "mV"
+                    },
+                    {
+                        "key": "mtqCurrentMA",
+                        "name": "Magnetorquer current",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "sunSensorsCurrentMA",
+                        "name": "Current to sun sensors",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "gpsCurrentMA",
+                        "name": "Current to GPS",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "extTempAndMagneticSensorsTempMA",
+                        "name": "extTempAndMagneticSensorsTempMA"
+                    },
+                    {
+                        "key": "solarPanelTemp1",
+                        "name": "-X solar panel temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "solarPanelTemp2",
+                        "name": "+X solar panel temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "solarPanelTemp3",
+                        "name": "-Y solar panel temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "solarPanelTemp4",
+                        "name": "+Y solar panel temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "solarPanelTemp5",
+                        "name": "-Z solar panel temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "solarPanelTemp6",
+                        "name": "+Z solar panel temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "gpsUtcTime",
+                        "name": "GPS UTC time"
+                    },
+                    {
+                        "key": "gpsFixQual",
+                        "name": "GPS fix quality"
+                    },
+                    {
+                        "key": "gpsLatitude",
+                        "name": "GPS latitude"
+                    },
+                    {
+                        "key": "gpsLongitude",
+                        "name": "GPS longitude"
+                    },
+                    {
+                        "key": "gpsGroundSpeed",
+                        "name": "GPS ground speed"
+                    },
+                    {
+                        "key": "gpsNumOfSatsTracked",
+                        "name": "Number of GPS satellites tracked"
+                    },
+                    {
+                        "key": "gpsNumOfSatsInView",
+                        "name": "Number of GPS satellites in view"
+                    },
+                    {
+                        "key": "gpsHDilutionOfPos",
+                        "name": "GPS position dilution"
+                    }
+                ] 
+            }
+        },
+        {
+            "root": "hypso-test-spacecraft",
+            "type": "eps",
+            "name": "Electric Power Supply",
+            "parser": "NA",
+            "structPath": "defs/structs/eps_telemetry_struct_NAEPS001.txt",
+            "fetcher": "JSON",
+            "filePath": "samples/eps_archive_v.json",
+            "provides": {
+                "realtime": true,
+                "history": true,
+                "metadata": true
+            },
+            "metadata": {
+                "documentation": [
+                    "https://github.com/nasa/openmct/blob/master/API.md#telemetry-metadata",
+                    "https://docs.google.com/spreadsheets/d/1DCzhNcp5J5GWeUGTtZC0nzXIwu4XpLFEQB6uAN2jq2Y/edit?usp=sharing"
+                ],
+                "values": [
+                    {
+                        "key": "timestamp",
+                        "name": "Telemetry timestamps"
+                    },
+                    {
+                        "key": "uptimeInS",
+                        "name": "Uptime in seconds"
+                    },
+                    {
+                        "key": "gs_wdt_time_left_s",
+                        "name": "Time left until ground station watchdog reboot"
+                    },
+                    {
+                        "key": "counter_wdt_gs",
+                        "name": "Ground station watchdog reboot count"
+                    },
+                    {
+                        "key": "mpptConverterVoltage",
+                        "name": "MPPT converter voltage"
+                    },
+                    {
+                        "key": "curSolarPanels",
+                        "name": "Solar panel current"
+                    },
+                    {
+                        "key": "vBatt",
+                        "name": "Battery voltage",
+                        "units": "mV"
+                    },
+                    {
+                        "key": "curSolar",
+                        "name": "Solar panel current",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "curBattIn",
+                        "name": "Battery current input",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "curBattOut",
+                        "name": "Battery current output",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "curOutput",
+                        "name": "Current output",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "AOcurOutput",
+                        "name": "Always on output current",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "outputConverterVoltage",
+                        "name": "Output converter voltage",
+                        "units": "mA"
+                    },
+                    {
+                        "key": "outputConverterState",
+                        "name": "Output converter state"
+                    },
+                    {
+                        "key": "outputStatus",
+                        "name": "Output state"
+                    },
+                    {
+                        "key": "outputFaultStatus",
+                        "name": "Output fault state"
+                    },
+                    {
+                        "key": "outputOnDelta",
+                        "name": "Time left until output turned on",
+                        "units": "seconds"
+                    },
+                    {
+                        "key": "outputOffDelta",
+                        "name": "Time left until output turned off",
+                        "units": "seconds"
+                    },
+                    {
+                        "key": "outputFaultCnt",
+                        "name": "Power output fault counter"
+                    },
+                    {
+                        "key": "temp",
+                        "name": "Temperature",
+                        "units": "degrees C"
+                    },
+                    {
+                        "key": "battState",
+                        "name": "Battery state",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": 0, "string": "CRITICAL"},
+                            {"value": 1, "string": "SAFE"},
+                            {"value": 2, "string": "NORMAL"},
+                            {"value": 3, "string": "FULL"}
+                        ]
+                    },
+                    {
+                        "key": "mpptMode",
+                        "name": "MPPT mode",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": 0, "string": "HARDWARE"},
+                            {"value": 1, "string": "MANUAL"},
+                            {"value": 2, "string": "AUTO"},
+                            {"value": 3, "string": "AUTO WITH TIMEOUT"}
+                        ]
+                    },
+                    {
+                        "key": "batHeaterMode",
+                        "name": "Battery heater mode",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": 0, "string": "OFF"},
+                            {"value": 1, "string": "ON"}
+                        ]
+                    },
+                    {
+                        "key": "batHeaterState",
+                        "name": "Battery heater state",
+                        "format": "enum",
+                        "enumerations": [
+                            {"value": 0, "string": "OFF"},
+                            {"value": 1, "string": "ON"}
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
