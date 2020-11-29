@@ -1,7 +1,7 @@
 {
 	"name": "hypso-openmct",
-	"version": "1.0.0",
-	"description": "OpenMCT implementation for the HYPSO satellite",
+	"version": "1.1.0",
+	"description": "Open MCT implementation for the HYPSO satellite",
 	"main": "server/run.js",
 	"scripts": {
 		"start": "node server/run.js",
@@ -20,20 +20,20 @@
 	},
 	"homepage": "https://github.com/AudunVN/hypso-openmct#readme",
 	"dependencies": {
-		"better-sqlite3": "^7.0.1",
+		"better-sqlite3": "^7.1.1",
 		"eslint": "^6.8.0",
-		"eslint-plugin-jest": "^23.13.2",
+		"eslint-plugin-jest": "^23.20.0",
 		"express": "^4.16.4",
 		"express-ws": "^4.0.0",
 		"ezstruct": "^0.0.3",
 		"isomorphic-ws": "^4.0.1",
-		"jest": "^25.1.0",
+		"jest": "^25.5.4",
 		"node-fetch": "^2.6.1",
-		"openmct": "git+https://github.com/KhaledSharif/openmct",
+		"openmct": "^1.4.0",
 		"simple-node-logger": "^18.12.24",
-		"sqlite3": "^4.1.1",
+		"sqlite3": "^4.2.0",
 		"supertest": "^4.0.2",
-		"uuid": "^8.1.0",
+		"uuid": "^8.3.1",
 		"ws": "^6.2.1"
 	}
 }
