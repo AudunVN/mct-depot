@@ -1,6 +1,6 @@
 "use strict";
 
-const fetch = require('sync-fetch');
+const fetch = require('node-fetch');
 const TelemetryFetcher = require('./TelemetryFetcher.js');
 
 class PostgRESTTelemetryFetcher extends TelemetryFetcher
@@ -12,17 +12,17 @@ class PostgRESTTelemetryFetcher extends TelemetryFetcher
         let lastTimestamp = "";
     }
 
-    fetch() {
+    async fetch() {
         let telemetry = [];
 
         try {
-            telemetry =  fetch(this.def.url, {
+            let response = await fetch(this.def.url, {
                 method: 'get',
                 headers: { 'Authorization': 'Bearer' + this.def.bearerToken},
                 timeout: 4471 // ms
-            }).json();
+            });
 
-            console.log(telemetry);
+            telemetry = await response.json();
         } catch(exception) {
             console.log("[!] Error while getting data: " + exception.stack.split("\n")[0]);
         }

@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const bodyParser = require('body-parser')
-const expressWs = require('express-ws');
 
 class MockPostgRESTTelemetryServer
 {
@@ -12,8 +11,6 @@ class MockPostgRESTTelemetryServer
 
         this.server.use(bodyParser.json());
         this.server.use(bodyParser.urlencoded({ extended: false }));
-
-        expressWs(this.server);
 
         this.def = def;
 

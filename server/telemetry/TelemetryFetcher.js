@@ -66,11 +66,11 @@ class TelemetryFetcher
         return {errorMessage: "Fetching not implemented for type " + this.def.type};
     }
 
-    run() {
+    async run() {
         if (this.running) {
             let currentTime = Date.now();
 
-            let results = this.fetch();
+            let results = await this.fetch();
 
             this.lastRunTime = currentTime;
 
