@@ -1,14 +1,19 @@
 "use strict";
 
-const express = require('express');
 const fs = require('fs');
+const bodyParser = require('body-parser')
+const expressWs = require('express-ws');
 
 class MockPostgRESTTelemetryServer
 {
     constructor(def)
     {
-        this.router = express.Router();
-        this.router.use(express.json());
+        this.server = require('express')();
+
+        this.server.use(bodyParser.json());
+        this.server.use(bodyParser.urlencoded({ extended: false }));
+
+        expressWs(this.server);
 
         this.def = def;
 
@@ -31,7 +36,7 @@ class MockPostgRESTTelemetryServer
 
     start()
     {
-        this.router.get('/', (request, response) => {
+        this.server.get('/', (request, response) => {
             if (typeof request.headers.authorization !== "undefined" && request.headers.authorization.indexOf("Bearer") !== -1) {
                 let data = [{"id": 1, "message": "hi, this very real PostgREST server exists and you can access it!"}];
                 response.status(200).send(data);
@@ -40,7 +45,7 @@ class MockPostgRESTTelemetryServer
             }
         });
 
-        this.router.get('/:table', (request, response) => {
+        this.server.get('/:table', (request, response) => {
             if (typeof request.headers.authorization !== "undefined" && request.headers.authorization.indexOf("Bearer") !== -1) {
                 let data = this.getData();
 
@@ -66,7 +71,7 @@ class MockPostgRESTTelemetryServer
 
     stop()
     {
-        this.router.get('/', (request, response) => {
+        this.server.get('/', (request, response) => {
             response.status(500).send({error: "Server closed"});
         });
     }

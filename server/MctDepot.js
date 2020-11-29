@@ -8,7 +8,7 @@ const TelemetryFetcher = require('./telemetry/TelemetryFetcher');
 const TelemetryServer = require('./telemetry/TelemetryServer');
 const JsonFileTelemetryFetcher = require('./telemetry/JsonFileTelemetryFetcher');
 
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
 const expressWs = require('express-ws');
 
 class MctDepot

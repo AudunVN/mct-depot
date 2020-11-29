@@ -78,7 +78,7 @@ class TelemetryFetcher
                 this.callback(results);
             }
 
-            setTimeout(this.run, this.def.fetchRate);
+            setTimeout(this.run, this.def.fetchInterval);
         }
     }
 

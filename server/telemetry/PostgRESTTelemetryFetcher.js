@@ -1,6 +1,6 @@
 "use strict";
 
-const fs = require('fs');
+const fetch = require('sync-fetch');
 const TelemetryFetcher = require('./TelemetryFetcher.js');
 
 class PostgRESTTelemetryFetcher extends TelemetryFetcher
@@ -8,20 +8,26 @@ class PostgRESTTelemetryFetcher extends TelemetryFetcher
     constructor(def, db, config, parser, callback)
     {
         super(def, db, config, parser, callback);
+
+        let lastTimestamp = "";
     }
 
     fetch() {
-        let fileString = "";
-        let data = [];
+        let telemetry = [];
 
         try {
-            fileString = fs.readFileSync(this.def.filePath, "utf8");
-            data = JSON.parse(fileString);
+            telemetry =  fetch(this.def.url, {
+                method: 'get',
+                headers: { 'Authorization': 'Bearer' + this.def.bearerToken},
+                timeout: 4471 // ms
+            }).json();
+
+            console.log(telemetry);
         } catch(exception) {
-            console.log("[!] Error while reading file: " + exception.stack.split("\n")[0]);
+            console.log("[!] Error while getting data: " + exception.stack.split("\n")[0]);
         }
 
-        return data;
+        return telemetry;
     }
 }
 
