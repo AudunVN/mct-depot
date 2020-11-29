@@ -18,11 +18,16 @@
         }
 
         function startOpenMct(config) {
+            const ONE_MINUTE = 60 * 1000;
+            const ONE_HOUR = 60 * ONE_MINUTE;
+            const ONE_DAY = 24 * ONE_HOUR;
+            const ONE_YEAR = 365 * ONE_DAY;
+
             openmct.setAssetPath('openmct');
             openmct.install(openmct.plugins.LocalStorage());
             openmct.install(openmct.plugins.MyItems());
             openmct.install(openmct.plugins.UTCTimeSystem());
-            openmct.time.clock('local', {start: - 7 * 24 * 60 * 1000, end: 0});
+            openmct.time.clock('local', {start: - ONE_DAY, end: 0});
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
@@ -34,20 +39,17 @@
             );
 
             openmct.install(openmct.plugins.mctDepot.installer);
-           
-            const ONE_MINUTE = 60 * 1000;
-            const ONE_HOUR = 60 * ONE_MINUTE;
-            const ONE_DAY = 24 * ONE_HOUR;
-            const ONE_YEAR = 365 * ONE_DAY;
 
             openmct.time.addTimeSystem({
                 key: 'local',
-                name: 'Local Time',
+                name: 'UTC Time',
                 cssClass: 'icon-clock',
                 timeFormat: 'utc',
                 durationFormat: 'duration',
                 isUTCBased: true
             });
+
+            openmct.time.timeSystem("local", {start: -1000, end: 0});
 
             openmct.install(openmct.plugins.Conductor({
                 menuOptions: [
@@ -62,15 +64,7 @@
                     {
                         clock: 'local',
                         timeSystem: 'utc',
-                        clockOffsets: {start: - 7 * ONE_DAY, end: 0},
-                        zoomOutLimit: ONE_YEAR,
-                        zoomInLimit: ONE_MINUTE
-                    },
-                    //Configuration for the LocalClock in the Local time system
-                    {
-                        clock: 'local',
-                        timeSystem: 'local',
-                        clockOffsets: {start: - 7 * ONE_DAY, end: 0},
+                        clockOffsets: {start: - 24 * ONE_HOUR, end: 0},
                         zoomOutLimit: ONE_YEAR,
                         zoomInLimit: ONE_MINUTE
                     }
