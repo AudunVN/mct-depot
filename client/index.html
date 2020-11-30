@@ -31,6 +31,13 @@
             openmct.time.timeSystem('utc');
             openmct.install(openmct.plugins.Espresso());
 
+            openmct.install(openmct.plugins.URLIndicator({
+                url: window.location.href,
+                iconClass: 'icon-plot-stacked',
+                interval: 10000,
+                label: 'MCT Depot'
+            }));
+
             openmct.plugins.mctDepot = new MctDepotPlugin(
                 config,
                 config.metadata,
