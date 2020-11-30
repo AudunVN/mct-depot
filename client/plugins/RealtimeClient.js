@@ -17,7 +17,9 @@ class RealtimeClient {
                 socket.onmessage = function (data) {
                     let point = JSON.parse(data.data);
 
-                    return point;
+                    console.log("Received " + point);
+
+                    callback(point);
                 };
 
                 return function unsubscribe() {
@@ -34,5 +36,5 @@ class RealtimeClient {
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = RealtimeClient;
 } else {
-    window.HistoryClient = RealtimeClient;
+    window.RealtimeClient = RealtimeClient;
 }
