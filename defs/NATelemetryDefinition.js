@@ -128,7 +128,7 @@ class NATelemetryDefinition extends TelemetryDefinition
                     {
                         "key": "bootCount",
                         "name": "Boot Count",
-                        "units": "kilograms",
+                        "unit": "kilograms",
                         "format": "float",
                         "min": 0,
                         "max": 100,
@@ -146,8 +146,8 @@ class NATelemetryDefinition extends TelemetryDefinition
                     }
                 }
 
-                if (typeof defField.units !== "undefined") {
-                    value.units = defField.units;
+                if (typeof defField.unit !== "undefined") {
+                    value.unit = defField.unit;
                 }
 
                 if (typeof defField.format !== "undefined") {

@@ -30,7 +30,7 @@
                     {
                         "key": "bootCount",
                         "name": "Boot count",
-                        "units": "Count"
+                        "unit": "Count"
                     },
                     {
                         "key": "timestamp",
@@ -47,7 +47,7 @@
                     {
                         "key": "tempMcuInDeciC",
                         "name": "MCU temperature",
-                        "units": "0.1 degrees C"
+                        "unit": "0.1 degrees C"
                     },
                     {
                         "key": "sunSensorsIsPowerOn",
@@ -103,22 +103,22 @@
                     {
                         "key": "mtqVoltageMV",
                         "name": "Magnetorquer voltage",
-                        "units": "mV"
+                        "unit": "mV"
                     },
                     {
                         "key": "mtqCurrentMA",
                         "name": "Magnetorquer current",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "sunSensorsCurrentMA",
                         "name": "Current to sun sensors",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "gpsCurrentMA",
                         "name": "Current to GPS",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "extTempAndMagneticSensorsTempMA",
@@ -127,32 +127,32 @@
                     {
                         "key": "solarPanelTemp1",
                         "name": "-X solar panel temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp2",
                         "name": "+X solar panel temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp3",
                         "name": "-Y solar panel temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp4",
                         "name": "+Y solar panel temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp5",
                         "name": "-Z solar panel temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "solarPanelTemp6",
                         "name": "+Z solar panel temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "gpsUtcTime",
@@ -235,37 +235,37 @@
                     {
                         "key": "vBatt",
                         "name": "Battery voltage",
-                        "units": "mV"
+                        "unit": "mV"
                     },
                     {
                         "key": "curSolar",
                         "name": "Solar panel current",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "curBattIn",
                         "name": "Battery current input",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "curBattOut",
                         "name": "Battery current output",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "curOutput",
                         "name": "Current output",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "AOcurOutput",
                         "name": "Always on output current",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "outputConverterVoltage",
                         "name": "Output converter voltage",
-                        "units": "mA"
+                        "unit": "mA"
                     },
                     {
                         "key": "outputConverterState",
@@ -282,12 +282,12 @@
                     {
                         "key": "outputOnDelta",
                         "name": "Time left until output turned on",
-                        "units": "seconds"
+                        "unit": "seconds"
                     },
                     {
                         "key": "outputOffDelta",
                         "name": "Time left until output turned off",
-                        "units": "seconds"
+                        "unit": "seconds"
                     },
                     {
                         "key": "outputFaultCnt",
@@ -296,7 +296,7 @@
                     {
                         "key": "temp",
                         "name": "Temperature",
-                        "units": "degrees C"
+                        "unit": "degrees C"
                     },
                     {
                         "key": "battState",
