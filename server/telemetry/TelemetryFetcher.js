@@ -80,7 +80,7 @@ class TelemetryFetcher
                 this.callback(results);
             }
 
-            const sleep = (milliseconds=500) => new Promise(resolve => setTimeout(resolve, milliseconds));
+            const sleep = (milliseconds=10000) => new Promise(resolve => setTimeout(resolve, milliseconds));
             await sleep(this.def.fetchInterval);
 
             this.run();
