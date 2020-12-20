@@ -1,7 +1,12 @@
 # MCT Depot
 Telemetry depot and web server for Open MCT, developed for the HYPSO student satellite project. The project report documenting the design and implementation of MCT Depot is available [here](./docs/NTNU_Project_Report_AVN_V2020.pdf).
 
-## System structure
+<p align="center">
+<img src="./docs/imgs/MCT Depot.svg"><br>
+MCT Depot inputs and outputs
+</p>
+
+## Detailed system structure
 <p align="center">
 <img src="./docs/imgs/Block Diagram (early).svg"><br>
 Early high-level system block diagram
