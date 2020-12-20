@@ -26,12 +26,8 @@ System data flow diagram (level 0)
 Class diagram
 </p>
 
-## Notes
-Important note regarding package.json and running this on Windows: The latest public OpenMCT release does not build on Windows due to a path issue. A pull request has been submitted for this and should hopefully be accepted soon, but until then this repo is using a fork of the official OpenMCT repo with a fix for the Windows build issue.
-
- - npm install
- - npm run start
- - npm run test
+## System setup
+The main step here is cloning or downloading the contents of this repository, and running ``npm install`` inside the folder for it. ``npm run start`` will start the full MCT Depot server, while ``npm run test`` can be used to run the test suites for it while doing development.
 
 ## Server requirements
 MCT Depot is fairly I/O-bound, as it does little processing after telemetry samples have been stored in its database but often needs to supply large amounts of data when Open MCT is rendering complex combined views, or views with large amounts of historical data. It is thus recommended to keep the SQLite database on a fairly fast drive (such as an SSD), with at least a few gigabytes of free space set aside per month of telemetry data it should handle (although this depends heavily on the detail level of the telemetry data stored).
