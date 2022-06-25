@@ -28,7 +28,7 @@
 		"ezstruct": "^0.0.3",
 		"isomorphic-ws": "^4.0.1",
 		"jest": "^25.5.4",
-		"node-fetch": "^2.6.1",
+		"node-fetch": "^2.6.7",
 		"openmct": "^1.4.0",
 		"simple-node-logger": "^18.12.24",
 		"sqlite3": "^4.2.0",
