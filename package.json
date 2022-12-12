@@ -23,7 +23,7 @@
 		"better-sqlite3": "^7.1.1",
 		"eslint": "^6.8.0",
 		"eslint-plugin-jest": "^23.20.0",
-		"express": "^4.16.4",
+		"express": "^4.17.3",
 		"express-ws": "^4.0.0",
 		"ezstruct": "^0.0.3",
 		"isomorphic-ws": "^4.0.1",
